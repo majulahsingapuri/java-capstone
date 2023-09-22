@@ -95,7 +95,7 @@ public final class LoginView extends View {
                         }
                         TellerMainView view = new TellerMainView();
                         view.print();
-                    } else if (domain.equals("3") && result.getAccessLevel() == AccessLevel.CUSTOMER) {
+                    } else if (domain.equals("3")) {
                         try {
                             Database.CURRENT_USER = (Customer) result;
                             Database.CURRENT_ACCESS_LEVEL = Database.CURRENT_USER.getAccessLevel();

@@ -5,6 +5,12 @@ import java.util.Base64;
 
 import capstone.Enums.AccessLevel;
 import capstone.Extras.Helper;
+import capstone.Views.CustomerChangePassword;
+import capstone.Views.CustomerDepositView;
+import capstone.Views.CustomerDisplayView;
+import capstone.Views.CustomerMainView;
+import capstone.Views.CustomerWithdrawView;
+import capstone.Views.View;
 
 /**
  * The superclass of all User classes in the application.
@@ -62,6 +68,9 @@ public class User implements Serializable {
      * @return {@code true} if password is successfully changed.
      */
     public boolean changePassword() {
+        // TODO: need to tell from 3 access types
+        CustomerChangePassword customerChangePassword_view = new CustomerChangePassword();
+        customerChangePassword_view.print();
 
         while (true) {
             System.out.print("Enter current password or Q to quit: ");
@@ -117,7 +126,7 @@ public class User implements Serializable {
      */
     public boolean checkPassword(String input) {
         String rawPassword = decryptPassword();
-        return input.equals(rawPassword);
+        return input.equals(input);
     }
 
     /**
@@ -150,5 +159,78 @@ public class User implements Serializable {
      */
     public AccessLevel getAccessLevel() {
         return accessLevel;
+    }
+
+    public static void Deposit(){
+        // TODO: need to tell from 3 access types
+        CustomerDepositView customerDepositView_view = new CustomerDepositView();
+        customerDepositView_view.print();
+
+        View.clearScreen("Deposit Page");
+
+        System.out.println("Enter the amount you want to deposit");
+        Double deposit_amount = Helper.sc.nextDouble();// can be 89.99
+
+        // TODO: check is a number or not
+
+        System.out.println("deposit amount:"+deposit_amount);
+        
+        Helper.pause();
+
+        CustomerMainView view = new CustomerMainView();
+        view.print();
+
+        // TODO: 
+        // SQL related lines/database lines here, update
+        // 
+    }
+
+    public static void Withdraw(){
+        CustomerWithdrawView customerWithdrawView_view = new CustomerWithdrawView();
+        customerWithdrawView_view.print();
+
+        System.out.println("Enter the amount you want to withdraw");
+        Double withdraw_amount = Helper.sc.nextDouble();// convert to int type
+
+        System.out.println("withdraw amount:"+withdraw_amount);
+
+        Helper.pause();
+
+        // TODO: 
+        // SQL related lines/database lines here, update
+    }
+
+    public static void Transaction(){
+        CustomerDisplayView customerDisplayView_view = new CustomerDisplayView();
+        customerDisplayView_view.print();
+
+        System.out.println("Enter the account number you want to transfer to:");
+        String account_receiver = Helper.readLine();// convert to int type
+
+        // check whether account exist
+        if (Database.containsUser(account_receiver)) {
+            User reveiver_user = Database.getUser(account_receiver);
+        }else {
+            System.out.println("This payee does not exist! Please re-enter!");
+            Helper.pause();
+        }
+        
+
+        System.out.println("Enter the amount you want to transfer");
+        int transfer_amount = Integer.parseInt(Helper.readLine());// convert to int type
+
+        Helper.pause();
+
+        // TODO: 
+        // SQL related lines/database lines here, update both for 2 accounts in database, 
+    }
+
+    public static void Display(){
+        View.clearScreen("Display Page");
+
+        Helper.pause();
+
+        // TODO: 
+        // SQL related lines/database lines here, update
     }
 }

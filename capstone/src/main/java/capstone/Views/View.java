@@ -20,7 +20,9 @@ public abstract class View {
      * ClearScreen function that prints a header as well as the current view that the User is in.
      * @param directory The path of the current view that the user is in.
      */
-    protected void clearScreen(String directory) {
+
+     // ?? protected before, can make it public static so objects User can use?????
+    public static void clearScreen(String directory) {
         Helper.printLargeSpace();
                
         String spaces = String.format("%" + (71 - directory.length()) + "s", "");

@@ -26,6 +26,10 @@ public final class CustomerMainView extends View {
                 System.out.println("What would you like to do?");
                 System.out.println("1: Change your Password");
                 System.out.println("2: Logout");
+                System.out.println("3: Deposit");
+                System.out.println("4: Withdraw");
+                System.out.println("5: Transaction");
+                System.out.println("6: Display Account Info");
                 System.out.print(String.format("%-50s: ", "Choice"));
                 choice = Integer.parseInt(Helper.readLine());
 
@@ -37,6 +41,18 @@ public final class CustomerMainView extends View {
                         LogoutView logoutView = new LogoutView();
                         logoutView.print();
                         return;
+                    case 3:
+                        Deposit();
+                        break;
+                    case 4:
+                        Withdraw();
+                        break;
+                    case 5:
+                        Transaction();
+                        break;
+                    case 6:
+                        Transaction();
+                        break;
                     default:
                         System.out.println("Please enter valid option.");
                 }
@@ -52,6 +68,31 @@ public final class CustomerMainView extends View {
     private void changePassword() {
 
         Database.CURRENT_USER.changePassword();
+        Helper.pause();
+
+    }
+
+    private void Deposit() {
+
+        Database.CURRENT_USER.Deposit();
+        Helper.pause();
+    }
+
+    private void Withdraw() {
+
+        Database.CURRENT_USER.Withdraw();
+        Helper.pause();
+    }
+
+    private void Transaction() {
+
+        Database.CURRENT_USER.Transaction();
+        Helper.pause();
+    }
+
+    private void Display() {
+
+        Database.CURRENT_USER.Display();
         Helper.pause();
     }
 }
