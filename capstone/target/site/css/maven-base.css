@@ -22,7 +22,7 @@ body {
   padding: 0px;
 }
 table {
-  padding:0px;
+  padding: 0px;
   width: 100%;
   margin-left: -2px;
   margin-right: -2px;
@@ -31,29 +31,34 @@ acronym {
   cursor: help;
   border-bottom: 1px dotted #feb;
 }
-table.bodyTable th, table.bodyTable td {
+table.bodyTable th,
+table.bodyTable td {
   padding: 2px 4px 2px 4px;
   vertical-align: top;
 }
 div.clear {
-  clear:both;
+  clear: both;
   visibility: hidden;
 }
 div.clear hr {
   display: none;
 }
-#bannerLeft, #bannerRight {
+#bannerLeft,
+#bannerRight {
   font-size: xx-large;
   font-weight: bold;
 }
-#bannerLeft img, #bannerRight img {
+#bannerLeft img,
+#bannerRight img {
   margin: 0px;
 }
-.xleft, #bannerLeft img {
-  float:left;
+.xleft,
+#bannerLeft img {
+  float: left;
 }
-.xright, #bannerRight {
-  float:right;
+.xright,
+#bannerRight {
+  float: right;
 }
 #banner {
   padding: 0px;
@@ -62,9 +67,9 @@ div.clear hr {
   padding: 3px 10px 3px 10px;
 }
 #leftColumn {
- width: 170px;
- float:left;
- overflow: auto;
+  width: 170px;
+  float: left;
+  overflow: auto;
 }
 #bodyColumn {
   margin-right: 1.5em;
@@ -114,19 +119,20 @@ div.clear hr {
   margin-bottom: 3px;
 }
 #poweredBy img {
-  display:block;
+  display: block;
   margin: 20px 0 20px 17px;
 }
 #search img {
-    margin: 0px;
-    display: block;
+  margin: 0px;
+  display: block;
 }
-#search #q, #search #btnG {
-    border: 1px solid #999;
-    margin-bottom:10px;
+#search #q,
+#search #btnG {
+  border: 1px solid #999;
+  margin-bottom: 10px;
 }
 #search form {
-    margin: 0px;
+  margin: 0px;
 }
 #lastPublished {
   font-size: x-small;
@@ -158,7 +164,8 @@ div.clear hr {
   margin: 0px;
   padding: 0px;
 }
-#navcolumn img.imageLink, .imageLink {
+#navcolumn img.imageLink,
+.imageLink {
   padding-left: 0px;
   padding-bottom: 0px;
   padding-top: 0px;

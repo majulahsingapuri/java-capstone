@@ -1,14 +1,3 @@
 {
-    "java.configuration.updateBuildConfiguration": "automatic",
-    "sqltools.connections": [
-        {
-            "previewLimit": 50,
-            "server": "localhost",
-            "port": 5432,
-            "driver": "PostgreSQL",
-            "name": "capstone2",
-            "database": "capstone2",
-            "username": "capstone2"
-        }
-    ]
+  "java.configuration.updateBuildConfiguration": "automatic"
 }
