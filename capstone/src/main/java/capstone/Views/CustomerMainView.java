@@ -28,8 +28,9 @@ public final class CustomerMainView extends View {
                 System.out.println("2: Logout");
                 System.out.println("3: Deposit");
                 System.out.println("4: Withdraw");
-                System.out.println("5: Transaction");
-                System.out.println("6: Display Account Info");
+                System.out.println("5: Transfer");
+                System.out.println("6: Transaction History");
+                System.out.println("7: Display Account Info");
                 System.out.print(String.format("%-50s: ", "Choice"));
                 choice = Integer.parseInt(Helper.readLine());
 
@@ -48,10 +49,13 @@ public final class CustomerMainView extends View {
                         Withdraw();
                         break;
                     case 5:
-                        Transaction();
+                        Transfer();
                         break;
                     case 6:
-                        Transaction();
+                        Transactions_History();
+                        break;
+                    case 7:
+                        Display();
                         break;
                     default:
                         System.out.println("Please enter valid option.");
@@ -84,15 +88,21 @@ public final class CustomerMainView extends View {
         Helper.pause();
     }
 
-    private void Transaction() {
+    private void Transactions_History() {
 
-        Database.CURRENT_USER.Transaction();
+        Database.CURRENT_USER.Transactions_History();
         Helper.pause();
     }
 
     private void Display() {
 
         Database.CURRENT_USER.Display();
+        Helper.pause();
+    }
+
+    private void Transfer() {
+
+        Database.CURRENT_USER.Transfer();
         Helper.pause();
     }
 }

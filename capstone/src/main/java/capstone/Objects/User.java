@@ -166,7 +166,7 @@ public class User implements Serializable {
         CustomerDepositView customerDepositView_view = new CustomerDepositView();
         customerDepositView_view.print();
 
-        View.clearScreen("Deposit Page");
+        // View.clearScreen("Deposit Page");
 
         System.out.println("Enter the amount you want to deposit");
         Double deposit_amount = Helper.sc.nextDouble();// can be 89.99
@@ -200,7 +200,7 @@ public class User implements Serializable {
         // SQL related lines/database lines here, update
     }
 
-    public static void Transaction(){
+    public static void Transactions_History(){
         CustomerDisplayView customerDisplayView_view = new CustomerDisplayView();
         customerDisplayView_view.print();
 
@@ -226,7 +226,16 @@ public class User implements Serializable {
     }
 
     public static void Display(){
-        View.clearScreen("Display Page");
+        // View.clearScreen("Display Page");
+
+        Helper.pause();
+
+        // TODO: 
+        // SQL related lines/database lines here, update
+    }
+
+    public static void Transfer(){
+        // View.clearScreen("Display Page");
 
         Helper.pause();
 

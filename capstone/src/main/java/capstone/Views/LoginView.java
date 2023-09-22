@@ -46,7 +46,7 @@ public final class LoginView extends View {
             
             System.out.println("Enter user domain[Enter q to quit]");
             System.out.println("1. Admin");
-            System.out.println("2. Bank");
+            System.out.println("2. Teller");
             System.out.println("3. Customer");
             while (true) {
 

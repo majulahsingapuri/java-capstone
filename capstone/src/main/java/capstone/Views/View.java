@@ -22,7 +22,7 @@ public abstract class View {
      */
 
      // ?? protected before, can make it public static so objects User can use?????
-    public static void clearScreen(String directory) {
+    protected void clearScreen(String directory) {
         Helper.printLargeSpace();
                
         String spaces = String.format("%" + (71 - directory.length()) + "s", "");
