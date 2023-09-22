@@ -77,7 +77,7 @@ public final class LoginView extends View {
             if (Database.containsUser(username)) {
                 User result = Database.getUser(username);
                 if (result.checkPassword(password)) {
-                    if (domain.equals("1")) {
+                    if (domain.equals("1") && result.getAccessLevel() == AccessLevel.ADMIN) {
                         try{
                             Database.CURRENT_USER = (Admin) result;
                             Database.CURRENT_ACCESS_LEVEL = Database.CURRENT_USER.getAccessLevel();
