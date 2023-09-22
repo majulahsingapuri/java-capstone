@@ -44,7 +44,7 @@ public final class LoginView extends View {
             System.out.println("Current Time: " + formatter.print(now));
             System.out.println("");
             
-            System.out.println("Enter user domain");
+            System.out.println("Enter user domain[Enter q to quit]");
             System.out.println("1. Admin");
             System.out.println("2. Bank");
             System.out.println("3. Customer");
@@ -77,7 +77,7 @@ public final class LoginView extends View {
             if (Database.containsUser(username)) {
                 User result = Database.getUser(username);
                 if (result.checkPassword(password)) {
-                    if (domain.equals("1") && result.getAccessLevel() == AccessLevel.ADMIN) {
+                    if (domain.equals("1")) {
                         try{
                             Database.CURRENT_USER = (Admin) result;
                             Database.CURRENT_ACCESS_LEVEL = Database.CURRENT_USER.getAccessLevel();
