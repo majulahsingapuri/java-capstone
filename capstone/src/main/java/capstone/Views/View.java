@@ -25,18 +25,21 @@ public abstract class View {
                
         String spaces = String.format("%" + (71 - directory.length()) + "s", "");
 
+        // Larry3D
+        // https://onlinetools.com/ascii/convert-text-to-ascii-art
         System.out.println(ConsoleColours.GREEN_BRIGHT + "╔════════════════════════════════════════════════════════════════════════╗");
         System.out.println("║                                                                        ║");
         System.out.println("║" + ConsoleColours.WHITE + "                              Welcome to                                " + ConsoleColours.GREEN_BRIGHT + "║");
         System.out.println("║                                                                        ║");
-        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "      ███╗   ███╗██╗   ██╗███████╗████████╗ █████╗ ██████╗ ███████╗     " + ConsoleColours.GREEN_BRIGHT + "║");
-        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "      ████╗ ████║╚██╗ ██╔╝██╔════╝╚══██╔══╝██╔══██╗██╔══██╗██╔════╝     " + ConsoleColours.GREEN_BRIGHT + "║");
-        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "      ██╔████╔██║ ╚████╔╝ ███████╗   ██║   ███████║██████╔╝███████╗     " + ConsoleColours.GREEN_BRIGHT + "║");
-        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "      ██║╚██╔╝██║  ╚██╔╝  ╚════██║   ██║   ██╔══██║██╔══██╗╚════██║     " + ConsoleColours.GREEN_BRIGHT + "║");
-        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "      ██║ ╚═╝ ██║   ██║   ███████║   ██║   ██║  ██║██║  ██║███████║     " + ConsoleColours.GREEN_BRIGHT + "║");
-        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "      ╚═╝     ╚═╝   ╚═╝   ╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝     " + ConsoleColours.GREEN_BRIGHT + "║");
+        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "                    ____     ____     ____                              " + ConsoleColours.GREEN_BRIGHT + "║");
+        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "                   /\\  _`\\  /\\  _`\\  /\\  _`\\                            " + ConsoleColours.GREEN_BRIGHT + "║");
+        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "                   \\ \\ \\L\\ \\\\ \\ \\L\\ \\\\ \\ \\/\\_\\                          " + ConsoleColours.GREEN_BRIGHT + "║");
+        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "                    \\ \\  _ <'\\ \\  _ <'\\ \\ \\/_/_                         " + ConsoleColours.GREEN_BRIGHT + "║");
+        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "                     \\ \\ \\L\\ \\\\ \\ \\L\\ \\\\ \\ \\L\\ \\                        " + ConsoleColours.GREEN_BRIGHT + "║");
+        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "                      \\ \\____/ \\ \\____/ \\ \\____/                        " + ConsoleColours.GREEN_BRIGHT + "║");
+        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "                       \\/___/   \\/___/   \\/___/                         " + ConsoleColours.GREEN_BRIGHT + "║");
         System.out.println("║                                                                        ║");
-        System.out.println("║" + ConsoleColours.WHITE + "                    Nanyang Technological University                    " + ConsoleColours.GREEN_BRIGHT + "║");            
+        System.out.println("║" + ConsoleColours.WHITE + "                        Big Banking Corporation                         " + ConsoleColours.GREEN_BRIGHT + "║");            
         System.out.println("║                                                                        ║");
         System.out.println("╚════════════════════════════════════════════════════════════════════════╝");
         

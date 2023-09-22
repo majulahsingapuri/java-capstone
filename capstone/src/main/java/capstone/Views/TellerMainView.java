@@ -21,7 +21,7 @@ public final class TellerMainView extends View {
         do {
             try {
 
-                clearScreen("Admin Main");
+                clearScreen("Teller Main");
 
                 System.out.println("What would you like to do?");
                 System.out.println("1: Change your Password");

@@ -44,7 +44,7 @@ public final class LoginView extends View {
             System.out.println("Current Time: " + formatter.print(now));
             System.out.println("");
             
-            System.out.println("Enter user domain");
+            System.out.println("Enter user domain[Enter q to quit]");
             System.out.println("1. Admin");
             System.out.println("2. Bank");
             System.out.println("3. Customer");
