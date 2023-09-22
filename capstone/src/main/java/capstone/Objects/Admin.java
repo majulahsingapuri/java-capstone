@@ -6,24 +6,14 @@ import capstone.Enums.AccessLevel;
  * The User class that defines the actions of a System Administator. Extends {@link User} with
  * Access Level {@link AccessLevel#ADMIN}.
  *
- * @author Jia Hui
+ * @author Bhargav
  * @version 1.0
  * @since 2020-11-1
  */
 public final class Admin extends User {
 
-  /** Unique identifier for Serialisation. */
-  private static final long serialVersionUID = 26L;
-
-  /**
-   * Initialiser for Class. Creates new object with new username, default password and Admin
-   * AccessLevel.
-   *
-   * @param username The User's username.
-   */
-  public Admin(String username) {
-    super(username, AccessLevel.ADMIN);
-  }
+  /** Admin's id */
+  private int adminID;
 
   /**
    * Initialiser for Class. Creates new object with new username and password, and Admin
@@ -31,8 +21,23 @@ public final class Admin extends User {
    *
    * @param username The User's username.
    * @param password The User's password.
+   * @param id The User's id
+   * @param adminID the User's Admin id
+   * @param firstName the User's first name
+   * @param lastName the User's last name
    */
-  public Admin(String username, String password) {
-    super(username, password, AccessLevel.ADMIN);
+  public Admin(
+      int id, String username, String password, int adminID, String firstName, String lastName) {
+    super(id, username, password, firstName, lastName, AccessLevel.ADMIN);
+    this.adminID = adminID;
+  }
+
+  /**
+   * Getter function for the admin's id
+   *
+   * @return int representing the admin's id
+   */
+  public int getAdminID() {
+    return this.adminID;
   }
 }
