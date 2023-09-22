@@ -20,11 +20,15 @@
 body {
   padding: 0px 0px 10px 0px;
 }
-body, td, select, input, li{
+body,
+td,
+select,
+input,
+li {
   font-family: Verdana, Helvetica, Arial, sans-serif;
   font-size: 13px;
 }
-code{
+code {
   font-family: Courier, monospace;
   font-size: 13px;
 }
@@ -32,19 +36,24 @@ a {
   text-decoration: none;
 }
 a:link {
-  color:#36a;
+  color: #36a;
 }
-a:visited  {
-  color:#47a;
+a:visited {
+  color: #47a;
 }
-a:active, a:hover {
-  color:#69c;
+a:active,
+a:hover {
+  color: #69c;
 }
 #legend li.externalLink {
   background: url(../images/external.png) left top no-repeat;
   padding-left: 18px;
 }
-a.externalLink, a.externalLink:link, a.externalLink:visited, a.externalLink:active, a.externalLink:hover {
+a.externalLink,
+a.externalLink:link,
+a.externalLink:visited,
+a.externalLink:active,
+a.externalLink:hover {
   background: url(../images/external.png) right center no-repeat;
   padding-right: 18px;
 }
@@ -52,7 +61,11 @@ a.externalLink, a.externalLink:link, a.externalLink:visited, a.externalLink:acti
   background: url(../images/newwindow.png) left top no-repeat;
   padding-left: 18px;
 }
-a.newWindow, a.newWindow:link, a.newWindow:visited, a.newWindow:active, a.newWindow:hover {
+a.newWindow,
+a.newWindow:link,
+a.newWindow:visited,
+a.newWindow:active,
+a.newWindow:hover {
   background: url(../images/newwindow.png) right center no-repeat;
   padding-right: 18px;
 }
@@ -61,7 +74,7 @@ h2 {
   border: 1px solid #999;
   color: #900;
   background-color: #ddd;
-  font-weight:900;
+  font-weight: 900;
   font-size: x-large;
 }
 h3 {
@@ -114,7 +127,8 @@ table.bodyTable th {
   font-weight: bold;
 }
 
-table.bodyTable th, table.bodyTable td {
+table.bodyTable th,
+table.bodyTable td {
   font-size: 1em;
 }
 
@@ -137,13 +151,18 @@ dl {
 dt {
   color: #900;
 }
-#organizationLogo img, #projectLogo img, #projectLogo span{
+#organizationLogo img,
+#projectLogo img,
+#projectLogo span {
   margin: 8px;
 }
 #banner {
   border-bottom: 1px solid #fff;
 }
-.errormark, .warningmark, .donemark, .infomark {
+.errormark,
+.warningmark,
+.donemark,
+.infomark {
   background: url(../images/icon_error_sml.gif) no-repeat;
 }
 
@@ -158,4 +177,3 @@ dt {
 .infomark {
   background-image: url(../images/icon_info_sml.gif);
 }
-
