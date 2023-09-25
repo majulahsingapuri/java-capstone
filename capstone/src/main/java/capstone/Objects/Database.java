@@ -502,7 +502,18 @@ public final class Database {
    * @return true
    */
   public static boolean updatePassword(User user, byte[] password) {
-    return true;
+    /** Updating the given password in the database */
+    try {
+      PreparedStatement updateUserPassword =
+          conn.prepareStatement(
+              "UPDATE a.password FROM" + AccessLevel.NONE.db + " WHERE username = ? ");
+      updateUserPassword.setString(1, user.getUsername());
+      updateUserPassword.executeQuery();
+      return true;
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return false;
   }
 
   /**
