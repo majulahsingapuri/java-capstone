@@ -13,7 +13,7 @@ public final class Teller extends User {
     /**
      * Unique identifier for Serialisation.
      */
-    private static final long serialVersionUID = 26L;
+    
 
     /**
      * Initialiser for Class. Creates new object with new username, default password and Teller AccessLevel.

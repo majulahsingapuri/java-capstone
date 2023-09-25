@@ -77,7 +77,8 @@ public final class LoginView extends View {
             if (Database.containsUser(username)) {
                 User result = Database.getUser(username);
                 if (result.checkPassword(password)) {
-                    if (domain.equals("1") && result.getAccessLevel() == AccessLevel.ADMIN) {
+                    if (domain.equals("1")) {
+                        // && result.getAccessLevel() == AccessLevel.ADMIN
                         try{
                             Database.CURRENT_USER = new Admin(username, password);
                             // Database.CURRENT_USER = (Admin) result;  casting error

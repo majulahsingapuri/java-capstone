@@ -15,16 +15,10 @@ public final class TellerDepositView extends View{
 
         while(true){
 
+            Helper.customer_search();// search the target customer from teller side
+
             try { 
                 // enter the account number teller wants to check on
-                System.out.println("Enter the customer account number:");
-                String account_string = Helper.readLine();// convert to int type
-                if (Database.containsUser(account_string)) {
-                    User customer_user = Database.getUser(account_string);
-                }else {
-                    System.out.println("This payee does not exist! Please re-enter!");
-                    Helper.pause();
-                }
 
                 System.out.println("Enter the amount you want to deposit");
                 Double deposit_amount = Helper.sc.nextDouble();
@@ -37,16 +31,8 @@ public final class TellerDepositView extends View{
                 
             }
 
-            System.out.println("Continue? [Y/N]: ");
-            String str_input = Helper.sc.nextLine();
-            
-            if (str_input.equals("N")){
-                break;
-            }else if (str_input.equals("Y")){
-                continue;
-            }else {
-                System.out.println("Wrong Input, please input Y/N or y/n");
-            }
+            int continue_checker = Helper.continue_checker();
+            if (continue_checker == 1){break;}else{continue;}
             // TODO: 
             // SQL related lines/database lines here, update
         }

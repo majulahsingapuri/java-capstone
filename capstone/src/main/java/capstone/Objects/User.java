@@ -1,21 +1,10 @@
 package capstone.Objects;
 
-import java.io.Serializable;
 import java.util.Base64;
 
 import capstone.Enums.AccessLevel;
-import capstone.Extras.ConsoleColours;
 import capstone.Extras.Helper;
 import capstone.Views.CustomerChangePassword;
-import capstone.Views.CustomerDepositView;
-import capstone.Views.CustomerDisplayView;
-import capstone.Views.CustomerMainView;
-import capstone.Views.CustomerTransactionHistoryView;
-import capstone.Views.CustomerTransferView;
-import capstone.Views.CustomerWithdrawView;
-import capstone.Views.TellerDepositView;
-import capstone.Views.View;
-
 /**
  * The superclass of all User classes in the application.
  * @author Jia Hui, Bhargav

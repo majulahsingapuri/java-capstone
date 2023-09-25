@@ -11,19 +11,10 @@ public final class TellerTransactionHistoryView extends View{
 
         // TODO:
         while(true){
-            try {
-                // enter the account number teller wants to check on
-                System.out.println("Enter the customer account number:");
-                String customer_account_string = Helper.readLine();// convert to int type
-                if (Database.containsUser(customer_account_string)) {
-                    User customer_user = Database.getUser(customer_account_string);
-                }else {
-                    System.out.println("This customer does not exist! Please re-enter!");
-                    Helper.pause();
-                }
-            }catch (Exception e){
+            Helper.customer_search();// search the target customer from teller side
 
-            }
+            int continue_checker = Helper.continue_checker();
+            if (continue_checker == 1){break;}else{continue;}
         }
     }
 }

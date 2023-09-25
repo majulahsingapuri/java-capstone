@@ -24,24 +24,34 @@ public final class AdminMainView extends View {
                 clearScreen("Admin Main");
 
                 System.out.println("What would you like to do?");
-                System.out.println("1: Add new user to System");
-                System.out.println("2: Change your Password");
-                System.out.println("3: Logout");
+                System.out.println("1: Change your Password");
+                System.out.println("2: Logout");
+                System.out.println("3: Add new user");
+                System.out.println("4: Delete current");
+                System.out.println("5: Freeze current");
                 System.out.print(String.format("%-50s: ", "Choice"));
                 choice = Integer.parseInt(Helper.readLine());
 
                 switch (choice) { 
                     case 1:
-                        // AddUserView addUserView = new AddUserView();
-                        // addUserView.print();
-                        break;
-                    case 2:
                         changePassword();
                         break;
-                    case 3:
+                    case 2:
                         LogoutView logoutView = new LogoutView();
                         logoutView.print();
                         return;
+                    case 3:
+                        AdminAddUser adminAddUser_view = new AdminAddUser();
+                        adminAddUser_view.print();
+                        break;
+                    case 4:
+                        AdminDeleteUser adminDeleteUser_view = new AdminDeleteUser();
+                        adminDeleteUser_view.print();
+                        break;
+                    case 5:
+                        AdminFreezeUser adminFreezeUser_view = new AdminFreezeUser();
+                        adminFreezeUser_view.print();
+                        break;
                     default:
                         System.out.println("Please enter valid option.");
                 }
@@ -55,7 +65,6 @@ public final class AdminMainView extends View {
      * Changes the Password for the {@link Database#CURRENT_USER}.
      */
     private void changePassword() {
-
         Database.CURRENT_USER.changePassword();
         Helper.pause();
     }

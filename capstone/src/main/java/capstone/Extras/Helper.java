@@ -5,6 +5,8 @@ import java.io.Console;
 import org.joda.time.DateTime;
 
 import capstone.Enums.DayOfWeek;
+import capstone.Objects.Database;
+import capstone.Objects.User;
 
 /**
  * A Helper Class with all properties and methods that are generally needed across the application.
@@ -138,4 +140,28 @@ public final class Helper {
         String line = String.format("%" + size + "s", "").replace(" ", "═");
         System.out.println(line);
     }
+
+	public static int continue_checker(){
+		System.out.println("Continue? [Y/N]: ");
+            String str_input = Helper.sc.nextLine();
+            if (str_input.equals("N")){
+                return 1;
+            }else if (str_input.equals("Y")){
+                return 0;
+            }else {
+                System.out.println("Wrong Input, please input Y/N or y/n");
+				return 0;
+            }
+	}
+
+	public static void customer_search(){
+		System.out.println("Enter the customer account number:");
+		String account_string = Helper.readLine();// convert to int type
+		if (Database.containsUser(account_string)) {
+			User customer_user = Database.getUser(account_string);
+		}else {
+			System.out.println("This payee does not exist! Please re-enter!");
+			Helper.pause();
+		}
+	}
 }
