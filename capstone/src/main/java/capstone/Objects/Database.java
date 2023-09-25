@@ -514,7 +514,70 @@ public final class Database {
    * @return true
    */
   public static boolean updateUser(User user, String firstName, String lastName) {
-    return true;
+    boolean result = false;
+    try {
+      PreparedStatement upstmt =
+          conn.prepareStatement(
+              "UPDATE "
+                  + AccessLevel.NONE.db
+                  + " SET first_name = ?,"
+                  + " SET last_name = ?"
+                  + " WHERE username = ?");
+      upstmt.setString(1, firstName);
+      upstmt.setString(2, lastName);
+      upstmt.setString(3, user.getUsername());
+      upstmt.executeQuery();
+      result = true;
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return result;
+  }
+
+  /**
+   * updates user details
+   *
+   * @param user the user to be updated
+   * @param firstName the User's new first name
+   * @return true
+   */
+  public static boolean updateUserFirstName(User user, String firstName) {
+    boolean result = false;
+    try {
+      PreparedStatement upstmt =
+          conn.prepareStatement(
+              "UPDATE " + AccessLevel.NONE.db + " SET first_name = ?," + " WHERE username = ?");
+      upstmt.setString(1, firstName);
+      upstmt.setString(2, user.getUsername());
+      upstmt.executeQuery();
+      result = true;
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return result;
+  }
+
+  /**
+   * updates user details
+   *
+   * @param user the user to be updated
+   * @param lastName the User's new last name
+   * @return true
+   */
+  public static boolean updateUserLastName(User user, String lastName) {
+    boolean result = false;
+    try {
+      PreparedStatement upstmt =
+          conn.prepareStatement(
+              "UPDATE " + AccessLevel.NONE.db + " SET last_name = ?" + " WHERE username = ?");
+      upstmt.setString(1, lastName);
+      upstmt.setString(2, user.getUsername());
+      upstmt.executeQuery();
+      result = true;
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return result;
   }
 
   /**
