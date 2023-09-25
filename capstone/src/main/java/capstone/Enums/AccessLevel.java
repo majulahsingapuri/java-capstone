@@ -21,8 +21,14 @@ public enum AccessLevel {
   /** Used to indicate a User on the Admin Domain. */
   ADMIN("migrations_admin");
 
+  /** The string value representing the DB table */
   public final String db;
 
+  /**
+   * The constructor for the AccessLevel Enum
+   *
+   * @param db the name of the DB table
+   */
   private AccessLevel(String db) {
     this.db = db;
   }

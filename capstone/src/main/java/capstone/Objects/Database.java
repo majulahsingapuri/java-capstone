@@ -1,6 +1,7 @@
 package capstone.Objects;
 
 import capstone.Enums.AccessLevel;
+import capstone.Enums.TransactionType;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,6 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
+import java.util.UUID;
+import org.joda.time.DateTime;
 
 /**
  * The Class that interacts with the files and handles reading and writing of information.
@@ -248,11 +251,18 @@ public final class Database {
   }
 
   /**
-   * Creates a new Customer for the Database
+   * Creates a new Customer in the database
    *
-   * @param username new username
-   * @param password new password
-   * @return a new customer
+   * @param username The username of the customer
+   * @param password The customer's password
+   * @param firstName The customer's first name
+   * @param lastName The customer's last name
+   * @param nric The customer's nric
+   * @param email The customer's email
+   * @param dateOfBirth The customer's date of birth
+   * @param address The customer's address
+   * @param phoneNumber The customer's phone number
+   * @return An Optional customer object. Unwrap this to get the underlying object.
    */
   public static Optional<Customer> createCustomer(
       String username,
@@ -629,11 +639,60 @@ public final class Database {
   /**
    * creates a Transaction in the transaction table
    *
-   * @param customer the customer that created the transaction
-   * @param account the to which the transaction is to be recorded
-   * @return the created Transaction, if any
+   * @param customer The customer that created the transaction
+   * @param account The to which the transaction is to be recorded
+   * @param transactionType A credit or debit transaction
+   * @param amount The amount of the transaction
+   * @return an Optional Transaction. Unwrap this object to get the underlying Transaction.
    */
-  public static Optional<Transaction> createTransaction(Customer customer, Account account) {
-    return null;
+  public static Optional<Transaction> createTransaction(
+      Customer customer, Account account, TransactionType transactionType, double amount) {
+    Optional<Transaction> transaction = Optional.empty();
+    try {
+      UUID uuid = UUID.randomUUID();
+      DateTime timestamp = DateTime.now();
+
+      // Insert values into database
+      PreparedStatement insertTransactionStatement =
+          conn.prepareStatement(
+              "insert into migrations_transaction (transaction_ref, transaction_type, date, amount,"
+                  + " account_no_id, customer_id_id)\n"
+                  + "values (?, ?, ?, ?, ?, ?)");
+      insertTransactionStatement.setString(1, uuid.toString());
+      insertTransactionStatement.setString(2, transactionType.type);
+      insertTransactionStatement.setDate(
+          3,
+          new java.sql.Date(
+              timestamp.toDate().getTime())); // TODO Check for probable loss of time part
+      insertTransactionStatement.setDouble(4, amount);
+      insertTransactionStatement.setInt(5, account.getID());
+      insertTransactionStatement.setInt(6, customer.getID());
+      insertTransactionStatement.executeQuery();
+
+      // Get updated values from database
+      PreparedStatement getTransactionStatement =
+          conn.prepareStatement(
+              "select id, transaction_ref, transaction_type, date, amount, account_no_id,"
+                  + " customer_id_id\n"
+                  + "from migrations_transaction\n"
+                  + "where transaction_ref = ?");
+      getTransactionStatement.setString(1, uuid.toString());
+      ResultSet rs = getTransactionStatement.executeQuery();
+      while (rs.next()) {
+        transaction =
+            Optional.of(
+                new Transaction(
+                    rs.getInt(1),
+                    rs.getString(2),
+                    transactionType,
+                    timestamp,
+                    rs.getDouble(5),
+                    rs.getInt(6),
+                    rs.getInt(7)));
+      }
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return transaction;
   }
 }

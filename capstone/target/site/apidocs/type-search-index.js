@@ -17,6 +17,7 @@ typeSearchIndex = [
   { p: "capstone.Objects", l: "Teller" },
   { p: "capstone.Views", l: "TellerMainView" },
   { p: "capstone.Objects", l: "Transaction" },
+  { p: "capstone.Enums", l: "TransactionType" },
   { p: "capstone.Objects", l: "User" },
   { p: "capstone.Views", l: "View" },
 ];

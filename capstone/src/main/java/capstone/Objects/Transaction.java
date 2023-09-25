@@ -1,5 +1,6 @@
 package capstone.Objects;
 
+import capstone.Enums.TransactionType;
 import org.joda.time.DateTime;
 
 /** Represting a transaction executed by a customer in the bank */
@@ -11,7 +12,7 @@ public class Transaction {
   private String transactionRef;
 
   /** The transaction type: Debit or Credit */
-  private String transactionType;
+  private TransactionType transactionType;
 
   /** The datetime object of the transaction */
   private DateTime date;
@@ -39,7 +40,7 @@ public class Transaction {
   public Transaction(
       int id,
       String transactionRef,
-      String transactionType,
+      TransactionType transactionType,
       DateTime date,
       double amount,
       int account_no_id,
@@ -76,7 +77,7 @@ public class Transaction {
    *
    * @return the Transaction Type
    */
-  public String getTransactionType() {
+  public TransactionType getTransactionType() {
     return this.transactionType;
   }
 
