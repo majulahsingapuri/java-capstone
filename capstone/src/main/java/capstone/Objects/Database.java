@@ -618,16 +618,38 @@ public final class Database {
   /**
    * Retrieves the records in the CustomerAccount table from the SQL DATABASE
    *
-   * @param customer the customer whose account to be fetched
-   * @return an Arraylist of account objects
+   * @param username allows filtering to be done on the username to connect the tables
+   * @return an Arraylist of All the Transactions of the user
    */
-  public static ArrayList<Account> getCustomerAccounts(Customer customer) {
-    // query the database for accounts for this user
-    /**
-     * select * from acccounts a join customer_accounts ca on a.id = ca.acc_no join customer c on
-     * ca.cust_id = c.id where c.username = ?
-     */
-    return new ArrayList<Account>();
+  public static ArrayList<Account> getCustomerAccounts(String username, int numberOfAccounts) {
+    ArrayList<Account> result = new ArrayList<Account>();
+
+    try {
+      PreparedStatement queryCustomerAccountStatement =
+          conn.prepareStatement(
+              "SELECT a.id, a.balance, account_type FROM "
+                  + AccessLevel.CUSTOMER.db
+                  + "AS c JOIN migrations_customeraccount as ca ON c.customer_id ="
+                  + " ca.customer_id_idJOIN migrations_account as a ON a.id = ca.account_no_id"
+                  + " WHERE c.username = ?LIMIT ?");
+      queryCustomerAccountStatement.setString(1, username);
+      queryCustomerAccountStatement.setInt(2, numberOfAccounts);
+      ResultSet rs = queryCustomerAccountStatement.executeQuery();
+
+      while (rs.next()) {
+        Account res =
+            new Account(
+                rs.getInt(1), // id
+                rs.getDouble(2),
+                AccountType.getAccountType(rs.getString(3)));
+        result.add(res);
+      }
+
+    } catch (SQLException se) {
+      System.out.println(se.getMessage());
+    }
+
+    return result;
   }
 
   /**

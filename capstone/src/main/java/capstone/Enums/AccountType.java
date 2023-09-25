@@ -19,4 +19,19 @@ public enum AccountType {
   private AccountType(String type) {
     this.type = type;
   }
+
+  /**
+   * Creates a method to retrieve the account type for SQL statements
+   *
+   * @param type defines the string to match with the account type
+   * @return the account type
+   */
+  public static AccountType getAccountType(String type) {
+    for (AccountType accountType : AccountType.values()) {
+      if (accountType.type.equals(type)) {
+        return accountType;
+      }
+    }
+    return null;
+  }
 }
