@@ -15,5 +15,6 @@ public class Main {
     new Database();
     LoginView view = new LoginView();
     view.print();
+    Database.close();
   }
 }

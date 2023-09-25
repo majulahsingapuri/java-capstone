@@ -38,13 +38,16 @@ public final class Database {
       conn = DriverManager.getConnection(jdbcUrl, username, password);
     } catch (SQLException se) {
       se.printStackTrace();
-    } finally {
-      if (conn != null)
-        try {
-          conn.close();
-        } catch (SQLException se) {
-          se.printStackTrace();
-        }
+    }
+  }
+
+  public static void close() {
+    if (conn != null) {
+      try {
+        conn.close();
+      } catch (SQLException se) {
+        se.printStackTrace();
+      }
     }
   }
 
