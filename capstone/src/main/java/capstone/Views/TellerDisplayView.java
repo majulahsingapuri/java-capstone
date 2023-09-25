@@ -9,6 +9,8 @@ public final class TellerDisplayView extends View{
         while(true){
             Helper.customer_search();// search the target customer from teller side
 
+            // display password & username & balance
+
             int continue_checker = Helper.continue_checker();
             if (continue_checker == 1){break;}else{continue;}
         }
