@@ -254,19 +254,95 @@ public final class Database {
    * @param password new password
    * @return a new customer
    */
-  public static Customer createCustomer(String username, String password) {
-    return new Customer(
-        1,
-        "username",
-        "password",
-        "tom",
-        "hanks",
-        1,
-        "s234324j",
-        "tom@hanks.com",
-        new Date(),
-        "1 bitch road",
-        "0198011");
+  public static Optional<Customer> createCustomer(
+      String username,
+      String password,
+      String firstName,
+      String lastName,
+      String nric,
+      String email,
+      Date dateOfBirth,
+      String address,
+      String phoneNumber) {
+    Optional<Customer> customer = Optional.empty();
+    try {
+      // insert a new user into the user table
+      PreparedStatement insertstmt =
+          conn.prepareStatement(
+              "INSERT INTO "
+                  + AccessLevel.NONE.db
+                  + "(username, password, first_name, last_name) VALUES (?, ?, ?, ?)");
+      insertstmt.setString(1, username);
+      insertstmt.setString(2, password);
+      insertstmt.setString(3, firstName);
+      insertstmt.setString(4, lastName);
+      insertstmt.executeQuery();
+
+      // fetch the user id from the user table
+      PreparedStatement selectstmt =
+          conn.prepareStatement("SELECT id FROM " + AccessLevel.NONE.db + " WHERE username = ?");
+      selectstmt.setString(1, username);
+      ResultSet rs = selectstmt.executeQuery();
+      int user_id = 0;
+      while (rs.next()) {
+        user_id = rs.getInt(1);
+      }
+
+      if (user_id != 0) {
+
+        // using the user id, insert into the customer table
+        PreparedStatement insertCustomer =
+            conn.prepareStatement(
+                "INSERT INTO "
+                    + AccessLevel.CUSTOMER.db
+                    + "(user_ptr_id, nric, email, date_of_birth, address, phone_no) VALUES (?, ?,"
+                    + " ?, ?, ?, ?)");
+        insertCustomer.setInt(1, user_id);
+        insertCustomer.setString(2, nric);
+        insertCustomer.setString(3, email);
+        insertCustomer.setDate(4, new java.sql.Date(dateOfBirth.getTime()));
+        insertCustomer.setString(5, address);
+        insertCustomer.setString(6, phoneNumber);
+        insertCustomer.executeQuery();
+
+        // display out the new customer user created
+        PreparedStatement stmt =
+            conn.prepareStatement(
+                "select a.id, a.username, a.password, a.first_name, a.last_name, b.customer_id,"
+                    + " b.nric, b.email, b.date_of_birth, b.address, b.phone_no\n"
+                    + "from "
+                    + AccessLevel.NONE.db
+                    + " as a join "
+                    + AccessLevel.CUSTOMER.db
+                    + " as b on a.id = b.user_ptr_id\n"
+                    + "where a.username = ?");
+        stmt.setString(1, username);
+        ResultSet rs2 = stmt.executeQuery();
+        while (rs2.next()) {
+          if (rs2.getString(2).equals(username)) {
+            customer =
+                Optional.of(
+                    new Customer(
+                        rs.getInt(1), // id
+                        rs.getString(2), // username
+                        rs.getString(3), // password
+                        rs.getString(4), // firstName
+                        rs.getString(5), // lastName
+                        rs.getInt(6), // customerID
+                        rs.getString(7), // nric
+                        rs.getString(8), // email
+                        rs.getDate(9), // DOB
+                        rs.getString(10), // address
+                        rs.getString(11) // phoneNo
+                        ));
+          }
+        }
+      }
+
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return customer;
   }
 
   /**
