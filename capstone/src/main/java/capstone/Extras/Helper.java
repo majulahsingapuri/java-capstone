@@ -142,6 +142,7 @@ public final class Helper {
     }
 
 	public static int continue_checker(){
+		// for most view, decide whether continue this service or back to upper menu
 		System.out.println("Continue? [Y/N]: ");
             String str_input = Helper.sc.nextLine();
             if (str_input.equals("N")){
@@ -155,6 +156,7 @@ public final class Helper {
 	}
 
 	public static void customer_search(){
+		// for admin and teller use
 		System.out.println("Enter the customer account number:");
 		String account_string = Helper.readLine();// convert to int type
 		if (Database.containsUser(account_string)) {
@@ -163,5 +165,7 @@ public final class Helper {
 			System.out.println("This payee does not exist! Please re-enter!");
 			Helper.pause();
 		}
+
+		// 
 	}
 }

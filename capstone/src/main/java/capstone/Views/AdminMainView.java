@@ -27,8 +27,10 @@ public final class AdminMainView extends View {
                 System.out.println("1: Change your Password");
                 System.out.println("2: Logout");
                 System.out.println("3: Add new user");
-                System.out.println("4: Delete current");
-                System.out.println("5: Freeze current");
+                System.out.println("4: Delete current user");
+                System.out.println("5: Freeze current user");
+                System.out.println("6: Update current user");
+                System.out.println("7: Display Account Info");
                 System.out.print(String.format("%-50s: ", "Choice"));
                 choice = Integer.parseInt(Helper.readLine());
 
@@ -51,6 +53,14 @@ public final class AdminMainView extends View {
                     case 5:
                         AdminFreezeUser adminFreezeUser_view = new AdminFreezeUser();
                         adminFreezeUser_view.print();
+                        break;
+                    case 6:
+                        AdminUpdateView adminUpdateView_view = new AdminUpdateView();
+                        adminUpdateView_view.print();
+                        break;
+                    case 7:
+                        AdminDisplayView adminDisplayView = new AdminDisplayView();
+                        adminDisplayView.print();
                         break;
                     default:
                         System.out.println("Please enter valid option.");
