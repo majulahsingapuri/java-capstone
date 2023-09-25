@@ -166,7 +166,7 @@ public final class Helper {
       System.out.println("This payee does not exist! Please re-enter!");
       Helper.pause();
     }
-
-    //
   }
+
+  //
 }

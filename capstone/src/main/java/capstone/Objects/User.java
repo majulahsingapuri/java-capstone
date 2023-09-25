@@ -118,7 +118,7 @@ public class User {
    */
   public boolean checkPassword(String input) {
     String rawPassword = decryptPassword();
-    return input.equals(input);
+    return input.equals(rawPassword);
   }
 
   /**

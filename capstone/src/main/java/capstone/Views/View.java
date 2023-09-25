@@ -20,8 +20,6 @@ public abstract class View {
    *
    * @param directory The path of the current view that the user is in.
    */
-
-  // ?? protected before, can make it public static so objects User can use?????
   protected void clearScreen(String directory) {
     Helper.printLargeSpace();
 
