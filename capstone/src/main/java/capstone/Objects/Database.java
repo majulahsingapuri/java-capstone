@@ -425,7 +425,7 @@ public final class Database {
    * @param password the new user's password
    * @return true
    */
-  public static boolean updatePassword(User user, String password) {
+  public static boolean updatePassword(User user, byte[] password) {
     return true;
   }
 
@@ -442,7 +442,7 @@ public final class Database {
   }
 
   /**
-   * Creates an Account inthe Account Table
+   * Creates an Account in the Account Table
    *
    * @return null if the account could not be created else an {@link Account} objct
    */

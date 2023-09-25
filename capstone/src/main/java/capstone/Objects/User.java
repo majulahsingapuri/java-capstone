@@ -75,8 +75,12 @@ public class User {
         System.out.print("Enter the new password again: ");
         String newPassword2 = Helper.getPasswordInput();
         if (newPassword1.equals(newPassword2)) {
-          this.password = encryptPassword(newPassword1);
-          return Database.updatePassword(this, newPassword1);
+          byte[] password = encryptPassword(newPassword1);
+          boolean result = Database.updatePassword(this, password);
+          if (result) {
+            this.password = password;
+          }
+          return result;
         } else {
           System.out.println("The passwords you entered do not match. Please try again.");
           Helper.pause();
