@@ -1,6 +1,7 @@
 package capstone.Objects;
 
 import capstone.Enums.AccessLevel;
+import capstone.Enums.AccountType;
 import capstone.Enums.TransactionType;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -315,7 +316,7 @@ public final class Database {
         insertCustomer.setString(6, phoneNumber);
         insertCustomer.executeQuery();
 
-        // display out the new customer user created
+        // select the new customer user created
         PreparedStatement stmt =
             conn.prepareStatement(
                 "select a.id, a.username, a.password, a.first_name, a.last_name, b.customer_id,"
@@ -397,7 +398,7 @@ public final class Database {
         insertAdmin.setInt(1, user_id);
         insertAdmin.executeQuery();
 
-        // display out the new admin user created
+        // select the new admin user created
         PreparedStatement stmt =
             conn.prepareStatement(
                 "SELECT a.id, a.username, a.password, a.first_name, a.last_name, b.admin_id FROM "
@@ -606,7 +607,66 @@ public final class Database {
    *
    * @return null if the account could not be created else an {@link Account} objct
    */
-  public static Optional<Account> createAccount() {
+  public static Optional<Account> createAccount(String username, AccountType accountType) {
+    Optional<Account> account = Optional.empty();
+    try {
+      // create a new account and get account id
+      PreparedStatement insertAccount =
+          conn.prepareStatement(
+              "INSERT INTO migrations_account(balance, account_type) VALUES (?, ?) RETURNING id");
+      insertAccount.setInt(1, 0);
+      insertAccount.setString(2, accountType.type);
+      ResultSet rs = insertAccount.executeQuery();
+      int account_no_id = 0;
+
+      while (rs.next()) {
+        account_no_id = rs.getInt(1); // get account_no_id
+      }
+
+      // fetch customer account and get customer id
+      PreparedStatement selectCust =
+          conn.prepareStatement(
+              "SELECT c.customer_id FROM "
+                  + AccessLevel.CUSTOMER.db
+                  + " AS c JOIN "
+                  + AccessLevel.NONE.db
+                  + " AS u ON c.user_ptr_id = c.id WHERE u.username = ?");
+      selectCust.setString(1, username);
+      ResultSet rs2 = selectCust.executeQuery();
+      int customer_id = 0;
+
+      while (rs2.next()) {
+        customer_id = rs2.getInt(1); // get customer_id
+      }
+
+      if (account_no_id != 0 && customer_id != 0) {
+        // create a customer_account relation between customer and account
+        PreparedStatement insertCustAcc =
+            conn.prepareStatement(
+                "INSERT INTO migrations_customeraccount(account_no_id, customer_id_id) "
+                    + "VALUES(?, ?)");
+        insertCustAcc.setInt(1, account_no_id);
+        insertCustAcc.setInt(2, customer_id);
+        insertCustAcc.executeQuery();
+
+        // select the new account created
+        PreparedStatement stmt =
+            conn.prepareStatement(
+                "SELECT id, balance, account_type FROM migrations_account as a WHERE a.id = ?");
+        stmt.setInt(1, account_no_id);
+        ResultSet rs3 = stmt.executeQuery();
+
+        while (rs3.next()) {
+          if (rs3.getInt(1) == account_no_id) {
+            account = Optional.of(new Account(rs3.getInt(1), rs3.getDouble(2), accountType));
+          }
+        }
+      }
+      return account;
+
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
     return null;
   }
 
