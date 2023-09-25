@@ -25,11 +25,13 @@ public final class LogoutView extends View {
         System.out.println(ConsoleColours.GREEN_BRIGHT + "╔══════════════════════════════════════════════════╗");
         System.out.println("║                                                  ║");
         System.out.println("║" + ConsoleColours.WHITE + "           You have been logged out of            " + ConsoleColours.GREEN_BRIGHT + "║");
-        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "       __  ___     _____________   ___  ____      " + ConsoleColours.GREEN_BRIGHT + "║");
-        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "      /  |/  /_ __/ __/_  __/ _ | / _ \\/ __/      " + ConsoleColours.GREEN_BRIGHT + "║");
-        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "     / /|_/ / // /\\ \\  / / / __ |/ , _/\\ \\        " + ConsoleColours.GREEN_BRIGHT + "║");
-        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "    /_/  /_/\\_, /___/ /_/ /_/ |_/_/|_/___/        " + ConsoleColours.GREEN_BRIGHT + "║");
-        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "           /___/                                  " + ConsoleColours.GREEN_BRIGHT + "║");
+        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "            ____     ____     ____                " + ConsoleColours.GREEN_BRIGHT + "║");
+        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "           /\\  _`\\  /\\  _`\\  /\\  _`\\              " + ConsoleColours.GREEN_BRIGHT + "║");
+        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "           \\ \\ \\L\\ \\\\ \\ \\L\\ \\\\ \\ \\/\\_\\            " + ConsoleColours.GREEN_BRIGHT + "║");
+        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "            \\ \\  _ <'\\ \\  _ <'\\ \\ \\/_/_           " + ConsoleColours.GREEN_BRIGHT + "║");
+        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "             \\ \\ \\L\\ \\\\ \\ \\L\\ \\\\ \\ \\L\\ \\          " + ConsoleColours.GREEN_BRIGHT + "║");
+        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "              \\ \\____/ \\ \\____/ \\ \\____/          " + ConsoleColours.GREEN_BRIGHT + "║");
+        System.out.println("║" + ConsoleColours.YELLOW_BOLD + "               \\/___/   \\/___/   \\/___/           " + ConsoleColours.GREEN_BRIGHT + "║");
         System.out.println("║                                                  ║");
         System.out.println("╚══════════════════════════════════════════════════╝");
 

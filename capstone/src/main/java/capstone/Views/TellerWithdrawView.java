@@ -1,19 +1,27 @@
 package capstone.Views;
 
-import capstone.Enums.AccessLevel;
 import capstone.Extras.ConsoleColours;
 import capstone.Extras.Helper;
 import capstone.Objects.Database;
+import capstone.Objects.User;
 
-public final class CustomerDepositView extends View{
-
+public final class TellerWithdrawView extends View{
     public void print() {
-        clearScreen("Customer Deposit Page");
-
+        clearScreen("Teller Withdraw Page");
+        // To Do one more step to select customer
         while(true){
-
             try { 
-                System.out.println("Enter the amount you want to deposit");
+                // enter the account number teller wants to check on
+                System.out.println("Enter the customer account number:");
+                String customer_account_string = Helper.readLine();// convert to int type
+                if (Database.containsUser(customer_account_string)) {
+                    User customer_user = Database.getUser(customer_account_string);
+                }else {
+                    System.out.println("This customer does not exist! Please re-enter!");
+                    Helper.pause();
+                }
+
+                System.out.println("Enter the amount you want to withdraw");
                 Double deposit_amount = Helper.sc.nextDouble();
                 System.out.println("deposit amount:" + deposit_amount);
                 Helper.sc.nextLine(); // this line ensures next .nextLine() consume propoerly for next input

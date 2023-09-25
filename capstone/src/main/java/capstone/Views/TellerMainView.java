@@ -26,6 +26,11 @@ public final class TellerMainView extends View {
                 System.out.println("What would you like to do?");
                 System.out.println("1: Change your Password");
                 System.out.println("2: Logout");
+                System.out.println("3: Deposit");
+                System.out.println("4: Withdraw");
+                System.out.println("5: Transfer");
+                System.out.println("6: Transaction History");
+                System.out.println("7: Display Account Info");
                 System.out.print(String.format("%-50s: ", "Choice"));
                 choice = Integer.parseInt(Helper.readLine());
 
@@ -37,6 +42,26 @@ public final class TellerMainView extends View {
                         LogoutView logoutView = new LogoutView();
                         logoutView.print();
                         return;
+                    case 3:
+                        TellerDepositView tellerDepositView_view = new TellerDepositView();
+                        tellerDepositView_view.print();
+                        break;
+                    case 4:
+                        TellerWithdrawView tellerWithdrawView_view = new TellerWithdrawView();
+                        tellerWithdrawView_view.print();
+                        break;
+                    case 5:
+                        TellerTransferView tellerTransferView_view = new TellerTransferView();
+                        tellerTransferView_view.print();
+                        break;
+                    case 6:
+                        TellerTransactionHistoryView tellerTransactionHistoryView_view = new TellerTransactionHistoryView();
+                        tellerTransactionHistoryView_view.print();
+                        break;
+                    case 7:
+                        TellerDisplayView tellerDisplayView_view = new TellerDisplayView();
+                        tellerDisplayView_view.print();
+                        break;
                     default:
                         System.out.println("Please enter valid option.");
                 }

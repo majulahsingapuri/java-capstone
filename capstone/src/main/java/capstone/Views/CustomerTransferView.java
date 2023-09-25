@@ -1,22 +1,33 @@
 package capstone.Views;
 
-import capstone.Enums.AccessLevel;
 import capstone.Extras.ConsoleColours;
 import capstone.Extras.Helper;
 import capstone.Objects.Database;
+import capstone.Objects.User;
 
-public final class CustomerDepositView extends View{
-
+public final class CustomerTransferView extends View{
     public void print() {
-        clearScreen("Customer Deposit Page");
+        clearScreen("Customer Transfer Page");
 
         while(true){
+            try {
+                // input account info
+                System.out.println("Enter the account number you want to transfer to:");
+                String account_string = Helper.readLine();// convert to int type
+                // check whether account exist
+                if (Database.containsUser(account_string)) {
+                    User reveiver_user = Database.getUser(account_string);
+                }else {
+                    System.out.println("This payee does not exist! Please re-enter!");
+                    Helper.pause();
+                }
 
-            try { 
-                System.out.println("Enter the amount you want to deposit");
+                System.out.println("Enter the amount you want to transfer");
                 Double deposit_amount = Helper.sc.nextDouble();
-                System.out.println("deposit amount:" + deposit_amount);
+                System.out.println("Transfer amount to account: " + account_string + " is: " +deposit_amount);
                 Helper.sc.nextLine(); // this line ensures next .nextLine() consume propoerly for next input
+
+                // TODO: double check on the transfer info?
 
             } catch (Exception e) {
                 System.out.println(ConsoleColours.RED_BOLD + "NOT A VALID NUMBER" + ConsoleColours.RESET);
@@ -24,9 +35,9 @@ public final class CustomerDepositView extends View{
                 
             }
 
+
             System.out.println("Continue? [Y/N]: ");
             String str_input = Helper.sc.nextLine();
-            
             if (str_input.equals("N")){
                 break;
             }else if (str_input.equals("Y")){
@@ -34,8 +45,6 @@ public final class CustomerDepositView extends View{
             }else {
                 System.out.println("Wrong Input, please input Y/N or y/n");
             }
-            // TODO: 
-            // SQL related lines/database lines here, update
-        }
     }
+}
 }

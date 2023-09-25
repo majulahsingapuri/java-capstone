@@ -79,16 +79,20 @@ public final class LoginView extends View {
                 if (result.checkPassword(password)) {
                     if (domain.equals("1") && result.getAccessLevel() == AccessLevel.ADMIN) {
                         try{
-                            Database.CURRENT_USER = (Admin) result;
+                            Database.CURRENT_USER = new Admin(username, password);
+                            // Database.CURRENT_USER = (Admin) result;  casting error
                             Database.CURRENT_ACCESS_LEVEL = Database.CURRENT_USER.getAccessLevel();
                         } catch (Exception e) {
                             System.out.println("Invalid user. Please try again");
                         }
                         AdminMainView adminView = new AdminMainView();
                         adminView.print();
-                    } else if (domain.equals("2") && result.getAccessLevel() == AccessLevel.TELLER) {
+                    } else if (domain.equals("2")) {
                         try {
-                            Database.CURRENT_USER = (Teller) result;
+                            // Parent p = new child();// yes
+                            // Parent p = (child) new Parent();// no, can not cast
+                            Database.CURRENT_USER = new Teller(username, password);// new
+                            // Database.CURRENT_USER = (Teller) result; // old
                             Database.CURRENT_ACCESS_LEVEL = Database.CURRENT_USER.getAccessLevel();
                         } catch (Exception e) {
                             System.out.println("Invalid user. Please enter again!");
@@ -97,7 +101,7 @@ public final class LoginView extends View {
                         view.print();
                     } else if (domain.equals("3")) {
                         try {
-                            Database.CURRENT_USER = (Customer) result;
+                            Database.CURRENT_USER = new Customer(username, password);
                             Database.CURRENT_ACCESS_LEVEL = Database.CURRENT_USER.getAccessLevel();
                         } catch (Exception e) {
                             System.out.println("Invalid user. Please enter again!");

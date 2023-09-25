@@ -43,19 +43,24 @@ public final class CustomerMainView extends View {
                         logoutView.print();
                         return;
                     case 3:
-                        Deposit();
+                        CustomerDepositView customerDepositView_view = new CustomerDepositView();
+                        customerDepositView_view.print();
                         break;
                     case 4:
-                        Withdraw();
+                        CustomerWithdrawView customerWithdrawView_view = new CustomerWithdrawView();
+                        customerWithdrawView_view.print();
                         break;
                     case 5:
-                        Transfer();
+                        CustomerTransferView customerTransferView_view = new CustomerTransferView();
+                        customerTransferView_view.print();
                         break;
                     case 6:
-                        Transactions_History();
+                        CustomerTransactionHistoryView customerTransactionHistoryView_view = new CustomerTransactionHistoryView();
+                        customerTransactionHistoryView_view.print();
                         break;
                     case 7:
-                        Display();
+                        CustomerDisplayView customerDisplayView_view = new CustomerDisplayView();
+                        customerDisplayView_view.print();
                         break;
                     default:
                         System.out.println("Please enter valid option.");
@@ -72,37 +77,6 @@ public final class CustomerMainView extends View {
     private void changePassword() {
 
         Database.CURRENT_USER.changePassword();
-        Helper.pause();
-
-    }
-
-    private void Deposit() {
-
-        Database.CURRENT_USER.Deposit();
-        Helper.pause();
-    }
-
-    private void Withdraw() {
-
-        Database.CURRENT_USER.Withdraw();
-        Helper.pause();
-    }
-
-    private void Transactions_History() {
-
-        Database.CURRENT_USER.Transactions_History();
-        Helper.pause();
-    }
-
-    private void Display() {
-
-        Database.CURRENT_USER.Display();
-        Helper.pause();
-    }
-
-    private void Transfer() {
-
-        Database.CURRENT_USER.Transfer();
         Helper.pause();
     }
 }
