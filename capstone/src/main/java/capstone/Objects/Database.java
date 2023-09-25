@@ -282,18 +282,12 @@ public final class Database {
           conn.prepareStatement(
               "INSERT INTO "
                   + AccessLevel.NONE.db
-                  + "(username, password, first_name, last_name) VALUES (?, ?, ?, ?)");
+                  + "(username, password, first_name, last_name) VALUES (?, ?, ?, ?) returning id");
       insertstmt.setString(1, username);
       insertstmt.setString(2, password);
       insertstmt.setString(3, firstName);
       insertstmt.setString(4, lastName);
-      insertstmt.executeQuery();
-
-      // fetch the user id from the user table
-      PreparedStatement selectstmt =
-          conn.prepareStatement("SELECT id FROM " + AccessLevel.NONE.db + " WHERE username = ?");
-      selectstmt.setString(1, username);
-      ResultSet rs = selectstmt.executeQuery();
+      ResultSet rs = insertstmt.executeQuery();
       int user_id = 0;
       while (rs.next()) {
         user_id = rs.getInt(1);
@@ -307,45 +301,30 @@ public final class Database {
                 "INSERT INTO "
                     + AccessLevel.CUSTOMER.db
                     + "(user_ptr_id, nric, email, date_of_birth, address, phone_no) VALUES (?, ?,"
-                    + " ?, ?, ?, ?)");
+                    + " ?, ?, ?, ?) returning customer_id");
         insertCustomer.setInt(1, user_id);
         insertCustomer.setString(2, nric);
         insertCustomer.setString(3, email);
         insertCustomer.setDate(4, new java.sql.Date(dateOfBirth.getTime()));
         insertCustomer.setString(5, address);
         insertCustomer.setString(6, phoneNumber);
-        insertCustomer.executeQuery();
-
-        // select the new customer user created
-        PreparedStatement stmt =
-            conn.prepareStatement(
-                "select a.id, a.username, a.password, a.first_name, a.last_name, b.customer_id,"
-                    + " b.nric, b.email, b.date_of_birth, b.address, b.phone_no\n"
-                    + "from "
-                    + AccessLevel.NONE.db
-                    + " as a join "
-                    + AccessLevel.CUSTOMER.db
-                    + " as b on a.id = b.user_ptr_id\n"
-                    + "where a.username = ?");
-        stmt.setString(1, username);
-        ResultSet rs2 = stmt.executeQuery();
+        ResultSet rs2 = insertCustomer.executeQuery();
         while (rs2.next()) {
           if (rs2.getString(2).equals(username)) {
             customer =
                 Optional.of(
                     new Customer(
-                        rs.getInt(1), // id
-                        rs.getString(2), // username
-                        rs.getString(3), // password
-                        rs.getString(4), // firstName
-                        rs.getString(5), // lastName
-                        rs.getInt(6), // customerID
-                        rs.getString(7), // nric
-                        rs.getString(8), // email
-                        rs.getDate(9), // DOB
-                        rs.getString(10), // address
-                        rs.getString(11) // phoneNo
-                        ));
+                        user_id,
+                        username,
+                        password,
+                        firstName,
+                        lastName,
+                        rs2.getInt(1), // customerID
+                        nric,
+                        email,
+                        dateOfBirth,
+                        address,
+                        phoneNumber));
           }
         }
       }
@@ -372,18 +351,12 @@ public final class Database {
           conn.prepareStatement(
               "INSERT INTO "
                   + AccessLevel.NONE.db
-                  + "(username, password, first_name, last_name) VALUES (?, ?, ?, ?)");
+                  + "(username, password, first_name, last_name) VALUES (?, ?, ?, ?) returning id");
       insertstmt.setString(1, username);
       insertstmt.setString(2, password);
       insertstmt.setString(3, firstName);
       insertstmt.setString(4, lastName);
-      insertstmt.executeQuery();
-
-      // fetch the user id from the user table
-      PreparedStatement selectstmt =
-          conn.prepareStatement("SELECT id FROM " + AccessLevel.NONE.db + " WHERE username = ?");
-      selectstmt.setString(1, username);
-      ResultSet rs = selectstmt.executeQuery();
+      ResultSet rs = insertstmt.executeQuery();
       int user_id = 0;
       while (rs.next()) {
         user_id = rs.getInt(1);
@@ -394,34 +367,22 @@ public final class Database {
         // using the user id, insert into the admin table
         PreparedStatement insertAdmin =
             conn.prepareStatement(
-                "INSERT INTO " + AccessLevel.ADMIN.db + "(user_ptr_id) VALUES (?)");
-        insertAdmin.setInt(1, user_id);
-        insertAdmin.executeQuery();
-
-        // select the new admin user created
-        PreparedStatement stmt =
-            conn.prepareStatement(
-                "SELECT a.id, a.username, a.password, a.first_name, a.last_name, b.admin_id FROM "
-                    + AccessLevel.NONE.db
-                    + " AS a JOIN "
+                "INSERT INTO "
                     + AccessLevel.ADMIN.db
-                    + " AS b ON a.id = b.user_ptr_id"
-                    + " WHERE username = ?");
-        stmt.setString(1, username);
-        ResultSet rs2 = stmt.executeQuery();
+                    + "(user_ptr_id) VALUES (?) returning admin_id");
+        insertAdmin.setInt(1, user_id);
+        ResultSet rs2 = insertAdmin.executeQuery();
         while (rs2.next()) {
-          if (rs2.getString(2).equals(username)) {
-            admin =
-                Optional.of(
-                    new Admin(
-                        rs2.getInt(1), // id
-                        rs2.getString(2), // username
-                        rs2.getString(3), // password
-                        rs2.getString(4), // firstName
-                        rs2.getString(5), // lastName
-                        rs2.getInt(6) // adminID
-                        ));
-          }
+          admin =
+              Optional.of(
+                  new Admin(
+                      user_id, // id
+                      username, // username
+                      password, // password
+                      firstName, // firstName
+                      lastName, // lastName
+                      rs2.getInt(1) // adminID
+                      ));
         }
       }
 
@@ -447,17 +408,12 @@ public final class Database {
           conn.prepareStatement(
               "INSERT INTO "
                   + AccessLevel.NONE.db
-                  + "(username, password, firstName, lastName) VALUES (?, ?, ?, ?) ");
+                  + "(username, password, firstName, lastName) VALUES (?, ?, ?, ?) returning id ");
       insertUserStatement.setString(1, username);
       insertUserStatement.setString(2, password);
       insertUserStatement.setString(3, firstName);
       insertUserStatement.setString(4, lastName);
-      insertUserStatement.executeUpdate();
-      /** Selects the newly created User */
-      PreparedStatement selectStatement =
-          conn.prepareStatement("SELECT id FROM " + AccessLevel.NONE.db + " WHERE username = ?");
-      selectStatement.setString(1, username);
-      ResultSet rs = selectStatement.executeQuery();
+      ResultSet rs = insertUserStatement.executeQuery();
       int user_id = 0;
       while (rs.next()) {
         user_id = rs.getInt(1);
@@ -468,33 +424,22 @@ public final class Database {
         /** Inserts the newly created Teller */
         PreparedStatement insertTellerStatement =
             conn.prepareStatement(
-                "INSERT INTO " + AccessLevel.TELLER.db + "(user_ptr_id) VALUES (?)");
-        insertTellerStatement.setInt(1, user_id);
-        insertTellerStatement.executeUpdate();
-
-        /** Selects the newly created Teller */
-        PreparedStatement selectTellerStatement =
-            conn.prepareStatement(
-                "SELECT a.id, a.username, a.password, a.first_name, a.last_name, b.teller_id FROM "
-                    + AccessLevel.NONE.db
-                    + " AS a JOIN "
+                "INSERT INTO "
                     + AccessLevel.TELLER.db
-                    + " AS b ON a.id = b.user_ptr_id"
-                    + " WHERE username = ?");
-        selectTellerStatement.setString(1, username);
-        ResultSet rs2 = selectTellerStatement.executeQuery();
-
+                    + "(user_ptr_id) VALUES (?) returning teller_id");
+        insertTellerStatement.setInt(1, user_id);
+        ResultSet rs2 = insertTellerStatement.executeQuery();
         while (rs2.next()) {
           if (rs2.getString(2).equals(username)) {
             teller =
                 Optional.of(
                     new Teller(
-                        rs2.getInt(1), // id
-                        rs2.getString(2), // username
-                        rs2.getString(3), // password
-                        rs2.getString(4), // firstName
-                        rs2.getString(5), // lastName
-                        rs2.getInt(6) // tellerId
+                        user_id, // id
+                        username, // username
+                        password, // password
+                        firstName, // firstName
+                        lastName, // lastName
+                        rs2.getInt(1) // tellerId
                         ));
           }
         }
@@ -717,7 +662,7 @@ public final class Database {
           conn.prepareStatement(
               "insert into migrations_transaction (transaction_ref, transaction_type, date, amount,"
                   + " account_no_id, customer_id_id)\n"
-                  + "values (?, ?, ?, ?, ?, ?)");
+                  + "values (?, ?, ?, ?, ?, ?) returning id");
       insertTransactionStatement.setString(1, uuid.toString());
       insertTransactionStatement.setString(2, transactionType.type);
       insertTransactionStatement.setDate(
@@ -727,28 +672,18 @@ public final class Database {
       insertTransactionStatement.setDouble(4, amount);
       insertTransactionStatement.setInt(5, account.getID());
       insertTransactionStatement.setInt(6, customer.getID());
-      insertTransactionStatement.executeQuery();
-
-      // Get updated values from database
-      PreparedStatement getTransactionStatement =
-          conn.prepareStatement(
-              "select id, transaction_ref, transaction_type, date, amount, account_no_id,"
-                  + " customer_id_id\n"
-                  + "from migrations_transaction\n"
-                  + "where transaction_ref = ?");
-      getTransactionStatement.setString(1, uuid.toString());
-      ResultSet rs = getTransactionStatement.executeQuery();
+      ResultSet rs = insertTransactionStatement.executeQuery();
       while (rs.next()) {
         transaction =
             Optional.of(
                 new Transaction(
                     rs.getInt(1),
-                    rs.getString(2),
+                    uuid.toString(),
                     transactionType,
                     timestamp,
-                    rs.getDouble(5),
-                    rs.getInt(6),
-                    rs.getInt(7)));
+                    amount,
+                    account.getID(),
+                    customer.getID()));
       }
     } catch (SQLException e) {
       System.out.println(e.getMessage());
