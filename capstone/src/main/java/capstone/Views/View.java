@@ -6,7 +6,7 @@ import capstone.Extras.Helper;
 /**
  * The abstract superclass of all views in the application.
  *
- * @author Bhargav, Nicolette
+ * @author Bhargav
  * @version 1.0
  * @since 2020-11-1
  */

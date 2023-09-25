@@ -8,7 +8,7 @@ import capstone.Objects.Database;
 /**
  * The log out page before being redirected to the {@link LoginView}.
  *
- * @author Nicolette
+ * @author Bhargav
  * @version 1.0
  * @since 2020-11-1
  */

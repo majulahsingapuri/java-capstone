@@ -55,13 +55,11 @@ public enum DayOfWeek {
    * @return The DayOfWeek, defaults to Monday if int day is out of range.
    */
   public static DayOfWeek getDayOfWeek(int day) {
-
     for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
       if (dayOfWeek.value == day) {
         return dayOfWeek;
       }
     }
-
     return DayOfWeek.MONDAY;
   }
 }

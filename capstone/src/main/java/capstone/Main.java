@@ -3,6 +3,7 @@ package capstone;
 import capstone.Objects.Database;
 import capstone.Views.LoginView;
 
+/** Main Class that runs the program. */
 public class Main {
   /**
    * Main function that is the starting point of the application. Initialises a new {@link Database}
@@ -14,5 +15,6 @@ public class Main {
     new Database();
     LoginView view = new LoginView();
     view.print();
+    Database.close();
   }
 }
