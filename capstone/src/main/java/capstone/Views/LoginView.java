@@ -71,7 +71,8 @@ public final class LoginView extends View {
       password = Helper.getPasswordInput();
 
       if (Database.containsUser(username)) {
-        User result = Database.getUser(username);
+        // TODO: Change this implementation to get the user based on the user type.
+        User result = Database.getUser(username).get();
         if (result.checkPassword(password)) {
           if (domain.equals("1") && result.getAccessLevel() == AccessLevel.ADMIN) {
             try {

@@ -38,9 +38,9 @@ public final class Customer extends User {
    * @param id the User's id
    * @param username The User's username.
    * @param password The User's password.
-   * @param customerID The User's password.
    * @param firstName The User's password.
    * @param lastName The User's password.
+   * @param customerID The User's password.
    * @param nric The User's password.
    * @param email The User's password.
    * @param dateOfBirth The User's password.
@@ -51,9 +51,9 @@ public final class Customer extends User {
       int id,
       String username,
       String password,
-      int customerID,
       String firstName,
       String lastName,
+      int customerID,
       String nric,
       String email,
       Date dateOfBirth,

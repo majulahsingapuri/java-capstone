@@ -22,12 +22,12 @@ public final class Admin extends User {
    * @param username The User's username.
    * @param password The User's password.
    * @param id The User's id
-   * @param adminID the User's Admin id
    * @param firstName the User's first name
    * @param lastName the User's last name
+   * @param adminID the User's Admin id
    */
   public Admin(
-      int id, String username, String password, int adminID, String firstName, String lastName) {
+      int id, String username, String password, String firstName, String lastName, int adminID) {
     super(id, username, password, firstName, lastName, AccessLevel.ADMIN);
     this.adminID = adminID;
   }

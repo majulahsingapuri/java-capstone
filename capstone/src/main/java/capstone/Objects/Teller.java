@@ -22,12 +22,12 @@ public final class Teller extends User {
    * @param username The Teller's username.
    * @param password The Teller's password.
    * @param id The Teller's user id
-   * @param tellerID The Teller id
    * @param firstName The Teller's first name
    * @param lastName The Teller's last name
+   * @param tellerID The Teller id
    */
   public Teller(
-      int id, String username, String password, int tellerID, String firstName, String lastName) {
+      int id, String username, String password, String firstName, String lastName, int tellerID) {
     super(id, username, password, firstName, lastName, AccessLevel.TELLER);
     this.tellerID = tellerID;
   }

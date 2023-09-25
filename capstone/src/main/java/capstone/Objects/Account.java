@@ -61,8 +61,11 @@ public class Account {
    * @return true if the balance was set
    */
   public boolean setBalance(double amount) {
-    // TODO: check that the amount cannot be negative
-    this.balance = amount;
-    return true;
+    if (amount >= 0) {
+      this.balance = amount;
+      return true;
+    } else {
+      return false;
+    }
   }
 }
