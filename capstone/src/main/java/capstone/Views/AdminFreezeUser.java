@@ -2,15 +2,19 @@ package capstone.Views;
 
 import capstone.Extras.Helper;
 
-public final class AdminFreezeUser extends View{
-    public void print(){
-        clearScreen("Admin Freeze User Page");
+public final class AdminFreezeUser extends View {
+  public void print() {
+    clearScreen("Admin Freeze User Page");
 
-        while(true){
-            Helper.customer_search();// customer_user is the target 
+    while (true) {
+      Helper.customer_search(); // customer_user is the target
 
-            int continue_checker = Helper.continue_checker();
-            if (continue_checker == 1){break;}else{continue;}
-        }
+      int continue_checker = Helper.continue_checker();
+      if (continue_checker == 1) {
+        break;
+      } else {
+        continue;
+      }
     }
+  }
 }
