@@ -660,7 +660,19 @@ public final class Database {
    * @return true
    */
   public static boolean updateBalance(Account account, float newBalance) {
-    return true;
+    boolean result = false;
+    try {
+      PreparedStatement stmt =
+          conn.prepareStatement(
+              "UPDATE migrations_account AS ma " + "SET balance = ? " + "WHERE ma.id = ?");
+      stmt.setFloat(1, newBalance);
+      stmt.setInt(2, account.getID());
+      stmt.executeQuery();
+      result = true;
+    } catch (SQLException se) {
+      System.out.println(se.getMessage());
+    }
+    return result;
   }
 
   /**
