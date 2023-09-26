@@ -71,13 +71,12 @@ CREATE OR REPLACE FUNCTION create_admin(
     ) RETURNS INTEGER AS $$
 DECLARE 
     user_id INTEGER;
-    existing_username TEXT;
 BEGIN 
     IF EXISTS (
         SELECT mu.username
         FROM migrations_user AS mu
         WHERE mu.username = create_admin.username
-    ) THEN RAISE EXCEPTION 'user % exists', username;
+    ) THEN RAISE EXCEPTION 'user % exists', create_admin.username;
     END IF;
     WITH insert_user AS (
         INSERT INTO migrations_user (username, password, first_name, last_name)
@@ -107,14 +106,13 @@ CREATE OR REPLACE FUNCTION create_teller(
     ) RETURNS INTEGER AS $$
 DECLARE 
     user_id INTEGER;
-    existing_userName TEXT;
 BEGIN 
     IF EXISTS (
         SELECT mu.username
         FROM migrations_user AS mu
         WHERE mu.username = create_teller.username
     ) THEN RAISE EXCEPTION 'user % exists',
-    username;
+    create_teller.username;
     END IF;
     WITH insert_user AS (
         INSERT INTO migrations_user (username, password, first_name, last_name)
@@ -136,3 +134,21 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION create_account(
+    customer_id INTEGER,
+    account_type TEXT
+) RETURNS INTEGER AS $$
+DECLARE 
+	account_id INTEGER;
+BEGIN
+    IF (SELECT NOT create_account.account_type = ANY('{CURRENT,SAVINGS}'::TEXT[]))
+        THEN RAISE EXCEPTION 'invalid account type %', create_account.account_type;
+    END IF;
+    WITH account_create AS (
+        INSERT INTO migrations_account(balance, account_type) VALUES (0, create_account.account_type) RETURNING id
+    )
+    SELECT id INTO account_id FROM account_create;
+    INSERT INTO migrations_customeraccount(account_no_id, customer_id_id) VALUES (account_id, create_account.customer_id);
+	RETURN account_id;
+END;
+$$ LANGUAGE plpgsql;
