@@ -310,22 +310,20 @@ public final class Database {
         insertCustomer.setString(6, phoneNumber);
         ResultSet rs2 = insertCustomer.executeQuery();
         while (rs2.next()) {
-          if (rs2.getString(2).equals(username)) {
-            customer =
-                Optional.of(
-                    new Customer(
-                        user_id,
-                        username,
-                        password,
-                        firstName,
-                        lastName,
-                        rs2.getInt(1), // customerID
-                        nric,
-                        email,
-                        dateOfBirth,
-                        address,
-                        phoneNumber));
-          }
+          customer =
+              Optional.of(
+                  new Customer(
+                      user_id,
+                      username,
+                      password,
+                      firstName,
+                      lastName,
+                      rs2.getInt(1), // customerID
+                      nric,
+                      email,
+                      dateOfBirth,
+                      address,
+                      phoneNumber));
         }
       }
 
@@ -430,18 +428,16 @@ public final class Database {
         insertTellerStatement.setInt(1, user_id);
         ResultSet rs2 = insertTellerStatement.executeQuery();
         while (rs2.next()) {
-          if (rs2.getString(2).equals(username)) {
-            teller =
-                Optional.of(
-                    new Teller(
-                        user_id, // id
-                        username, // username
-                        password, // password
-                        firstName, // firstName
-                        lastName, // lastName
-                        rs2.getInt(1) // tellerId
-                        ));
-          }
+          teller =
+              Optional.of(
+                  new Teller(
+                      user_id, // id
+                      username, // username
+                      password, // password
+                      firstName, // firstName
+                      lastName, // lastName
+                      rs2.getInt(1) // tellerId
+                      ));
         }
       }
     } catch (SQLException e) {
