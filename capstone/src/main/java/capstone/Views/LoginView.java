@@ -14,7 +14,7 @@ import org.joda.time.format.DateTimeFormatter;
 /**
  * Initial View seen by {@link User}. Used to log in the User to the System.
  *
- * @author Bhargav, Kah Ee
+ * @author Bhargav
  * @version 1.0
  * @since 2020-11-1
  */
@@ -71,7 +71,8 @@ public final class LoginView extends View {
       password = Helper.getPasswordInput();
 
       if (Database.containsUser(username)) {
-        User result = Database.getUser(username);
+        // TODO: Change this implementation to get the user based on the user type.
+        User result = Database.getUser(username).get();
         if (result.checkPassword(password)) {
           if (domain.equals("1") && result.getAccessLevel() == AccessLevel.ADMIN) {
             try {

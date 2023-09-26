@@ -1,5 +1,7 @@
 typeSearchIndex = [
   { p: "capstone.Enums", l: "AccessLevel" },
+  { p: "capstone.Objects", l: "Account" },
+  { p: "capstone.Enums", l: "AccountType" },
   { p: "capstone.Objects", l: "Admin" },
   { p: "capstone.Views", l: "AdminMainView" },
   { l: "All Classes and Interfaces", u: "allclasses-index.html" },
@@ -14,6 +16,8 @@ typeSearchIndex = [
   { p: "capstone", l: "Main" },
   { p: "capstone.Objects", l: "Teller" },
   { p: "capstone.Views", l: "TellerMainView" },
+  { p: "capstone.Objects", l: "Transaction" },
+  { p: "capstone.Enums", l: "TransactionType" },
   { p: "capstone.Objects", l: "User" },
   { p: "capstone.Views", l: "View" },
 ];

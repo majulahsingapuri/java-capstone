@@ -2,23 +2,28 @@ package capstone.Objects;
 
 import capstone.Enums.AccessLevel;
 import capstone.Extras.Helper;
-import java.io.Serializable;
 import java.util.Base64;
 
 /**
  * The superclass of all User classes in the application.
  *
- * @author Jia Hui, Bhargav
+ * @author Bhargav
  * @version 1.0
  * @since 2020-11-1
  */
-public class User implements Serializable {
+public class User {
 
-  /** The unique ID of the class for Serialisation. */
-  private static final long serialVersionUID = 29L;
+  /** The User ID associated with each network User. */
+  private int id;
 
   /** The username associated with each network User. */
   private String username;
+
+  /** The first name associated with each network User. */
+  private String firstName;
+
+  /** The last name associated with each network User. */
+  private String lastName;
 
   /** The {@link AccessLevel} of each User. */
   private AccessLevel accessLevel;
@@ -29,27 +34,26 @@ public class User implements Serializable {
   /**
    * Initialiser for the User Class with a new username, password and {@link AccessLevel}.
    *
+   * @param id the id of the User
    * @param username The username of the User.
    * @param password The password of the User.
+   * @param firstName The User's first name.
+   * @param lastName The User's last name.
    * @param accessLevel The AccessLevel of the user.
    */
-  protected User(String username, String password, AccessLevel accessLevel) {
+  protected User(
+      int id,
+      String username,
+      String password,
+      String firstName,
+      String lastName,
+      AccessLevel accessLevel) {
+    this.id = id;
     this.username = username;
     this.password = encryptPassword(password);
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.accessLevel = accessLevel;
-  }
-
-  /**
-   * Initialiser for the User Class with a default password and a new username and {@link
-   * AccessLevel}.
-   *
-   * @param username The username of the User.
-   * @param accessLevel The AccessLevel of the user.
-   */
-  protected User(String username, AccessLevel accessLevel) {
-    this.username = username;
-    this.accessLevel = accessLevel;
-    this.password = encryptPassword("javaInsecureP@ssword");
   }
 
   /**
@@ -71,10 +75,12 @@ public class User implements Serializable {
         System.out.print("Enter the new password again: ");
         String newPassword2 = Helper.getPasswordInput();
         if (newPassword1.equals(newPassword2)) {
-          this.password = encryptPassword(newPassword1);
-          // TODO: Call the DB method that writes the password to the DB
-          System.out.println("Password updated successfully.");
-          return true;
+          byte[] password = encryptPassword(newPassword1);
+          boolean result = Database.updatePassword(this, password);
+          if (result) {
+            this.password = password;
+          }
+          return result;
         } else {
           System.out.println("The passwords you entered do not match. Please try again.");
           Helper.pause();
@@ -122,29 +128,12 @@ public class User implements Serializable {
   }
 
   /**
-   * Changes the {@link AccessLevel} for the User.
-   *
-   * @param accessLevel The new AccessLevel
-   * @return {@code true} once AccessLevel has been changed.
-   */
-  protected boolean changeAccessLevel(AccessLevel accessLevel) {
-
-    if (this.accessLevel == accessLevel) {
-      System.out.println("User is already a " + accessLevel.name() + "!");
-      return false;
-    } else {
-      this.accessLevel = accessLevel;
-      return true;
-    }
-  }
-
-  /**
    * Getter method that retrieves the Username of the User.
    *
    * @return The username as a String.
    */
   public String getUsername() {
-    return username;
+    return this.username;
   }
 
   /**
@@ -153,6 +142,51 @@ public class User implements Serializable {
    * @return the AccessLevel of the User.
    */
   public AccessLevel getAccessLevel() {
-    return accessLevel;
+    return this.accessLevel;
+  }
+
+  /**
+   * Getter method that retrieves the User's first name
+   *
+   * @return the first name as String
+   */
+  public String getFirstName() {
+    return this.firstName;
+  }
+
+  /**
+   * Getter method that retrieves the User's last name
+   *
+   * @return the last name as String
+   */
+  public String getLastName() {
+    return this.lastName;
+  }
+
+  /**
+   * Setter method that sets the User's first name
+   *
+   * @param firstName the new first name of the user.
+   */
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  /**
+   * Setter method that sets the User's last name
+   *
+   * @param lastName the new last name of the user
+   */
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
+  /**
+   * Getter method that retrieves the User's id
+   *
+   * @return the User's id
+   */
+  public int getID() {
+    return this.id;
   }
 }

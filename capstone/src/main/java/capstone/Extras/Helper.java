@@ -8,7 +8,7 @@ import org.joda.time.DateTime;
 /**
  * A Helper Class with all properties and methods that are generally needed across the application.
  *
- * @author Bhargav, Jia Hui, Timothy, Kah Ee
+ * @author Bhargav
  * @version 1.0
  * @since 2020-11-1
  */
