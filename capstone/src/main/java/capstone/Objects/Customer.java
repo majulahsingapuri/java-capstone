@@ -174,6 +174,6 @@ public final class Customer extends User {
    * @return the customer accounts
    */
   public ArrayList<Account> getCustomerAccounts() {
-    return Database.getCustomerAccounts(this);
+    return Database.getCustomerAccounts(this.getUsername());
   }
 }
