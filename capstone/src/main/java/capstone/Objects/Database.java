@@ -647,6 +647,37 @@ public final class Database {
     return result;
   }
 
+  public static ArrayList<Transaction> getCustomerTransactions(Customer customer) {
+    ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+    try {
+      PreparedStatement queryCustomerTransactions =
+          conn.prepareStatement(
+              "SELECT c.id, c.transaction_ref, c.transaction_type, c.date, c.account_no_id,"
+                  + " c.customer_id_id\n"
+                  + "from migrations_customer as bjoin migrations_transaction as c on b.customer_id"
+                  + " = c.customer_id_id where b.customer_id = ?; ");
+      queryCustomerTransactions.setInt(1, customer.getCustomerID());
+      ResultSet rs = queryCustomerTransactions.executeQuery();
+
+      while (rs.next()) {
+        Transaction res =
+            new Transaction(
+                rs.getInt(1),
+                rs.getString(2),
+                TransactionType.getTransactionType(rs.getString(3)),
+                DateTime.parse(rs.getDate(4).toString()),
+                rs.getDouble(5),
+                rs.getInt(6),
+                rs.getInt(7));
+        transactions.add(res);
+      }
+
+    } catch (SQLException se) {
+      System.out.println(se.getMessage());
+    }
+    return transactions;
+  }
+
   /**
    * Updates the new balance for the account
    *
