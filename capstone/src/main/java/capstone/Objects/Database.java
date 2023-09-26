@@ -406,7 +406,8 @@ public final class Database {
           conn.prepareStatement(
               "INSERT INTO "
                   + AccessLevel.NONE.db
-                  + "(username, password, firstName, lastName) VALUES (?, ?, ?, ?) returning id ");
+                  + "(username, password, first_Name, last_Name) VALUES (?, ?, ?, ?) returning id"
+                  + " ");
       insertUserStatement.setString(1, username);
       insertUserStatement.setString(2, password);
       insertUserStatement.setString(3, firstName);
@@ -571,7 +572,7 @@ public final class Database {
                   + AccessLevel.CUSTOMER.db
                   + " AS c JOIN "
                   + AccessLevel.NONE.db
-                  + " AS u ON c.user_ptr_id = c.id WHERE u.username = ?");
+                  + " AS u ON c.user_ptr_id = u.id WHERE u.username = ?");
       selectCust.setString(1, username);
       ResultSet rs2 = selectCust.executeQuery();
       int customer_id = 0;
