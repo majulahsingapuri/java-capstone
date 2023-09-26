@@ -6,6 +6,9 @@ import capstone.Objects.Customer;
 import capstone.Objects.Database;
 import capstone.Objects.Teller;
 import capstone.Objects.User;
+
+import javax.xml.crypto.Data;
+
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -71,12 +74,12 @@ public final class LoginView extends View {
 
       if (Database.containsUser(username)) {
         // TODO: Change this implementation to get the user based on the user type.
-        User result = Database.getUser(username).get();
-        if (result.checkPassword(password)) {
+        User user = Database.getUser(username).get();
+        if (user.checkPassword(password)) {
           if (domain.equals("1")) {
             // && result.getAccessLevel() == AccessLevel.ADMIN
             try {
-              Database.CURRENT_USER = new Admin(username, password);
+              Database.CURRENT_USER = Database.getAdmin(username).get();
               // Database.CURRENT_USER = (Admin) result;  casting error
               Database.CURRENT_ACCESS_LEVEL = Database.CURRENT_USER.getAccessLevel();
             } catch (Exception e) {
@@ -88,7 +91,7 @@ public final class LoginView extends View {
             try {
               // Parent p = new child();// yes
               // Parent p = (child) new Parent();// no, can not cast
-              Database.CURRENT_USER = new Teller(username, password); // new
+              Database.CURRENT_USER = Database.getTeller(username).get(); // new
               // Database.CURRENT_USER = (Teller) result; // old
               Database.CURRENT_ACCESS_LEVEL = Database.CURRENT_USER.getAccessLevel();
             } catch (Exception e) {
@@ -98,7 +101,7 @@ public final class LoginView extends View {
             view.print();
           } else if (domain.equals("3")) {
             try {
-              Database.CURRENT_USER = new Customer(username, password);
+              Database.CURRENT_USER = Database.getCustomer(username).get();
               Database.CURRENT_ACCESS_LEVEL = Database.CURRENT_USER.getAccessLevel();
             } catch (Exception e) {
               System.out.println("Invalid user. Please enter again!");

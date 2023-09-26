@@ -158,10 +158,10 @@ public final class Helper {
 
   public static void customer_search() {
     // for admin and teller use
-    System.out.println("Enter the customer account number:");
-    String account_string = Helper.readLine(); // convert to int type
-    if (Database.containsUser(account_string)) {
-      User customer_user = Database.getUser(account_string);
+    System.out.println("Enter the customer username:");
+    String username = Helper.readLine(); // convert to int type
+    if (Database.containsUser(username)) {
+      User customer_user = Database.getUser(username).get();
     } else {
       System.out.println("This payee does not exist! Please re-enter!");
       Helper.pause();
