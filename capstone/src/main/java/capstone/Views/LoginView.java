@@ -7,6 +7,8 @@ import capstone.Objects.Database;
 import capstone.Objects.Teller;
 import capstone.Objects.User;
 
+import java.util.Optional;
+
 import javax.xml.crypto.Data;
 
 import org.joda.time.DateTime;
@@ -73,14 +75,14 @@ public final class LoginView extends View {
       password = Helper.getPasswordInput();
 
       if (Database.containsUser(username)) {
-        // TODO: Change this implementation to get the user based on the user type.
         User user = Database.getUser(username).get();
         if (user.checkPassword(password)) {
           if (domain.equals("1")) {
-            // && result.getAccessLevel() == AccessLevel.ADMIN
             try {
-              Database.CURRENT_USER = Database.getAdmin(username).get();
-              // Database.CURRENT_USER = (Admin) result;  casting error
+              Optional<Admin> result = Database.getAdmin(username);
+              Boolean isEmpty = result.isEmpty();
+              if (isEmpty) throw new Exception("Admin not found");
+              Database.CURRENT_USER = result.get();
               Database.CURRENT_ACCESS_LEVEL = Database.CURRENT_USER.getAccessLevel();
             } catch (Exception e) {
               System.out.println("Invalid user. Please try again");
@@ -89,10 +91,10 @@ public final class LoginView extends View {
             adminView.print();
           } else if (domain.equals("2")) {
             try {
-              // Parent p = new child();// yes
-              // Parent p = (child) new Parent();// no, can not cast
-              Database.CURRENT_USER = Database.getTeller(username).get(); // new
-              // Database.CURRENT_USER = (Teller) result; // old
+              Optional<Teller> result = Database.getTeller(username);
+              Boolean isEmpty = result.isEmpty();
+              if (isEmpty) throw new Exception("Teller not found");
+              Database.CURRENT_USER = result.get();
               Database.CURRENT_ACCESS_LEVEL = Database.CURRENT_USER.getAccessLevel();
             } catch (Exception e) {
               System.out.println("Invalid user. Please enter again!");
@@ -101,7 +103,10 @@ public final class LoginView extends View {
             view.print();
           } else if (domain.equals("3")) {
             try {
-              Database.CURRENT_USER = Database.getCustomer(username).get();
+              Optional<Customer> result = Database.getCustomer(username);
+              Boolean isEmpty = result.isEmpty();
+              if (isEmpty) throw new Exception("Customer not found");
+              Database.CURRENT_USER = result.get();
               Database.CURRENT_ACCESS_LEVEL = Database.CURRENT_USER.getAccessLevel();
             } catch (Exception e) {
               System.out.println("Invalid user. Please enter again!");
