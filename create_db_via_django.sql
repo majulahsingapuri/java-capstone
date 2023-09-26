@@ -134,11 +134,62 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION create_customer (
+    username TEXT,
+    password TEXT,
+    first_name TEXT,
+    last_name TEXT,
+    nric TEXT,
+    email TEXT,
+    date_of_birth DATE,
+    address TEXT,
+    phone_number TEXT
+) RETURNS INTEGER AS $$
+DECLARE
+    user_id INTEGER;
+BEGIN
+    /* Checks if the Username Exists */
+    IF EXISTS(SELECT mu.username FROM migrations_user AS mu WHERE mu.username = create_customer.username)
+    THEN
+        RAISE EXCEPTION 'user % exists', create_customer.username;
+    END IF;
+
+    /* Checks if the NRIC Exists */
+    IF EXISTS(SELECT mu.nric FROM migrations_customer AS mu WHERE mu.nric = create_customer.nric)
+    THEN
+        RAISE EXCEPTION 'NRIC % exists', create_customer.nric;
+    END IF;
+
+    /* Checks if the Phone Number Exists */
+    IF EXISTS(SELECT mu.phone_no FROM migrations_customer AS mu WHERE mu.phone_no = create_customer.phone_number)
+    THEN
+        RAISE EXCEPTION 'Phone number % exists', create_customer.phone_number;
+    END IF;
+
+    /* Checks if the Email Exists */
+    IF EXISTS(SELECT mu.email FROM migrations_customer AS mu WHERE mu.email = create_customer.email)
+    THEN
+        RAISE EXCEPTION 'Email % exists', create_customer.email;
+    END IF;
+
+    WITH insert_user AS (
+        INSERT INTO migrations_user(username, password, first_name, last_name)
+        VALUES(create_customer.username, create_customer.password, create_customer.first_name, create_customer.last_name)
+        RETURNING id
+    )
+    INSERT INTO migrations_customer (user_ptr_id, nric, email, date_of_birth, address, phone_no)
+    VALUES ((SELECT id FROM insert_user), create_customer.nric, create_customer.email, create_customer.date_of_birth, create_customer.address, create_customer.phone_number);
+
+    SELECT id INTO user_id FROM migrations_user AS mu WHERE mu.username = create_customer.username;
+    RETURN user_id;
+END;
+$$ LANGUAGE plpgsql;
+
 CREATE OR REPLACE FUNCTION create_account(
     customer_id INTEGER,
     account_type TEXT
 ) RETURNS INTEGER AS $$
-DECLARE 
+DECLARE
 	account_id INTEGER;
 BEGIN
     IF (SELECT NOT create_account.account_type = ANY('{CURRENT,SAVINGS}'::TEXT[]))
