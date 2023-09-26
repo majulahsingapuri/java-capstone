@@ -617,7 +617,7 @@ public final class Database {
    * @param username allows filtering to be done on the username to connect the tables
    * @return an Arraylist of All the Transactions of the user
    */
-  public static ArrayList<Account> getCustomerAccounts(String username, int numberOfAccounts) {
+  public static ArrayList<Account> getCustomerAccounts(String username) {
     ArrayList<Account> result = new ArrayList<Account>();
 
     try {
@@ -625,11 +625,10 @@ public final class Database {
           conn.prepareStatement(
               "SELECT a.id, a.balance, account_type FROM "
                   + AccessLevel.CUSTOMER.db
-                  + "AS c JOIN migrations_customeraccount as ca ON c.customer_id ="
-                  + " ca.customer_id_idJOIN migrations_account as a ON a.id = ca.account_no_id"
-                  + " WHERE c.username = ?LIMIT ?");
+                  + "AS c JOIN migrations_customeraccount AS ca ON c.customer_id ="
+                  + " ca.customer_id_id JOIN migrations_account AS a ON a.id = ca.account_no_id"
+                  + " WHERE c.username = ? ");
       queryCustomerAccountStatement.setString(1, username);
-      queryCustomerAccountStatement.setInt(2, numberOfAccounts);
       ResultSet rs = queryCustomerAccountStatement.executeQuery();
 
       while (rs.next()) {
