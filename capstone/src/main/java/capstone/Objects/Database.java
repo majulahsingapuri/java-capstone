@@ -347,41 +347,24 @@ public final class Database {
       // insert a new user into the user table
       PreparedStatement insertstmt =
           conn.prepareStatement(
-              "INSERT INTO "
-                  + AccessLevel.NONE.db
-                  + "(username, password, first_name, last_name) VALUES (?, ?, ?, ?) returning id");
+              "SELECT id, admin_id FROM create_admin(?, ?, ?, ?) AS (id INTEGER, admin_id"
+                  + " INTEGER)");
       insertstmt.setString(1, username);
       insertstmt.setString(2, password);
       insertstmt.setString(3, firstName);
       insertstmt.setString(4, lastName);
       ResultSet rs = insertstmt.executeQuery();
-      int user_id = 0;
       while (rs.next()) {
-        user_id = rs.getInt(1);
-      }
-
-      if (user_id != 0) {
-
-        // using the user id, insert into the admin table
-        PreparedStatement insertAdmin =
-            conn.prepareStatement(
-                "INSERT INTO "
-                    + AccessLevel.ADMIN.db
-                    + "(user_ptr_id) VALUES (?) returning admin_id");
-        insertAdmin.setInt(1, user_id);
-        ResultSet rs2 = insertAdmin.executeQuery();
-        while (rs2.next()) {
-          admin =
-              Optional.of(
-                  new Admin(
-                      user_id, // id
-                      username, // username
-                      password, // password
-                      firstName, // firstName
-                      lastName, // lastName
-                      rs2.getInt(1) // adminID
-                      ));
-        }
+        admin =
+            Optional.of(
+                new Admin(
+                    rs.getInt(1), // id
+                    username, // username
+                    password, // password
+                    firstName, // firstName
+                    lastName, // lastName
+                    rs.getInt(2) // adminID
+                    ));
       }
 
     } catch (SQLException e) {
@@ -549,7 +532,7 @@ public final class Database {
    *
    * @return null if the account could not be created else an {@link Account} objct
    */
-  public static Optional<Account> createAccount(String username, AccountType accountType) {
+  public static Optional<Account> createAccount(Customer customer, AccountType accountType) {
     Optional<Account> account = Optional.empty();
     try {
       // create a new account and get account id
@@ -565,23 +548,9 @@ public final class Database {
         account_no_id = rs.getInt(1); // get account_no_id
       }
 
-      // fetch customer account and get customer id
-      PreparedStatement selectCust =
-          conn.prepareStatement(
-              "SELECT c.customer_id FROM "
-                  + AccessLevel.CUSTOMER.db
-                  + " AS c JOIN "
-                  + AccessLevel.NONE.db
-                  + " AS u ON c.user_ptr_id = c.id WHERE u.username = ?");
-      selectCust.setString(1, username);
-      ResultSet rs2 = selectCust.executeQuery();
-      int customer_id = 0;
+      int customer_id = customer.getCustomerID();
 
-      while (rs2.next()) {
-        customer_id = rs2.getInt(1); // get customer_id
-      }
-
-      if (account_no_id != 0 && customer_id != 0) {
+      if (account_no_id != 0) {
         // create a customer_account relation between customer and account
         PreparedStatement insertCustAcc =
             conn.prepareStatement(

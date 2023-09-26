@@ -68,9 +68,11 @@ CREATE OR REPLACE FUNCTION create_admin(
         password TEXT,
         first_name TEXT,
         last_name TEXT
-    ) RETURNS INTEGER AS $$
+    ) RETURNS RECORD AS $$
 DECLARE 
+    ret RECORD;
     user_id INTEGER;
+    admin_id INTEGER;
 BEGIN 
     IF EXISTS (
         SELECT mu.username
@@ -91,10 +93,13 @@ BEGIN
     INSERT INTO migrations_admin (user_ptr_id)
     SELECT id
     FROM insert_user;
-    SELECT id INTO user_id
+    SELECT mu.id, ma.admin_id
     FROM migrations_user AS mu
+    INTO user_id, admin_id
+    JOIN migrations_admin AS ma on mu.id = ma.user_ptr_id
     WHERE mu.username = create_admin.username;
-    RETURN user_id;
+    ret := (user_id, admin_id);
+    RETURN ret;
 END;
 $$ LANGUAGE plpgsql;
 
