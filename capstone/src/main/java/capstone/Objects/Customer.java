@@ -176,4 +176,13 @@ public final class Customer extends User {
   public ArrayList<Account> getCustomerAccounts() {
     return Database.getCustomerAccounts(this.getUsername());
   }
+
+  /**
+   * Gets the customer's transactions from the database
+   *
+   * @return an ArrayList of the customer's transactions
+   */
+  public ArrayList<Transaction> getCustomerTransactions() {
+    return Database.getCustomerTransactions(this);
+  }
 }

@@ -647,6 +647,12 @@ public final class Database {
     return result;
   }
 
+  /**
+   * Fetch the given customer's transactions from the database
+   *
+   * @param customer the customer whose data to fetch
+   * @return an ArrayList of Transactions
+   */
   public static ArrayList<Transaction> getCustomerTransactions(Customer customer) {
     ArrayList<Transaction> transactions = new ArrayList<Transaction>();
     try {
