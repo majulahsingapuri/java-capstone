@@ -62,3 +62,77 @@ CREATE INDEX "migrations_customeraccount_account_no_id_2cb4d181" ON "migrations_
 CREATE INDEX "migrations_transaction_customer_id_id_d37cd9aa" ON "migrations_transaction" ("customer_id_id");
 CREATE INDEX "migrations_customeraccount_customer_id_id_d5f2c36a" ON "migrations_customeraccount" ("customer_id_id");
 COMMIT;
+
+CREATE OR REPLACE FUNCTION create_admin(
+        username TEXT,
+        password TEXT,
+        first_name TEXT,
+        last_name TEXT
+    ) RETURNS INTEGER AS $$
+DECLARE 
+    user_id INTEGER;
+    existing_username TEXT;
+BEGIN 
+    IF EXISTS (
+        SELECT mu.username
+        FROM migrations_user AS mu
+        WHERE mu.username = create_admin.username
+    ) THEN RAISE EXCEPTION 'user % exists', username;
+    END IF;
+    WITH insert_user AS (
+        INSERT INTO migrations_user (username, password, first_name, last_name)
+        VALUES (
+                create_admin.username,
+                create_admin.password,
+                create_admin.first_name,
+                create_admin.last_name
+            )
+        RETURNING id
+    )
+    INSERT INTO migrations_admin (user_ptr_id)
+    SELECT id
+    FROM insert_user;
+    SELECT id INTO user_id
+    FROM migrations_user AS mu
+    WHERE mu.username = create_admin.username;
+    RETURN user_id;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION create_teller(
+        username TEXT,
+        password TEXT,
+        first_name TEXT,
+        last_name TEXT
+    ) RETURNS INTEGER AS $$
+DECLARE 
+    user_id INTEGER;
+    existing_userName TEXT;
+BEGIN 
+    IF EXISTS (
+        SELECT mu.username
+        FROM migrations_user AS mu
+        WHERE mu.username = create_teller.username
+    ) THEN RAISE EXCEPTION 'user % exists',
+    username;
+    END IF;
+    WITH insert_user AS (
+        INSERT INTO migrations_user (username, password, first_name, last_name)
+        VALUES (
+                create_teller.username,
+                create_teller.password,
+                create_teller.first_name,
+                create_teller.last_name
+            )
+        RETURNING id
+    )
+    INSERT INTO migrations_teller (user_ptr_id)
+    SELECT id
+    FROM insert_user;
+    SELECT id INTO user_id
+    FROM migrations_user AS mu
+    WHERE mu.username = create_teller.username;
+    RETURN user_id;
+END;
+$$ LANGUAGE plpgsql;
+

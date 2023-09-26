@@ -406,7 +406,8 @@ public final class Database {
           conn.prepareStatement(
               "INSERT INTO "
                   + AccessLevel.NONE.db
-                  + "(username, password, firstName, lastName) VALUES (?, ?, ?, ?) returning id ");
+                  + "(username, password, first_name, last_name) VALUES (?, ?, ?, ?) returning id"
+                  + " ");
       insertUserStatement.setString(1, username);
       insertUserStatement.setString(2, password);
       insertUserStatement.setString(3, firstName);
