@@ -73,7 +73,12 @@ memberSearchIndex = [
     l: "containsUser(String)",
     u: "containsUser(java.lang.String)",
   },
-  { p: "capstone.Objects", c: "Database", l: "createAccount()" },
+  {
+    p: "capstone.Objects",
+    c: "Database",
+    l: "createAccount(String, AccountType)",
+    u: "createAccount(java.lang.String,capstone.Enums.AccountType)",
+  },
   {
     p: "capstone.Objects",
     c: "Database",
@@ -95,8 +100,8 @@ memberSearchIndex = [
   {
     p: "capstone.Objects",
     c: "Database",
-    l: "createTransaction(Customer, Account, TransactionType, DateTime, double)",
-    u: "createTransaction(capstone.Objects.Customer,capstone.Objects.Account,capstone.Enums.TransactionType,org.joda.time.DateTime,double)",
+    l: "createTransaction(Customer, Account, TransactionType, double)",
+    u: "createTransaction(capstone.Objects.Customer,capstone.Objects.Account,capstone.Enums.TransactionType,double)",
   },
   { p: "capstone.Enums", c: "TransactionType", l: "CREDIT" },
   { p: "capstone.Enums", c: "AccountType", l: "CURRENT" },
@@ -150,6 +155,12 @@ memberSearchIndex = [
   { p: "capstone.Objects", c: "User", l: "getAccessLevel()" },
   { p: "capstone.Objects", c: "Transaction", l: "getAccountNoID()" },
   { p: "capstone.Objects", c: "Account", l: "getAccountType()" },
+  {
+    p: "capstone.Enums",
+    c: "AccountType",
+    l: "getAccountType(String)",
+    u: "getAccountType(java.lang.String)",
+  },
   { p: "capstone.Objects", c: "Customer", l: "getAddress()" },
   {
     p: "capstone.Objects",
@@ -170,8 +181,8 @@ memberSearchIndex = [
   {
     p: "capstone.Objects",
     c: "Database",
-    l: "getCustomerAccounts(Customer)",
-    u: "getCustomerAccounts(capstone.Objects.Customer)",
+    l: "getCustomerAccounts(String)",
+    u: "getCustomerAccounts(java.lang.String)",
   },
   { p: "capstone.Objects", c: "Customer", l: "getCustomerID()" },
   { p: "capstone.Objects", c: "Transaction", l: "getCustomerID()" },

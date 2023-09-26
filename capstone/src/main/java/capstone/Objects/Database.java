@@ -614,16 +614,74 @@ public final class Database {
   /**
    * Retrieves the records in the CustomerAccount table from the SQL DATABASE
    *
-   * @param customer the customer whose account to be fetched
-   * @return an Arraylist of account objects
+   * @param username allows filtering to be done on the username to connect the tables
+   * @return an Arraylist of All the Transactions of the user
    */
-  public static ArrayList<Account> getCustomerAccounts(Customer customer) {
-    // query the database for accounts for this user
-    /**
-     * select * from acccounts a join customer_accounts ca on a.id = ca.acc_no join customer c on
-     * ca.cust_id = c.id where c.username = ?
-     */
-    return new ArrayList<Account>();
+  public static ArrayList<Account> getCustomerAccounts(String username) {
+    ArrayList<Account> result = new ArrayList<Account>();
+
+    try {
+      PreparedStatement queryCustomerAccountStatement =
+          conn.prepareStatement(
+              "SELECT a.id, a.balance, account_type FROM "
+                  + AccessLevel.CUSTOMER.db
+                  + "AS c JOIN migrations_customeraccount AS ca ON c.customer_id ="
+                  + " ca.customer_id_id JOIN migrations_account AS a ON a.id = ca.account_no_id"
+                  + " WHERE c.username = ? ");
+      queryCustomerAccountStatement.setString(1, username);
+      ResultSet rs = queryCustomerAccountStatement.executeQuery();
+
+      while (rs.next()) {
+        Account res =
+            new Account(
+                rs.getInt(1), // id
+                rs.getDouble(2),
+                AccountType.getAccountType(rs.getString(3)));
+        result.add(res);
+      }
+
+    } catch (SQLException se) {
+      System.out.println(se.getMessage());
+    }
+
+    return result;
+  }
+
+  /**
+   * Fetch the given customer's transactions from the database
+   *
+   * @param customer the customer whose data to fetch
+   * @return an ArrayList of Transactions
+   */
+  public static ArrayList<Transaction> getCustomerTransactions(Customer customer) {
+    ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+    try {
+      PreparedStatement queryCustomerTransactions =
+          conn.prepareStatement(
+              "SELECT c.id, c.transaction_ref, c.transaction_type, c.date, c.account_no_id,"
+                  + " c.customer_id_id\n"
+                  + "from migrations_customer as bjoin migrations_transaction as c on b.customer_id"
+                  + " = c.customer_id_id where b.customer_id = ?; ");
+      queryCustomerTransactions.setInt(1, customer.getCustomerID());
+      ResultSet rs = queryCustomerTransactions.executeQuery();
+
+      while (rs.next()) {
+        Transaction res =
+            new Transaction(
+                rs.getInt(1),
+                rs.getString(2),
+                TransactionType.getTransactionType(rs.getString(3)),
+                DateTime.parse(rs.getDate(4).toString()),
+                rs.getDouble(5),
+                rs.getInt(6),
+                rs.getInt(7));
+        transactions.add(res);
+      }
+
+    } catch (SQLException se) {
+      System.out.println(se.getMessage());
+    }
+    return transactions;
   }
 
   /**
@@ -634,7 +692,19 @@ public final class Database {
    * @return true
    */
   public static boolean updateBalance(Account account, float newBalance) {
-    return true;
+    boolean result = false;
+    try {
+      PreparedStatement stmt =
+          conn.prepareStatement(
+              "UPDATE migrations_account AS ma " + "SET balance = ? " + "WHERE ma.id = ?");
+      stmt.setFloat(1, newBalance);
+      stmt.setInt(2, account.getID());
+      stmt.executeQuery();
+      result = true;
+    } catch (SQLException se) {
+      System.out.println(se.getMessage());
+    }
+    return result;
   }
 
   /**
