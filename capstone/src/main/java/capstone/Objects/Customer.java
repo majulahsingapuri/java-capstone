@@ -38,14 +38,14 @@ public final class Customer extends User {
    * @param id the User's id
    * @param username The User's username.
    * @param password The User's password.
-   * @param firstName The User's password.
-   * @param lastName The User's password.
-   * @param customerID The User's password.
-   * @param nric The User's password.
-   * @param email The User's password.
-   * @param dateOfBirth The User's password.
-   * @param address The User's password.
-   * @param phoneNumber The User's password.
+   * @param firstName The User's first name.
+   * @param lastName The User's last name.
+   * @param customerID The User's customer id.
+   * @param nric The User's nric.
+   * @param email The User's email.
+   * @param dateOfBirth The User's date of birth.
+   * @param address The User's address.
+   * @param phoneNumber The User's phone number.
    */
   public Customer(
       int id,
