@@ -76,7 +76,7 @@ public final class Database {
               "select username from " + AccessLevel.NONE.db + " where username = ?");
       st.setString(1, username);
       ResultSet rs = st.executeQuery();
-      
+
       while (rs.next()) {
         if (rs.getString(1).equals(username)) {
           result = true;
@@ -627,9 +627,10 @@ public final class Database {
           conn.prepareStatement(
               "SELECT a.id, a.balance, account_type FROM "
                   + AccessLevel.CUSTOMER.db
-                  + "AS c JOIN migrations_customeraccount AS ca ON c.customer_id ="
+                  + " AS c JOIN migrations_customeraccount AS ca ON c.customer_id ="
                   + " ca.customer_id_id JOIN migrations_account AS a ON a.id = ca.account_no_id"
-                  + " WHERE c.username = ? ");
+                  + " JOIN migrations_user AS u ON c.user_ptr_id = u.id"
+                  + " WHERE u.username = ? ");
       queryCustomerAccountStatement.setString(1, username);
       ResultSet rs = queryCustomerAccountStatement.executeQuery();
 

@@ -142,7 +142,8 @@ public final class Helper {
     System.out.println(line);
   }
 
-  public static Double number_checker() {
+  public static Double Amount_input_Checker() {
+    // TODO: minus??
     double input_amount = 0;
     try {
       System.out.println("Enter the amount:");
@@ -159,7 +160,7 @@ public final class Helper {
 
   public static int continue_checker() {
     // for most view, decide whether continue this service or back to upper menu
-    System.out.println("Continue? [Y/N]: ");
+    System.out.println("Continue in this service? [Y/N]: ");
     String str_input = Helper.sc.nextLine();
     if (str_input.equals("N")) {
       return 1;
