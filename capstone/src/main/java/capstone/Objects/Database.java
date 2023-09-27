@@ -76,6 +76,7 @@ public final class Database {
               "select username from " + AccessLevel.NONE.db + " where username = ?");
       st.setString(1, username);
       ResultSet rs = st.executeQuery();
+      
       while (rs.next()) {
         if (rs.getString(1).equals(username)) {
           result = true;

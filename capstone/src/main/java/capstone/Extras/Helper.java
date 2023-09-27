@@ -168,5 +168,40 @@ public final class Helper {
     }
   }
 
-  //
+  public static String getUserDomain(){
+    //to print and get the domain of user
+    String domain;
+    System.out.println("Enter the user's domain");
+    while (true){
+      System.out.println("1. Admin");
+      System.out.println("2. Teller");
+      System.out.println("3. Customer");
+
+      System.out.print(String.format("%-50s: ", "Choice"));
+      domain = Helper.readLine();
+
+      if (domain.equals("1")) return "admin";
+      else if (domain.equals("2")) return "teller";
+      else if (domain.equals("3")) return "customer";
+      else System.out.println("Invalid input, try again");
+      }
+  }
+
+  public static String[] getUserAttributes(){
+    String[] ret = new String[4]; 
+    System.out.print(String.format("%-50s: ", "Enter username"));
+    String username = Helper.readLine();
+    ret[0] = username;
+    System.out.print(String.format("%-50s: ", "Enter password"));
+    String password = Helper.readLine();
+    //TODO: implement a password complexity checker in Helper to check if the password should pass  
+    ret[1] = password;
+    System.out.print(String.format("%-50s: ", "Enter firstName"));
+    String firstName = Helper.readLine();
+    ret[2] = firstName;
+    System.out.print(String.format("%-50s: ", "Enter lastName"));
+    String lastName = Helper.readLine();
+    ret[3] = lastName;
+    return ret;
+  }
 }
