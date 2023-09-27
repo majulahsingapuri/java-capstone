@@ -402,13 +402,14 @@ public final class Database {
    * @param password the new user's password
    * @return true
    */
-  public static boolean updatePassword(User user, byte[] password) {
+  public static boolean updatePassword(User user, String password) {
     /** Updating the given password in the database */
     try {
       PreparedStatement updateUserPassword =
           conn.prepareStatement(
-              "UPDATE a.password FROM" + AccessLevel.NONE.db + " WHERE username = ? ");
-      updateUserPassword.setString(1, user.getUsername());
+              "UPDATE " + AccessLevel.NONE.db + " SET password = ? WHERE username = ? ");
+      updateUserPassword.setString(1, password);
+      updateUserPassword.setString(2, user.getUsername());
       updateUserPassword.executeQuery();
       return true;
     } catch (SQLException e) {

@@ -2,7 +2,7 @@ package capstone.Objects;
 
 import capstone.Enums.AccessLevel;
 import capstone.Extras.Helper;
-import java.util.Base64;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  * The superclass of all User classes in the application.
@@ -29,7 +29,7 @@ public class User {
   private AccessLevel accessLevel;
 
   /** The encrypted password of each user. */
-  private byte[] password;
+  private String password;
 
   /**
    * Initialiser for the User Class with a new username, password and {@link AccessLevel}.
@@ -75,7 +75,7 @@ public class User {
         System.out.print("Enter the new password again: ");
         String newPassword2 = Helper.getPasswordInput();
         if (newPassword1.equals(newPassword2)) {
-          byte[] password = encryptPassword(newPassword1);
+          String password = encryptPassword(newPassword1);
           boolean result = Database.updatePassword(this, password);
           if (result) {
             this.password = password;
@@ -94,26 +94,13 @@ public class User {
   }
 
   /**
-   * Encrypts the raw password string using the Base64 encoding scheme as specified in RFC 4648 and
-   * RFC 2045.
+   * Encrypts the raw password string using the BCrypt tool
    *
    * @param rawString the raw password string
    * @return the encoded bytes
    */
-  private byte[] encryptPassword(String rawString) {
-    byte[] encodedBytes = Base64.getEncoder().encode(rawString.getBytes());
-    return encodedBytes;
-  }
-
-  /**
-   * Decrypts the password stored as byte data, using the Base 64 encoding scheme as specified in
-   * RFC 4648 and RFC 2045.
-   *
-   * @return the raw password string
-   */
-  private String decryptPassword() {
-    byte[] bytes = Base64.getDecoder().decode(this.password);
-    return new String(bytes);
+  private String encryptPassword(String rawString) {
+    return BCrypt.hashpw(rawString, BCrypt.gensalt());
   }
 
   /**
@@ -123,8 +110,7 @@ public class User {
    * @return {@code true} if the password is correct.
    */
   public boolean checkPassword(String input) {
-    String rawPassword = decryptPassword();
-    return input.equals(rawPassword);
+    return BCrypt.checkpw(input, this.password);
   }
 
   /**
