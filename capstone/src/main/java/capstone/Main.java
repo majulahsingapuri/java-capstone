@@ -1,9 +1,5 @@
 package capstone;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-
 import capstone.Objects.Database;
 import capstone.Views.LoginView;
 
@@ -21,6 +17,5 @@ public class Main {
     LoginView view = new LoginView();
     view.print();
     Database.close();
-  
   }
 }

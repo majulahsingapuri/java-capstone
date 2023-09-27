@@ -6,11 +6,7 @@ import capstone.Objects.Customer;
 import capstone.Objects.Database;
 import capstone.Objects.Teller;
 import capstone.Objects.User;
-
 import java.util.Optional;
-
-import javax.xml.crypto.Data;
-
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;

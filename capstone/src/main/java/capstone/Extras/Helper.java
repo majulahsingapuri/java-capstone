@@ -1,9 +1,11 @@
 package capstone.Extras;
 
 import capstone.Enums.DayOfWeek;
+import capstone.Objects.Customer;
 import capstone.Objects.Database;
 import capstone.Objects.User;
 import java.io.Console;
+import java.util.Optional;
 import java.util.Scanner;
 import org.joda.time.DateTime;
 
@@ -172,15 +174,22 @@ public final class Helper {
     }
   }
 
-  public static void customer_search() {
+  public static String customer_search() {
     // for admin and teller use
     System.out.println("Enter the customer username:");
     String username = Helper.readLine(); // convert to int type
     if (Database.containsUser(username)) {
-      User customer_user = Database.getUser(username).get();
+      Optional<Customer> queryRes = Database.getCustomer(username);
+      Boolean isEmpty = queryRes.isEmpty();
+      if (isEmpty) {
+        System.out.println("Customer with username " + username + " cannot be found");
+        return null;
+      }
+      return username;
     } else {
-      System.out.println("This payee does not exist! Please re-enter!");
+      System.out.println("This username does not exist! Please re-enter!");
       Helper.pause();
+      return null;
     }
   }
 
@@ -221,10 +230,10 @@ public final class Helper {
     return ret;
   }
 
-  public static void printUserInfo(User user){
+  public static void printUserInfo(User user) {
     Helper.printLine(80);
-    System.out.print(String.format("%-50s: %s%n", "userName", user.getUsername()));  
-    System.out.print(String.format("%-50s: %s%n", "firstName",user.getFirstName()));
-    System.out.print(String.format("%-50s: %s%n", "lastName",user.getLastName()));  
-}
+    System.out.print(String.format("%-50s: %s%n", "userName", user.getUsername()));
+    System.out.print(String.format("%-50s: %s%n", "firstName", user.getFirstName()));
+    System.out.print(String.format("%-50s: %s%n", "lastName", user.getLastName()));
+  }
 }

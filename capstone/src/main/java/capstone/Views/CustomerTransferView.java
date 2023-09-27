@@ -15,7 +15,7 @@ public final class CustomerTransferView extends View {
         System.out.println("Enter the account number you want to transfer to:");
         String account_string = Helper.readLine(); // convert to int type
         // check whether account exist
-        //TODO: need to first get username then get account
+        // TODO: need to first get username then get account
         if (Database.containsUser(account_string)) {
           User reveiver_user = Database.getUser(account_string).get();
         } else {
