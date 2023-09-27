@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 import org.joda.time.DateTime;
+import org.json.JSONObject;
 
 /**
  * The Class that interacts with the files and handles reading and writing of information.
@@ -280,51 +281,33 @@ public final class Database {
       // insert a new user into the user table
       PreparedStatement insertstmt =
           conn.prepareStatement(
-              "INSERT INTO "
-                  + AccessLevel.NONE.db
-                  + "(username, password, first_name, last_name) VALUES (?, ?, ?, ?) returning id");
+              "SELECT user_id, customer_id FROM create_customer(?, ?, ?, ?, ?, ?, ?, ?, ?) AS"
+                  + " (user_id INTEGER, customer_id INTEGER)");
       insertstmt.setString(1, username);
       insertstmt.setString(2, password);
       insertstmt.setString(3, firstName);
       insertstmt.setString(4, lastName);
+      insertstmt.setString(5, nric);
+      insertstmt.setString(6, email);
+      insertstmt.setDate(7, new java.sql.Date(dateOfBirth.getTime()));
+      insertstmt.setString(8, address);
+      insertstmt.setString(9, phoneNumber);
       ResultSet rs = insertstmt.executeQuery();
-      int user_id = 0;
       while (rs.next()) {
-        user_id = rs.getInt(1);
-      }
-
-      if (user_id != 0) {
-
-        // using the user id, insert into the customer table
-        PreparedStatement insertCustomer =
-            conn.prepareStatement(
-                "INSERT INTO "
-                    + AccessLevel.CUSTOMER.db
-                    + "(user_ptr_id, nric, email, date_of_birth, address, phone_no) VALUES (?, ?,"
-                    + " ?, ?, ?, ?) returning customer_id");
-        insertCustomer.setInt(1, user_id);
-        insertCustomer.setString(2, nric);
-        insertCustomer.setString(3, email);
-        insertCustomer.setDate(4, new java.sql.Date(dateOfBirth.getTime()));
-        insertCustomer.setString(5, address);
-        insertCustomer.setString(6, phoneNumber);
-        ResultSet rs2 = insertCustomer.executeQuery();
-        while (rs2.next()) {
-          customer =
-              Optional.of(
-                  new Customer(
-                      user_id,
-                      username,
-                      password,
-                      firstName,
-                      lastName,
-                      rs2.getInt(1), // customerID
-                      nric,
-                      email,
-                      dateOfBirth,
-                      address,
-                      phoneNumber));
-        }
+        customer =
+            Optional.of(
+                new Customer(
+                    rs.getInt(1), // userID
+                    username,
+                    password,
+                    firstName,
+                    lastName,
+                    rs.getInt(2), // customerID
+                    nric,
+                    email,
+                    dateOfBirth,
+                    address,
+                    phoneNumber));
       }
 
     } catch (SQLException e) {
@@ -347,41 +330,24 @@ public final class Database {
       // insert a new user into the user table
       PreparedStatement insertstmt =
           conn.prepareStatement(
-              "INSERT INTO "
-                  + AccessLevel.NONE.db
-                  + "(username, password, first_name, last_name) VALUES (?, ?, ?, ?) returning id");
+              "SELECT user_id, admin_id FROM create_admin(?, ?, ?, ?) AS (user_id INTEGER, admin_id"
+                  + " INTEGER)");
       insertstmt.setString(1, username);
       insertstmt.setString(2, password);
       insertstmt.setString(3, firstName);
       insertstmt.setString(4, lastName);
       ResultSet rs = insertstmt.executeQuery();
-      int user_id = 0;
       while (rs.next()) {
-        user_id = rs.getInt(1);
-      }
-
-      if (user_id != 0) {
-
-        // using the user id, insert into the admin table
-        PreparedStatement insertAdmin =
-            conn.prepareStatement(
-                "INSERT INTO "
-                    + AccessLevel.ADMIN.db
-                    + "(user_ptr_id) VALUES (?) returning admin_id");
-        insertAdmin.setInt(1, user_id);
-        ResultSet rs2 = insertAdmin.executeQuery();
-        while (rs2.next()) {
-          admin =
-              Optional.of(
-                  new Admin(
-                      user_id, // id
-                      username, // username
-                      password, // password
-                      firstName, // firstName
-                      lastName, // lastName
-                      rs2.getInt(1) // adminID
-                      ));
-        }
+        admin =
+            Optional.of(
+                new Admin(
+                    rs.getInt(1), // id
+                    username, // username
+                    password, // password
+                    firstName, // firstName
+                    lastName, // lastName
+                    rs.getInt(2) // adminID
+                    ));
       }
 
     } catch (SQLException e) {
@@ -404,41 +370,24 @@ public final class Database {
       /** Insert a new User */
       PreparedStatement insertUserStatement =
           conn.prepareStatement(
-              "INSERT INTO "
-                  + AccessLevel.NONE.db
-                  + "(username, password, firstName, lastName) VALUES (?, ?, ?, ?) returning id ");
+              "SELECT user_id, teller_id FROM create_teller(?, ?, ?, ?) AS (user_id INTEGER,"
+                  + " teller_id INTEGER)");
       insertUserStatement.setString(1, username);
       insertUserStatement.setString(2, password);
       insertUserStatement.setString(3, firstName);
       insertUserStatement.setString(4, lastName);
       ResultSet rs = insertUserStatement.executeQuery();
-      int user_id = 0;
       while (rs.next()) {
-        user_id = rs.getInt(1);
-      }
-
-      if (user_id != 0) {
-
-        /** Inserts the newly created Teller */
-        PreparedStatement insertTellerStatement =
-            conn.prepareStatement(
-                "INSERT INTO "
-                    + AccessLevel.TELLER.db
-                    + "(user_ptr_id) VALUES (?) returning teller_id");
-        insertTellerStatement.setInt(1, user_id);
-        ResultSet rs2 = insertTellerStatement.executeQuery();
-        while (rs2.next()) {
-          teller =
-              Optional.of(
-                  new Teller(
-                      user_id, // id
-                      username, // username
-                      password, // password
-                      firstName, // firstName
-                      lastName, // lastName
-                      rs2.getInt(1) // tellerId
-                      ));
-        }
+        teller =
+            Optional.of(
+                new Teller(
+                    rs.getInt(1), // id
+                    username, // username
+                    password, // password
+                    firstName, // firstName
+                    lastName, // lastName
+                    rs.getInt(2) // tellerId
+                    ));
       }
     } catch (SQLException e) {
       System.out.println(e.getMessage());
@@ -453,13 +402,14 @@ public final class Database {
    * @param password the new user's password
    * @return true
    */
-  public static boolean updatePassword(User user, byte[] password) {
+  public static boolean updatePassword(User user, String password) {
     /** Updating the given password in the database */
     try {
       PreparedStatement updateUserPassword =
           conn.prepareStatement(
-              "UPDATE a.password FROM" + AccessLevel.NONE.db + " WHERE username = ? ");
-      updateUserPassword.setString(1, user.getUsername());
+              "UPDATE " + AccessLevel.NONE.db + " SET password = ? WHERE username = ? ");
+      updateUserPassword.setString(1, password);
+      updateUserPassword.setString(2, user.getUsername());
       updateUserPassword.executeQuery();
       return true;
     } catch (SQLException e) {
@@ -548,60 +498,17 @@ public final class Database {
    *
    * @return null if the account could not be created else an {@link Account} objct
    */
-  public static Optional<Account> createAccount(String username, AccountType accountType) {
+  public static Optional<Account> createAccount(Customer customer, AccountType accountType) {
     Optional<Account> account = Optional.empty();
     try {
       // create a new account and get account id
-      PreparedStatement insertAccount =
-          conn.prepareStatement(
-              "INSERT INTO migrations_account(balance, account_type) VALUES (?, ?) RETURNING id");
-      insertAccount.setInt(1, 0);
+      PreparedStatement insertAccount = conn.prepareStatement("SELECT * FROM create_account(?, ?)");
+      insertAccount.setInt(1, customer.getCustomerID());
       insertAccount.setString(2, accountType.type);
       ResultSet rs = insertAccount.executeQuery();
-      int account_no_id = 0;
 
       while (rs.next()) {
-        account_no_id = rs.getInt(1); // get account_no_id
-      }
-
-      // fetch customer account and get customer id
-      PreparedStatement selectCust =
-          conn.prepareStatement(
-              "SELECT c.customer_id FROM "
-                  + AccessLevel.CUSTOMER.db
-                  + " AS c JOIN "
-                  + AccessLevel.NONE.db
-                  + " AS u ON c.user_ptr_id = c.id WHERE u.username = ?");
-      selectCust.setString(1, username);
-      ResultSet rs2 = selectCust.executeQuery();
-      int customer_id = 0;
-
-      while (rs2.next()) {
-        customer_id = rs2.getInt(1); // get customer_id
-      }
-
-      if (account_no_id != 0 && customer_id != 0) {
-        // create a customer_account relation between customer and account
-        PreparedStatement insertCustAcc =
-            conn.prepareStatement(
-                "INSERT INTO migrations_customeraccount(account_no_id, customer_id_id) "
-                    + "VALUES(?, ?)");
-        insertCustAcc.setInt(1, account_no_id);
-        insertCustAcc.setInt(2, customer_id);
-        insertCustAcc.executeQuery();
-
-        // select the new account created
-        PreparedStatement stmt =
-            conn.prepareStatement(
-                "SELECT id, balance, account_type FROM migrations_account as a WHERE a.id = ?");
-        stmt.setInt(1, account_no_id);
-        ResultSet rs3 = stmt.executeQuery();
-
-        while (rs3.next()) {
-          if (rs3.getInt(1) == account_no_id) {
-            account = Optional.of(new Account(rs3.getInt(1), rs3.getDouble(2), accountType));
-          }
-        }
+        account = Optional.of(new Account(rs.getInt(1), 0.0, accountType));
       }
       return account;
 
@@ -755,5 +662,202 @@ public final class Database {
       System.out.println(e.getMessage());
     }
     return transaction;
+  }
+
+  /***
+   * creates a log and logs the details
+   *
+   * @param user cast the object down to a user
+   * @param task user's task
+   * @param error the error for the task
+   * @return true if successfully logged
+   */
+  public static boolean createLogging(User user, String task, String error) {
+    boolean result = false;
+    DateTime timestamp = DateTime.now();
+    JSONObject jo = new JSONObject();
+    jo.put("user", user.getUsername());
+    jo.put("task", task);
+    jo.put("error", error);
+    try {
+      PreparedStatement stmt =
+          conn.prepareStatement(
+              "INSERT INTO migrations_log(user_ptr_id, date, data) VALUES (?, ?, ?::json)");
+      stmt.setInt(1, user.getID());
+      stmt.setDate(
+          2,
+          new java.sql.Date(
+              timestamp.toDate().getTime())); // TODO Check for probable loss of time part
+      stmt.setString(3, jo.toString());
+      stmt.executeQuery();
+      result = true;
+    } catch (SQLException se) {
+      System.out.println(se.getMessage());
+    }
+    return result;
+  }
+
+  /**
+   * allows the teller and admin to change the customer's first name
+   *
+   * @param customer customer to update
+   * @param firstName new first name
+   * @return true if first name is successfully updated
+   */
+  public static boolean updateCustomerFirstName(Customer customer, String firstName) {
+    boolean result = false;
+    try {
+      PreparedStatement upstmt =
+          conn.prepareStatement(
+              "UPDATE " + AccessLevel.CUSTOMER.db + " SET first_name = ?," + " WHERE username = ?");
+      upstmt.setString(1, firstName);
+      upstmt.setString(2, customer.getUsername());
+      upstmt.executeQuery();
+      result = true;
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return result;
+  }
+
+  /**
+   * allows the teller and admin to change the customer's last name
+   *
+   * @param customer customer to update
+   * @param lastName new last name
+   * @return true if last name is successfully updated
+   */
+  public static boolean updateCustomerLastName(Customer customer, String lastName) {
+    boolean result = false;
+    try {
+      PreparedStatement upstmt =
+          conn.prepareStatement(
+              "UPDATE " + AccessLevel.CUSTOMER.db + " SET last_name = ?," + " WHERE username = ?");
+      upstmt.setString(1, lastName);
+      upstmt.setString(2, customer.getUsername());
+      upstmt.executeQuery();
+      result = true;
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return result;
+  }
+
+  /**
+   * allows the teller and admin to change the customer's nric
+   *
+   * @param customer customer to update
+   * @param nric new nric
+   * @return true if nric is successfully updated
+   */
+  public static boolean updateCustomerNRIC(Customer customer, String nric) {
+    boolean result = false;
+    try {
+      PreparedStatement upstmt =
+          conn.prepareStatement(
+              "UPDATE " + AccessLevel.CUSTOMER.db + " SET nric = ?," + " WHERE username = ?");
+      upstmt.setString(1, nric);
+      upstmt.setString(2, customer.getUsername());
+      upstmt.executeQuery();
+      result = true;
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return result;
+  }
+
+  /**
+   * allows the teller and admin to change the customer's email
+   *
+   * @param customer customer to update
+   * @param email new email
+   * @return true if email is successfully updated
+   */
+  public static boolean updateCustomerEmail(Customer customer, String email) {
+    boolean result = false;
+    try {
+      PreparedStatement upstmt =
+          conn.prepareStatement(
+              "UPDATE " + AccessLevel.CUSTOMER.db + " SET email = ?," + " WHERE username = ?");
+      upstmt.setString(1, email);
+      upstmt.setString(2, customer.getUsername());
+      upstmt.executeQuery();
+      result = true;
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return result;
+  }
+
+  /**
+   * allows the teller and admin to change the customer's date of birth
+   *
+   * @param customer customer to update
+   * @param email new date of birth
+   * @return true if date of birth is successfully updated
+   */
+  public static boolean updateCustomerDob(Customer customer, Date dob) {
+    boolean result = false;
+    try {
+      PreparedStatement upstmt =
+          conn.prepareStatement(
+              "UPDATE "
+                  + AccessLevel.CUSTOMER.db
+                  + " SET date_of_birth = ?,"
+                  + " WHERE username = ?");
+      upstmt.setDate(1, new java.sql.Date(dob.getTime()));
+      upstmt.setString(2, customer.getUsername());
+      upstmt.executeQuery();
+      result = true;
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return result;
+  }
+
+  /**
+   * allows the teller and admin to change the customer's address
+   *
+   * @param customer customer to update
+   * @param email new address
+   * @return true if address is successfully updated
+   */
+  public static boolean updateCustomerAddress(Customer customer, String address) {
+    boolean result = false;
+    try {
+      PreparedStatement upstmt =
+          conn.prepareStatement(
+              "UPDATE " + AccessLevel.CUSTOMER.db + " SET address = ?," + " WHERE username = ?");
+      upstmt.setString(1, address);
+      upstmt.setString(2, customer.getUsername());
+      upstmt.executeQuery();
+      result = true;
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return result;
+  }
+
+  /**
+   * allows the teller and admin to change the customer's phone number
+   *
+   * @param customer customer to update
+   * @param email new phone number
+   * @return true if phone number is successfully updated
+   */
+  public static boolean updateCustomerPhoneNumber(Customer customer, String phone_number) {
+    boolean result = false;
+    try {
+      PreparedStatement upstmt =
+          conn.prepareStatement(
+              "UPDATE " + AccessLevel.CUSTOMER.db + " SET phone_no = ?," + " WHERE username = ?");
+      upstmt.setString(1, phone_number);
+      upstmt.setString(2, customer.getUsername());
+      upstmt.executeQuery();
+      result = true;
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return result;
   }
 }
