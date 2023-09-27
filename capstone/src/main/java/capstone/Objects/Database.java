@@ -664,18 +664,26 @@ public final class Database {
     return transaction;
   }
 
-  public static boolean createLogging(Admin admin, String task, String error) {
+  /***
+   * creates a log and logs the details
+   *
+   * @param user cast the object down to a user
+   * @param task user's task
+   * @param error the error for the task
+   * @return true if successfully logged
+   */
+  public static boolean createLogging(User user, String task, String error) {
     boolean result = false;
     DateTime timestamp = DateTime.now();
     JSONObject jo = new JSONObject();
-    jo.put("user", admin.getUsername());
+    jo.put("user", user.getUsername());
     jo.put("task", task);
     jo.put("error", error);
     try {
       PreparedStatement stmt =
           conn.prepareStatement(
               "INSERT INTO migrations_log(user_ptr_id, date, data) VALUES (?, ?, ?::json)");
-      stmt.setInt(1, admin.getID());
+      stmt.setInt(1, user.getID());
       stmt.setDate(
           2,
           new java.sql.Date(
