@@ -17,3 +17,5 @@ This is for the UOB TDP Capstone 2 project
    ```bash
    docker run -d -v capstone2_db:/var/lib/postgresql/data -e POSTGRES_USER=capstone2 -e POSTGRES_PASSWORD=password -e POSTGRES_DB=capstone2 -p 5432:5432 --name capstone2_db postgres
    ```
+
+4. Run the `create_db_via_django.sql` file to create the tables.
