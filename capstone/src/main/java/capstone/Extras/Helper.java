@@ -90,7 +90,7 @@ public final class Helper {
    */
   public static String readLine() {
 
-    return sc.nextLine().toUpperCase();
+    return sc.nextLine();
   }
 
   /**
@@ -142,6 +142,21 @@ public final class Helper {
     System.out.println(line);
   }
 
+  public static Double number_checker() {
+    double input_amount = 0;
+    try {
+      System.out.println("Enter the amount:");
+      input_amount = Helper.sc.nextDouble();
+      System.out.println("Amount Number:" + input_amount);
+      Helper.sc.nextLine(); // this line ensures next .nextLine() consume propoerly for next input
+      return input_amount;
+    } catch (Exception e) {
+      System.out.println(ConsoleColours.RED_BOLD + "NOT A VALID NUMBER" + ConsoleColours.RESET);
+      Helper.sc.nextLine(); // this line ensures next .nextLine() consume propoerly for next input
+      return input_amount;
+    }
+  }
+
   public static int continue_checker() {
     // for most view, decide whether continue this service or back to upper menu
     System.out.println("Continue? [Y/N]: ");
@@ -168,11 +183,11 @@ public final class Helper {
     }
   }
 
-  public static String getUserDomain(){
-    //to print and get the domain of user
+  public static String getUserDomain() {
+    // to print and get the domain of user
     String domain;
     System.out.println("Enter the user's domain");
-    while (true){
+    while (true) {
       System.out.println("1. Admin");
       System.out.println("2. Teller");
       System.out.println("3. Customer");
@@ -184,17 +199,17 @@ public final class Helper {
       else if (domain.equals("2")) return "teller";
       else if (domain.equals("3")) return "customer";
       else System.out.println("Invalid input, try again");
-      }
+    }
   }
 
-  public static String[] getUserAttributes(){
-    String[] ret = new String[4]; 
+  public static String[] getUserAttributes() {
+    String[] ret = new String[4];
     System.out.print(String.format("%-50s: ", "Enter username"));
     String username = Helper.readLine();
     ret[0] = username;
     System.out.print(String.format("%-50s: ", "Enter password"));
     String password = Helper.readLine();
-    //TODO: implement a password complexity checker in Helper to check if the password should pass  
+    // TODO: implement a password complexity checker in Helper to check if the password should pass
     ret[1] = password;
     System.out.print(String.format("%-50s: ", "Enter firstName"));
     String firstName = Helper.readLine();
