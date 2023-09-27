@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 import org.joda.time.DateTime;
+import org.json.JSONObject;
 
 /**
  * The Class that interacts with the files and handles reading and writing of information.
@@ -660,5 +661,30 @@ public final class Database {
       System.out.println(e.getMessage());
     }
     return transaction;
+  }
+
+  public static boolean createLogging(Admin admin, String task, String error) {
+    boolean result = false;
+    DateTime timestamp = DateTime.now();
+    JSONObject jo = new JSONObject();
+    jo.put("user", admin.getUsername());
+    jo.put("task", task);
+    jo.put("error", error);
+    try {
+      PreparedStatement stmt =
+          conn.prepareStatement(
+              "INSERT INTO migrations_log(user_ptr_id, date, data) VALUES (?, ?, ?::json)");
+      stmt.setInt(1, admin.getID());
+      stmt.setDate(
+          2,
+          new java.sql.Date(
+              timestamp.toDate().getTime())); // TODO Check for probable loss of time part
+      stmt.setString(3, jo.toString());
+      stmt.executeQuery();
+      result = true;
+    } catch (SQLException se) {
+      System.out.println(se.getMessage());
+    }
+    return result;
   }
 }
