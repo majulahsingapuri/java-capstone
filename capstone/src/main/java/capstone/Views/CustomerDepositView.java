@@ -1,5 +1,6 @@
 package capstone.Views;
 
+import capstone.Extras.ConsoleColours;
 import capstone.Extras.Helper;
 import capstone.Objects.Account;
 import capstone.Objects.Database;
@@ -30,7 +31,10 @@ public final class CustomerDepositView extends View {
             });
         System.out.println("#################");
       } catch (Exception e) {
-        System.out.println("This customer does not have a bank account!");
+        System.out.println(
+            ConsoleColours.RED_BOLD
+                + "This customer does not have a bank account!"
+                + ConsoleColours.RESET);
         continue;
       }
 
@@ -58,16 +62,23 @@ public final class CustomerDepositView extends View {
                   (float) (balance_current + input_amount); // [x] difference with withdraw
               Database.updateBalance(
                   account_list.get(choice - 1), balance_after_withdraw); // add try
-              System.out.println("Deposit Successful!"); // [x] difference with withdraw
+              System.out.println(
+                  ConsoleColours.GREEN
+                      + "Deposit Successful!"
+                      + ConsoleColours.RESET); // [x] difference with withdraw
               break;
             } else if (input_amount <= 0) {
-              System.out.println("Please enter a valid and positive number!");
+              System.out.println(
+                  ConsoleColours.RED_BOLD
+                      + "Please enter a valid and positive number!"
+                      + ConsoleColours.RESET);
               continue;
             }
           }
           break;
         } catch (Exception e) {
-          System.out.println("Invalid choice input!");
+          System.out.println(
+              ConsoleColours.RED_BOLD + "Invalid choice input!" + ConsoleColours.RESET);
           continue;
         }
       }

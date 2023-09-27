@@ -1,5 +1,6 @@
 package capstone.Views;
 
+import capstone.Extras.ConsoleColours;
 import capstone.Extras.Helper;
 import capstone.Objects.Account;
 import capstone.Objects.Database;
@@ -31,7 +32,10 @@ public final class TellerWithdrawView extends View {
             });
         System.out.println("#################");
       } catch (Exception e) {
-        System.out.println("This customer does not have a bank account!");
+        System.out.println(
+            ConsoleColours.RED_BOLD
+                + "This customer does not have a bank account!"
+                + ConsoleColours.RESET);
         continue;
       }
 
@@ -57,19 +61,25 @@ public final class TellerWithdrawView extends View {
               float balance_after_withdraw = (float) (balance_current - input_amount);
               Database.updateBalance(
                   account_list.get(choice - 1), balance_after_withdraw); // add try
-              System.out.println("Withdraw Successful!");
+              System.out.println(
+                  ConsoleColours.GREEN + "Withdraw Successful!" + ConsoleColours.RESET);
               break;
             } else if (input_amount > balance_current) {
-              System.out.println("Insufficient Cash inside!");
+              System.out.println(
+                  ConsoleColours.YELLOW + "Insufficient Cash inside!" + ConsoleColours.RESET);
               break;
             } else if (input_amount <= 0) {
-              System.out.println("Please enter a valid and positive number!");
+              System.out.println(
+                  ConsoleColours.RED_BOLD
+                      + "Please enter a valid and positive number!"
+                      + ConsoleColours.RESET);
               continue;
             }
           }
           break;
         } catch (Exception e) {
-          System.out.println("Invalid choice input!");
+          System.out.println(
+              ConsoleColours.RED_BOLD + "Invalid choice input!" + ConsoleColours.RESET);
           continue;
         }
       }

@@ -169,7 +169,8 @@ public final class Helper {
     } else if (str_input.equals("Y")) {
       return 0;
     } else {
-      System.out.println("Wrong Input, please input Y/N or y/n");
+      System.out.println(
+          ConsoleColours.RED_BOLD + "Wrong Input, please input Y/N or y/n" + ConsoleColours.RESET);
       return 0;
     }
   }
@@ -182,12 +183,20 @@ public final class Helper {
       Optional<Customer> queryRes = Database.getCustomer(username);
       Boolean isEmpty = queryRes.isEmpty();
       if (isEmpty) {
-        System.out.println("Customer with username " + username + " cannot be found");
+        System.out.println(
+            ConsoleColours.RED_BOLD
+                + "Customer with username "
+                + username
+                + " cannot be found"
+                + ConsoleColours.RESET);
         return null;
       }
       return username;
     } else {
-      System.out.println("This username does not exist! Please re-enter!");
+      System.out.println(
+          ConsoleColours.RED_BOLD
+              + "This username does not exist! Please re-enter!"
+              + ConsoleColours.RESET);
       Helper.pause();
       return null;
     }
@@ -208,7 +217,9 @@ public final class Helper {
       if (domain.equals("1")) return "admin";
       else if (domain.equals("2")) return "teller";
       else if (domain.equals("3")) return "customer";
-      else System.out.println("Invalid input, try again");
+      else
+        System.out.println(
+            ConsoleColours.RED_BOLD + "Invalid input, try again" + ConsoleColours.RESET);
     }
   }
 
