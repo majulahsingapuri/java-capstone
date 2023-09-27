@@ -209,7 +209,7 @@ public final class Helper {
     String username = Helper.readLine();
     ret[0] = username;
     System.out.print(String.format("%-50s: ", "Enter password"));
-    String password = Helper.readLine();
+    String password = Helper.getPasswordInput();
     // TODO: implement a password complexity checker in Helper to check if the password should pass
     ret[1] = password;
     System.out.print(String.format("%-50s: ", "Enter firstName"));
@@ -220,4 +220,11 @@ public final class Helper {
     ret[3] = lastName;
     return ret;
   }
+
+  public static void printUserInfo(User user){
+    Helper.printLine(80);
+    System.out.print(String.format("%-50s: %s%n", "userName", user.getUsername()));  
+    System.out.print(String.format("%-50s: %s%n", "firstName",user.getFirstName()));
+    System.out.print(String.format("%-50s: %s%n", "lastName",user.getLastName()));  
+}
 }
