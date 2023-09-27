@@ -696,4 +696,168 @@ public final class Database {
     }
     return result;
   }
+
+  /**
+   * allows the teller and admin to change the customer's first name
+   *
+   * @param customer customer to update
+   * @param firstName new first name
+   * @return true if first name is successfully updated
+   */
+  public static boolean updateCustomerFirstName(Customer customer, String firstName) {
+    boolean result = false;
+    try {
+      PreparedStatement upstmt =
+          conn.prepareStatement(
+              "UPDATE " + AccessLevel.CUSTOMER.db + " SET first_name = ?," + " WHERE username = ?");
+      upstmt.setString(1, firstName);
+      upstmt.setString(2, customer.getUsername());
+      upstmt.executeQuery();
+      result = true;
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return result;
+  }
+
+  /**
+   * allows the teller and admin to change the customer's last name
+   *
+   * @param customer customer to update
+   * @param lastName new last name
+   * @return true if last name is successfully updated
+   */
+  public static boolean updateCustomerLastName(Customer customer, String lastName) {
+    boolean result = false;
+    try {
+      PreparedStatement upstmt =
+          conn.prepareStatement(
+              "UPDATE " + AccessLevel.CUSTOMER.db + " SET last_name = ?," + " WHERE username = ?");
+      upstmt.setString(1, lastName);
+      upstmt.setString(2, customer.getUsername());
+      upstmt.executeQuery();
+      result = true;
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return result;
+  }
+
+  /**
+   * allows the teller and admin to change the customer's nric
+   *
+   * @param customer customer to update
+   * @param nric new nric
+   * @return true if nric is successfully updated
+   */
+  public static boolean updateCustomerNRIC(Customer customer, String nric) {
+    boolean result = false;
+    try {
+      PreparedStatement upstmt =
+          conn.prepareStatement(
+              "UPDATE " + AccessLevel.CUSTOMER.db + " SET nric = ?," + " WHERE username = ?");
+      upstmt.setString(1, nric);
+      upstmt.setString(2, customer.getUsername());
+      upstmt.executeQuery();
+      result = true;
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return result;
+  }
+
+  /**
+   * allows the teller and admin to change the customer's email
+   *
+   * @param customer customer to update
+   * @param email new email
+   * @return true if email is successfully updated
+   */
+  public static boolean updateCustomerEmail(Customer customer, String email) {
+    boolean result = false;
+    try {
+      PreparedStatement upstmt =
+          conn.prepareStatement(
+              "UPDATE " + AccessLevel.CUSTOMER.db + " SET email = ?," + " WHERE username = ?");
+      upstmt.setString(1, email);
+      upstmt.setString(2, customer.getUsername());
+      upstmt.executeQuery();
+      result = true;
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return result;
+  }
+
+  /**
+   * allows the teller and admin to change the customer's date of birth
+   *
+   * @param customer customer to update
+   * @param email new date of birth
+   * @return true if date of birth is successfully updated
+   */
+  public static boolean updateCustomerDob(Customer customer, Date dob) {
+    boolean result = false;
+    try {
+      PreparedStatement upstmt =
+          conn.prepareStatement(
+              "UPDATE "
+                  + AccessLevel.CUSTOMER.db
+                  + " SET date_of_birth = ?,"
+                  + " WHERE username = ?");
+      upstmt.setDate(1, new java.sql.Date(dob.getTime()));
+      upstmt.setString(2, customer.getUsername());
+      upstmt.executeQuery();
+      result = true;
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return result;
+  }
+
+  /**
+   * allows the teller and admin to change the customer's address
+   *
+   * @param customer customer to update
+   * @param email new address
+   * @return true if address is successfully updated
+   */
+  public static boolean updateCustomerAddress(Customer customer, String address) {
+    boolean result = false;
+    try {
+      PreparedStatement upstmt =
+          conn.prepareStatement(
+              "UPDATE " + AccessLevel.CUSTOMER.db + " SET address = ?," + " WHERE username = ?");
+      upstmt.setString(1, address);
+      upstmt.setString(2, customer.getUsername());
+      upstmt.executeQuery();
+      result = true;
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return result;
+  }
+
+  /**
+   * allows the teller and admin to change the customer's phone number
+   *
+   * @param customer customer to update
+   * @param email new phone number
+   * @return true if phone number is successfully updated
+   */
+  public static boolean updateCustomerPhoneNumber(Customer customer, String phone_number) {
+    boolean result = false;
+    try {
+      PreparedStatement upstmt =
+          conn.prepareStatement(
+              "UPDATE " + AccessLevel.CUSTOMER.db + " SET phone_no = ?," + " WHERE username = ?");
+      upstmt.setString(1, phone_number);
+      upstmt.setString(2, customer.getUsername());
+      upstmt.executeQuery();
+      result = true;
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return result;
+  }
 }
