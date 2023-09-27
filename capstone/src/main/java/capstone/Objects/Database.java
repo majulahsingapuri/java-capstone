@@ -280,51 +280,33 @@ public final class Database {
       // insert a new user into the user table
       PreparedStatement insertstmt =
           conn.prepareStatement(
-              "INSERT INTO "
-                  + AccessLevel.NONE.db
-                  + "(username, password, first_name, last_name) VALUES (?, ?, ?, ?) returning id");
+              "SELECT user_id, customer_id FROM create_customer(?, ?, ?, ?, ?, ?, ?, ?, ?) AS"
+                  + " (user_id INTEGER, customer_id INTEGER)");
       insertstmt.setString(1, username);
       insertstmt.setString(2, password);
       insertstmt.setString(3, firstName);
       insertstmt.setString(4, lastName);
+      insertstmt.setString(5, nric);
+      insertstmt.setString(6, email);
+      insertstmt.setDate(7, new java.sql.Date(dateOfBirth.getTime()));
+      insertstmt.setString(8, address);
+      insertstmt.setString(9, phoneNumber);
       ResultSet rs = insertstmt.executeQuery();
-      int user_id = 0;
       while (rs.next()) {
-        user_id = rs.getInt(1);
-      }
-
-      if (user_id != 0) {
-
-        // using the user id, insert into the customer table
-        PreparedStatement insertCustomer =
-            conn.prepareStatement(
-                "INSERT INTO "
-                    + AccessLevel.CUSTOMER.db
-                    + "(user_ptr_id, nric, email, date_of_birth, address, phone_no) VALUES (?, ?,"
-                    + " ?, ?, ?, ?) returning customer_id");
-        insertCustomer.setInt(1, user_id);
-        insertCustomer.setString(2, nric);
-        insertCustomer.setString(3, email);
-        insertCustomer.setDate(4, new java.sql.Date(dateOfBirth.getTime()));
-        insertCustomer.setString(5, address);
-        insertCustomer.setString(6, phoneNumber);
-        ResultSet rs2 = insertCustomer.executeQuery();
-        while (rs2.next()) {
-          customer =
-              Optional.of(
-                  new Customer(
-                      user_id,
-                      username,
-                      password,
-                      firstName,
-                      lastName,
-                      rs2.getInt(1), // customerID
-                      nric,
-                      email,
-                      dateOfBirth,
-                      address,
-                      phoneNumber));
-        }
+        customer =
+            Optional.of(
+                new Customer(
+                    rs.getInt(1), // userID
+                    username,
+                    password,
+                    firstName,
+                    lastName,
+                    rs.getInt(2), // customerID
+                    nric,
+                    email,
+                    dateOfBirth,
+                    address,
+                    phoneNumber));
       }
 
     } catch (SQLException e) {
@@ -347,7 +329,7 @@ public final class Database {
       // insert a new user into the user table
       PreparedStatement insertstmt =
           conn.prepareStatement(
-              "SELECT id, admin_id FROM create_admin(?, ?, ?, ?) AS (id INTEGER, admin_id"
+              "SELECT user_id, admin_id FROM create_admin(?, ?, ?, ?) AS (user_id INTEGER, admin_id"
                   + " INTEGER)");
       insertstmt.setString(1, username);
       insertstmt.setString(2, password);
@@ -387,42 +369,24 @@ public final class Database {
       /** Insert a new User */
       PreparedStatement insertUserStatement =
           conn.prepareStatement(
-              "INSERT INTO "
-                  + AccessLevel.NONE.db
-                  + "(username, password, first_name, last_name) VALUES (?, ?, ?, ?) returning id"
-                  + " ");
+              "SELECT user_id, teller_id FROM create_teller(?, ?, ?, ?) AS (user_id INTEGER,"
+                  + " teller_id INTEGER)");
       insertUserStatement.setString(1, username);
       insertUserStatement.setString(2, password);
       insertUserStatement.setString(3, firstName);
       insertUserStatement.setString(4, lastName);
       ResultSet rs = insertUserStatement.executeQuery();
-      int user_id = 0;
       while (rs.next()) {
-        user_id = rs.getInt(1);
-      }
-
-      if (user_id != 0) {
-
-        /** Inserts the newly created Teller */
-        PreparedStatement insertTellerStatement =
-            conn.prepareStatement(
-                "INSERT INTO "
-                    + AccessLevel.TELLER.db
-                    + "(user_ptr_id) VALUES (?) returning teller_id");
-        insertTellerStatement.setInt(1, user_id);
-        ResultSet rs2 = insertTellerStatement.executeQuery();
-        while (rs2.next()) {
-          teller =
-              Optional.of(
-                  new Teller(
-                      user_id, // id
-                      username, // username
-                      password, // password
-                      firstName, // firstName
-                      lastName, // lastName
-                      rs2.getInt(1) // tellerId
-                      ));
-        }
+        teller =
+            Optional.of(
+                new Teller(
+                    rs.getInt(1), // id
+                    username, // username
+                    password, // password
+                    firstName, // firstName
+                    lastName, // lastName
+                    rs.getInt(2) // tellerId
+                    ));
       }
     } catch (SQLException e) {
       System.out.println(e.getMessage());
@@ -536,42 +500,13 @@ public final class Database {
     Optional<Account> account = Optional.empty();
     try {
       // create a new account and get account id
-      PreparedStatement insertAccount =
-          conn.prepareStatement(
-              "INSERT INTO migrations_account(balance, account_type) VALUES (?, ?) RETURNING id");
-      insertAccount.setInt(1, 0);
+      PreparedStatement insertAccount = conn.prepareStatement("SELECT * FROM create_account(?, ?)");
+      insertAccount.setInt(1, customer.getCustomerID());
       insertAccount.setString(2, accountType.type);
       ResultSet rs = insertAccount.executeQuery();
-      int account_no_id = 0;
 
       while (rs.next()) {
-        account_no_id = rs.getInt(1); // get account_no_id
-      }
-
-      int customer_id = customer.getCustomerID();
-
-      if (account_no_id != 0) {
-        // create a customer_account relation between customer and account
-        PreparedStatement insertCustAcc =
-            conn.prepareStatement(
-                "INSERT INTO migrations_customeraccount(account_no_id, customer_id_id) "
-                    + "VALUES(?, ?)");
-        insertCustAcc.setInt(1, account_no_id);
-        insertCustAcc.setInt(2, customer_id);
-        insertCustAcc.executeQuery();
-
-        // select the new account created
-        PreparedStatement stmt =
-            conn.prepareStatement(
-                "SELECT id, balance, account_type FROM migrations_account as a WHERE a.id = ?");
-        stmt.setInt(1, account_no_id);
-        ResultSet rs3 = stmt.executeQuery();
-
-        while (rs3.next()) {
-          if (rs3.getInt(1) == account_no_id) {
-            account = Optional.of(new Account(rs3.getInt(1), rs3.getDouble(2), accountType));
-          }
-        }
+        account = Optional.of(new Account(rs.getInt(1), 0.0, accountType));
       }
       return account;
 

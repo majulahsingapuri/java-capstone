@@ -108,16 +108,17 @@ CREATE OR REPLACE FUNCTION create_teller(
         password TEXT,
         first_name TEXT,
         last_name TEXT
-    ) RETURNS INTEGER AS $$
+    ) RETURNS RECORD AS $$
 DECLARE 
+    ret RECORD;
     user_id INTEGER;
+    teller_id INTEGER;
 BEGIN 
     IF EXISTS (
         SELECT mu.username
         FROM migrations_user AS mu
         WHERE mu.username = create_teller.username
-    ) THEN RAISE EXCEPTION 'user % exists',
-    create_teller.username;
+    ) THEN RAISE EXCEPTION 'user % exists', create_teller.username;
     END IF;
     WITH insert_user AS (
         INSERT INTO migrations_user (username, password, first_name, last_name)
@@ -132,10 +133,13 @@ BEGIN
     INSERT INTO migrations_teller (user_ptr_id)
     SELECT id
     FROM insert_user;
-    SELECT id INTO user_id
+    SELECT mu.id, ma.teller_id
     FROM migrations_user AS mu
+    INTO user_id, teller_id
+    JOIN migrations_teller AS ma on mu.id = ma.user_ptr_id
     WHERE mu.username = create_teller.username;
-    RETURN user_id;
+    ret := (user_id, teller_id);
+    RETURN ret;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -149,9 +153,11 @@ CREATE OR REPLACE FUNCTION create_customer (
     date_of_birth DATE,
     address TEXT,
     phone_number TEXT
-) RETURNS INTEGER AS $$
+) RETURNS RECORD AS $$
 DECLARE
+    ret RECORD;
     user_id INTEGER;
+    customer_id INTEGER;
 BEGIN
     /* Checks if the Username Exists */
     IF EXISTS(SELECT mu.username FROM migrations_user AS mu WHERE mu.username = create_customer.username)
@@ -185,8 +191,9 @@ BEGIN
     INSERT INTO migrations_customer (user_ptr_id, nric, email, date_of_birth, address, phone_no)
     VALUES ((SELECT id FROM insert_user), create_customer.nric, create_customer.email, create_customer.date_of_birth, create_customer.address, create_customer.phone_number);
 
-    SELECT id INTO user_id FROM migrations_user AS mu WHERE mu.username = create_customer.username;
-    RETURN user_id;
+    SELECT mu.id, mc.customer_id FROM migrations_user AS mu INTO user_id, customer_id JOIN migrations_customer AS mc on mc.user_ptr_id = mu.id WHERE mu.username = create_customer.username;
+    ret := (user_id, customer_id);
+    RETURN ret;
 END;
 $$ LANGUAGE plpgsql;
 
