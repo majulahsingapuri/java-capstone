@@ -598,13 +598,13 @@ public final class Database {
    * @param newBalance the new balance to be updated
    * @return true
    */
-  public static boolean updateBalance(Account account, float newBalance) {
+  public static boolean updateBalance(Account account, double newBalance) {
     boolean result = false;
     try {
       PreparedStatement stmt =
           conn.prepareStatement(
               "UPDATE migrations_account AS ma " + "SET balance = ? " + "WHERE ma.id = ?");
-      stmt.setFloat(1, newBalance);
+      stmt.setDouble(1, newBalance);
       stmt.setInt(2, account.getID());
       stmt.executeQuery();
       result = true;
@@ -636,7 +636,7 @@ public final class Database {
               "insert into migrations_transaction (transaction_ref, transaction_type, date, amount,"
                   + " account_no_id, customer_id_id)\n"
                   + "values (?, ?, ?, ?, ?, ?) returning id");
-      insertTransactionStatement.setString(1, uuid.toString());
+      insertTransactionStatement.setObject(1, uuid);
       insertTransactionStatement.setString(2, transactionType.type);
       insertTransactionStatement.setDate(
           3,
@@ -644,7 +644,7 @@ public final class Database {
               timestamp.toDate().getTime())); // TODO Check for probable loss of time part
       insertTransactionStatement.setDouble(4, amount);
       insertTransactionStatement.setInt(5, account.getID());
-      insertTransactionStatement.setInt(6, customer.getID());
+      insertTransactionStatement.setInt(6, customer.getCustomerID());
       ResultSet rs = insertTransactionStatement.executeQuery();
       while (rs.next()) {
         transaction =
@@ -656,7 +656,7 @@ public final class Database {
                     timestamp,
                     amount,
                     account.getID(),
-                    customer.getID()));
+                    customer.getCustomerID()));
       }
     } catch (SQLException e) {
       System.out.println(e.getMessage());
