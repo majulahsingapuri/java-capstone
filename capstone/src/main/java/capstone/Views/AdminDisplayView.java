@@ -22,7 +22,9 @@ public final class AdminDisplayView extends View {
         String username = Helper.readLine();
         Optional<Admin> queryRes = Database.getAdmin(username);
         isEmpty = queryRes.isEmpty();
-        if (isEmpty) System.out.println("Admin with username " + username + " can not be found");
+        if (isEmpty)
+          System.out.println(
+              "Admin with username " + username + " can not be found" + "\uD83E\uDD7A");
         else {
           Helper.printUserInfo((User) queryRes.get());
           Helper.printLine(80);
@@ -32,7 +34,9 @@ public final class AdminDisplayView extends View {
         String username = Helper.readLine();
         Optional<Teller> queryRes = Database.getTeller(username);
         isEmpty = queryRes.isEmpty();
-        if (isEmpty) System.out.println("Teller with username " + username + " can not be found");
+        if (isEmpty)
+          System.out.println(
+              "Teller with username " + username + " can not be found" + "\uD83E\uDD7A");
         else {
           Helper.printUserInfo((User) queryRes.get());
           Helper.printLine(80);
@@ -43,7 +47,9 @@ public final class AdminDisplayView extends View {
         Optional<Customer> queryRes = Database.getCustomer(username);
         isEmpty = queryRes.isEmpty();
         Customer customer = queryRes.get();
-        if (isEmpty) System.out.println("Customer with username " + username + " can not be found");
+        if (isEmpty)
+          System.out.println(
+              "Customer with username " + username + " can not be found" + "\uD83E\uDD7A");
         else {
           Helper.printUserInfo((User) customer);
           System.out.print(String.format("%-50s: %s%n", "NRIC", customer.getNRIC()));

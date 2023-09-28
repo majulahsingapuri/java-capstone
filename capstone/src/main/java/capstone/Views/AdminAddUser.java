@@ -22,14 +22,14 @@ public final class AdminAddUser extends View {
         String[] ret = Helper.getUserAttributes();
         Optional<Admin> queryRes = Database.createAdmin(ret[0], ret[1], ret[2], ret[3]);
         isEmpty = queryRes.isEmpty();
-        if (isEmpty) System.out.println("Create Admin failed, please try again");
-        else System.out.println("Admin has been created successfully");
+        if (isEmpty) System.out.println("Create Admin failed, please try again" + "\uD83E\uDD7A");
+        else System.out.println("Admin has been created successfully" + "\uD83C\uDF89");
       } else if (domain.equals("teller")) {
         String[] ret = Helper.getUserAttributes();
         Optional<Teller> queryRes = Database.createTeller(ret[0], ret[1], ret[2], ret[3]);
         isEmpty = queryRes.isEmpty();
-        if (isEmpty) System.out.println("Create Teller failed, please try again");
-        else System.out.println("Teller has been created successfully");
+        if (isEmpty) System.out.println("Create Teller failed, please try again" + "\uD83E\uDD7A");
+        else System.out.println("Teller has been created successfully" + "\uD83C\uDF89");
       } else {
         Date dateOfBirth;
         String[] ret = Helper.getUserAttributes();
@@ -46,7 +46,8 @@ public final class AdminAddUser extends View {
             dateOfBirth = dateFormat.parse(date);
             break;
           } catch (ParseException e) {
-            System.out.println("\u001B[31mInvalid input format. Please try again.\u001B[0m");
+            System.out.println(
+                "\u001B[31mInvalid input format. Please try again.\u001B[0m" + "\uD83E\uDD7A");
           }
         }
 
@@ -60,8 +61,9 @@ public final class AdminAddUser extends View {
             Database.createCustomer(
                 ret[0], ret[1], ret[2], ret[3], nric, email, dateOfBirth, address, phoneNumber);
         isEmpty = queryRes.isEmpty();
-        if (isEmpty) System.out.println("Create Customer failed, please try again");
-        else System.out.println("Customer has been created successfully");
+        if (isEmpty)
+          System.out.println("Create Customer failed, please try again" + "\uD83E\uDD7A");
+        else System.out.println("Customer has been created successfully" + "\uD83C\uDF89");
       }
 
       int continue_checker = Helper.continue_checker();

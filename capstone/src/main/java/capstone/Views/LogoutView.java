@@ -85,6 +85,6 @@ public final class LogoutView extends View {
 
     System.out.println("\n");
 
-    clearScreen("Login");
+    clearScreen("Login" + "\uD83D\uDC4B");
   }
 }

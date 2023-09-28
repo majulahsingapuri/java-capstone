@@ -22,7 +22,7 @@ public final class CustomerDisplayView extends View {
       System.out.print(String.format("%-50s: %s%n", "phoneNumber", customer.getPhoneNumber()));
       System.out.print(String.format("%-50s: %s%n", "address", customer.getAddress()));
       Helper.printLine(80);
-      System.out.println("Accounts List");
+      System.out.println("Accounts List" + "\uD83D\uDCDA");
 
       ArrayList<Account> account_list = Database.getCustomerAccounts(customer.getUsername());
       if (account_list.size() > 0) {

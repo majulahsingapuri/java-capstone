@@ -89,7 +89,11 @@ public abstract class View {
     System.out.println(
         "║"
             + ConsoleColours.WHITE
-            + "                        Big Banking Corporation                         "
+            + "                      "
+            + "\uD83C\uDF46"
+            + "Big Banking Corporation"
+            + "\uD83C\uDF46"
+            + "                       "
             + ConsoleColours.GREEN_BRIGHT
             + "║");
     System.out.println(

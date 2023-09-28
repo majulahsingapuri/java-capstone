@@ -80,11 +80,4 @@ public final class TellerMainView extends View {
       }
     } while (true);
   }
-
-  /** Changes the Password for the {@link Database#CURRENT_USER}. */
-  private void changePassword() {
-
-    Database.CURRENT_USER.changePassword();
-    Helper.pause();
-  }
 }

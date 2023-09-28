@@ -65,7 +65,7 @@ public class User {
   public boolean changePassword() {
 
     while (true) {
-      System.out.print("Enter current password or Q to quit: ");
+      System.out.print("Enter current password or Q to quit: " + "\uD83D\uDD12");
       String oldPassword = Helper.getPasswordInput();
       if (oldPassword.equals("Q")) {
         break;
@@ -75,10 +75,10 @@ public class User {
         String newPassword1 = Helper.getPasswordInput();
         System.out.print("Enter the new password again: ");
         String newPassword2 = Helper.getPasswordInput();
-        System.out.println("new password:" + newPassword2);
+        System.out.println("new password:" + newPassword2 + "\uD83D\uDD11");
         if (newPassword1.equals(newPassword2)) {
           String password = encryptPassword(newPassword1);
-          System.out.println("new password encrypted:" + password);
+          System.out.println("new password encrypted:" + "\uD83D\uDD10" + password);
           boolean result = Database.updatePassword(this, password); // password
           System.out.println(
               ConsoleColours.GREEN
