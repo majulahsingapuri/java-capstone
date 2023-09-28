@@ -1,5 +1,6 @@
 package capstone.Views;
 
+import capstone.Extras.ConsoleColours;
 import capstone.Extras.Helper;
 import capstone.Objects.Account;
 import capstone.Objects.Customer;
@@ -34,7 +35,11 @@ public final class CustomerDisplayView extends View {
         }
       } else {
         Helper.printLine(80);
-        System.out.println("No Accounts Available for current customer:" + customer.getUsername());
+        System.out.println(
+            ConsoleColours.YELLOW
+                + "No Accounts Available for current customer:"
+                + customer.getUsername()
+                + ConsoleColours.RESET);
       }
 
       Helper.printLine(80);

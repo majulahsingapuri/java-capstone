@@ -568,10 +568,10 @@ public final class Database {
     try {
       PreparedStatement queryCustomerTransactions =
           conn.prepareStatement(
-              "SELECT c.id, c.transaction_ref, c.transaction_type, c.date, c.account_no_id,"
-                  + " c.customer_id_id\n"
-                  + "from migrations_customer as bjoin migrations_transaction as c on b.customer_id"
-                  + " = c.customer_id_id where b.customer_id = ?; ");
+              "SELECT c.id, c.transaction_ref, c.transaction_type, c.date, c.amount,"
+                  + " c.account_no_id, c.customer_id_id\n"
+                  + "from migrations_customer as b join migrations_transaction as c on"
+                  + " b.customer_id = c.customer_id_id where b.customer_id = ?; ");
       queryCustomerTransactions.setInt(1, customer.getCustomerID());
       ResultSet rs = queryCustomerTransactions.executeQuery();
 
@@ -601,13 +601,13 @@ public final class Database {
    * @param newBalance the new balance to be updated
    * @return true
    */
-  public static boolean updateBalance(Account account, float newBalance) {
+  public static boolean updateBalance(Account account, double newBalance) {
     boolean result = false;
     try {
       PreparedStatement stmt =
           conn.prepareStatement(
               "UPDATE migrations_account AS ma " + "SET balance = ? " + "WHERE ma.id = ?");
-      stmt.setFloat(1, newBalance);
+      stmt.setDouble(1, newBalance);
       stmt.setInt(2, account.getID());
       stmt.executeQuery();
       result = true;
@@ -647,7 +647,7 @@ public final class Database {
               timestamp.toDate().getTime())); // TODO Check for probable loss of time part
       insertTransactionStatement.setDouble(4, amount);
       insertTransactionStatement.setInt(5, account.getID());
-      insertTransactionStatement.setInt(6, customer.getID());
+      insertTransactionStatement.setInt(6, customer.getCustomerID());
       ResultSet rs = insertTransactionStatement.executeQuery();
       while (rs.next()) {
         transaction =
@@ -659,7 +659,7 @@ public final class Database {
                     timestamp,
                     amount,
                     account.getID(),
-                    customer.getID()));
+                    customer.getCustomerID()));
       }
     } catch (SQLException e) {
       System.out.println(e.getMessage());
