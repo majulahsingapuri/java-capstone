@@ -7,7 +7,7 @@ public final class AdminDeleteUser extends View {
     clearScreen("Admin Delete User Page");
 
     while (true) {
-      Helper.customer_search(); // customer_user is the target
+      Helper.customer_search(); // customer is the target
 
       int continue_checker = Helper.continue_checker();
       if (continue_checker == 1) {
