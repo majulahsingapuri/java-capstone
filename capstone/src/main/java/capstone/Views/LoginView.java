@@ -33,6 +33,7 @@ public final class LoginView extends View {
 
     DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
     String password, username, domain;
+    Boolean isEmpty;
 
     while (true) {
 
@@ -76,7 +77,7 @@ public final class LoginView extends View {
           if (domain.equals("1")) {
             try {
               Optional<Admin> result = Database.getAdmin(username);
-              Boolean isEmpty = result.isEmpty();
+              isEmpty = result.isEmpty();
               if (isEmpty) throw new Exception("Admin not found");
               Database.CURRENT_USER = result.get();
               Database.CURRENT_ACCESS_LEVEL = Database.CURRENT_USER.getAccessLevel();
@@ -88,7 +89,7 @@ public final class LoginView extends View {
           } else if (domain.equals("2")) {
             try {
               Optional<Teller> result = Database.getTeller(username);
-              Boolean isEmpty = result.isEmpty();
+              isEmpty = result.isEmpty();
               if (isEmpty) throw new Exception("Teller not found");
               Database.CURRENT_USER = result.get();
               Database.CURRENT_ACCESS_LEVEL = Database.CURRENT_USER.getAccessLevel();
@@ -100,7 +101,7 @@ public final class LoginView extends View {
           } else if (domain.equals("3")) {
             try {
               Optional<Customer> result = Database.getCustomer(username);
-              Boolean isEmpty = result.isEmpty();
+              isEmpty = result.isEmpty();
               if (isEmpty) throw new Exception("Customer not found");
               Database.CURRENT_USER = result.get();
               Database.CURRENT_ACCESS_LEVEL = Database.CURRENT_USER.getAccessLevel();
