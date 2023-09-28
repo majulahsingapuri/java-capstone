@@ -1,6 +1,7 @@
 package capstone.Objects;
 
 import capstone.Enums.AccessLevel;
+import capstone.Extras.ConsoleColours;
 import capstone.Extras.Helper;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -77,19 +78,24 @@ public class User {
         System.out.println("new password:" + newPassword2);
         if (newPassword1.equals(newPassword2)) {
           String password = encryptPassword(newPassword1);
-          System.out.println("new password encry:" + password);
+          System.out.println("new password encrypted:" + password);
           boolean result = Database.updatePassword(this, password); // password
-          // boolean result = Database.updatePassword(this, newPassword1);//password
+          System.out.println(
+              ConsoleColours.GREEN + "Password Update Successfully!" + ConsoleColours.RESET);
+          Helper.pause();
           if (result) {
             this.password = password;
           }
           return result;
         } else {
-          System.out.println("The passwords you entered do not match. Please try again.");
+          System.out.println(
+              ConsoleColours.RED
+                  + "The passwords you entered do not match. Please try again."
+                  + ConsoleColours.RESET);
           Helper.pause();
         }
       } else {
-        System.out.println("Invalid password!");
+        System.out.println(ConsoleColours.RED + "Wrong password!" + ConsoleColours.RESET);
         Helper.pause();
       }
     }

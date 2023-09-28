@@ -31,6 +31,7 @@ public final class AdminMainView extends View {
       System.out.println("2: Display current user info");
       System.out.println("3: Update current user");
       System.out.println("4: Logout");
+      System.out.println("5: Change Password");
       System.out.print(String.format("%-50s: ", "Choice"));
 
       option = Helper.readLine();
@@ -51,6 +52,9 @@ public final class AdminMainView extends View {
           LogoutView logoutView = new LogoutView();
           logoutView.print();
           return;
+        case "5":
+          AdminChangePassword adminChangePassword_view = new AdminChangePassword();
+          adminChangePassword_view.print();
         default:
           System.out.println("Please enter valid option.");
       }

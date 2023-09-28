@@ -35,7 +35,8 @@ public final class TellerMainView extends View {
 
         switch (choice) {
           case 1:
-            changePassword();
+            TellerChangePassword tellerChangePassword_view = new TellerChangePassword();
+            tellerChangePassword_view.print();
             break;
           case 2:
             LogoutView logoutView = new LogoutView();
