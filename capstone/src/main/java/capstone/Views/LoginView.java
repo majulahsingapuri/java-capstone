@@ -50,7 +50,7 @@ public final class LoginView extends View {
         System.out.print(String.format("%-50s: ", "Choice"));
         domain = Helper.readLine();
 
-        if (domain.equals("Q")) {
+        if (domain.equals("q") || domain.equals("Q")) {
           return;
         } else if (domain.equals("1")) {
           System.out.print(String.format("%-50s: ", "Enter admin username"));

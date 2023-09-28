@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 import org.joda.time.DateTime;
 import org.json.JSONObject;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  * The Class that interacts with the files and handles reading and writing of information.
@@ -285,7 +286,7 @@ public final class Database {
               "SELECT user_id, customer_id FROM create_customer(?, ?, ?, ?, ?, ?, ?, ?, ?) AS"
                   + " (user_id INTEGER, customer_id INTEGER)");
       insertstmt.setString(1, username);
-      insertstmt.setString(2, password);
+      insertstmt.setString(2, BCrypt.hashpw(password, BCrypt.gensalt()));
       insertstmt.setString(3, firstName);
       insertstmt.setString(4, lastName);
       insertstmt.setString(5, nric);
@@ -334,7 +335,7 @@ public final class Database {
               "SELECT user_id, admin_id FROM create_admin(?, ?, ?, ?) AS (user_id INTEGER, admin_id"
                   + " INTEGER)");
       insertstmt.setString(1, username);
-      insertstmt.setString(2, password);
+      insertstmt.setString(2, BCrypt.hashpw(password, BCrypt.gensalt()));
       insertstmt.setString(3, firstName);
       insertstmt.setString(4, lastName);
       ResultSet rs = insertstmt.executeQuery();
@@ -374,7 +375,7 @@ public final class Database {
               "SELECT user_id, teller_id FROM create_teller(?, ?, ?, ?) AS (user_id INTEGER,"
                   + " teller_id INTEGER)");
       insertUserStatement.setString(1, username);
-      insertUserStatement.setString(2, password);
+      insertUserStatement.setString(2, BCrypt.hashpw(password, BCrypt.gensalt()));
       insertUserStatement.setString(3, firstName);
       insertUserStatement.setString(4, lastName);
       ResultSet rs = insertUserStatement.executeQuery();

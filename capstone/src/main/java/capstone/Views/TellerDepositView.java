@@ -18,11 +18,11 @@ public final class TellerDepositView extends View {
         continue;
       }
 
-      try {
-        ArrayList<Account> account_list = Database.getCustomerAccounts(username);
+      ArrayList<Account> account_list = Database.getCustomerAccounts(username);
+      if (account_list.size() > 0) {
         System.out.println("Here are all the accounts under customer: " + username);
         System.out.println("#################");
-        System.out.println("Choice | Account ID | Type");
+        System.out.println("Choice | Account ID | Type    | Balance");
         account_list.forEach(
             (account) -> {
               System.out.println(
@@ -30,18 +30,19 @@ public final class TellerDepositView extends View {
                       + "      | "
                       + account.getID()
                       + "          | "
-                      + account.getAccountType());
+                      + account.getAccountType()
+                      + " | "
+                      + account.getBalance());
             });
         System.out.println("#################");
-      } catch (Exception e) {
+      } else {
         System.out.println(
             ConsoleColours.RED_BOLD
                 + "This customer does not have a bank account!"
                 + ConsoleColours.RESET);
-        continue;
+        Helper.pause();
+        break;
       }
-
-      ArrayList<Account> account_list = Database.getCustomerAccounts(username);
 
       /*
        * check on right choice input

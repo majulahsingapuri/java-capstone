@@ -2,7 +2,6 @@ package capstone.Objects;
 
 import capstone.Enums.AccessLevel;
 import capstone.Extras.Helper;
-import capstone.Views.CustomerChangePassword;
 import org.mindrot.jbcrypt.BCrypt;
 
 /**
@@ -51,7 +50,7 @@ public class User {
       AccessLevel accessLevel) {
     this.id = id;
     this.username = username;
-    this.password = encryptPassword(password);
+    this.password = password;
     this.firstName = firstName;
     this.lastName = lastName;
     this.accessLevel = accessLevel;
@@ -63,9 +62,6 @@ public class User {
    * @return {@code true} if password is successfully changed.
    */
   public boolean changePassword() {
-    // TODO: need to tell from 3 access types
-    CustomerChangePassword customerChangePassword_view = new CustomerChangePassword();
-    customerChangePassword_view.print();
 
     while (true) {
       System.out.print("Enter current password or Q to quit: ");
@@ -78,9 +74,12 @@ public class User {
         String newPassword1 = Helper.getPasswordInput();
         System.out.print("Enter the new password again: ");
         String newPassword2 = Helper.getPasswordInput();
+        System.out.println("new password:" + newPassword2);
         if (newPassword1.equals(newPassword2)) {
           String password = encryptPassword(newPassword1);
-          boolean result = Database.updatePassword(this, password);
+          System.out.println("new password encry:" + password);
+          boolean result = Database.updatePassword(this, password); // password
+          // boolean result = Database.updatePassword(this, newPassword1);//password
           if (result) {
             this.password = password;
           }
