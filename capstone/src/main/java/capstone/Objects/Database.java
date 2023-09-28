@@ -701,52 +701,6 @@ public final class Database {
   }
 
   /**
-   * allows the teller and admin to change the customer's first name
-   *
-   * @param customer customer to update
-   * @param firstName new first name
-   * @return true if first name is successfully updated
-   */
-  public static boolean updateCustomerFirstName(Customer customer, String firstName) {
-    boolean result = false;
-    try {
-      PreparedStatement upstmt =
-          conn.prepareStatement(
-              "UPDATE " + AccessLevel.CUSTOMER.db + " SET first_name = ?," + " WHERE username = ?");
-      upstmt.setString(1, firstName);
-      upstmt.setString(2, customer.getUsername());
-      upstmt.executeQuery();
-      result = true;
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
-    return result;
-  }
-
-  /**
-   * allows the teller and admin to change the customer's last name
-   *
-   * @param customer customer to update
-   * @param lastName new last name
-   * @return true if last name is successfully updated
-   */
-  public static boolean updateCustomerLastName(Customer customer, String lastName) {
-    boolean result = false;
-    try {
-      PreparedStatement upstmt =
-          conn.prepareStatement(
-              "UPDATE " + AccessLevel.CUSTOMER.db + " SET last_name = ?," + " WHERE username = ?");
-      upstmt.setString(1, lastName);
-      upstmt.setString(2, customer.getUsername());
-      upstmt.executeQuery();
-      result = true;
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
-    return result;
-  }
-
-  /**
    * allows the teller and admin to change the customer's nric
    *
    * @param customer customer to update
