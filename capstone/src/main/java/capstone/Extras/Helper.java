@@ -7,6 +7,8 @@ import capstone.Objects.User;
 import java.io.Console;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.function.Function;
+import java.util.regex.*;
 import org.joda.time.DateTime;
 
 /**
@@ -225,19 +227,22 @@ public final class Helper {
 
   public static String[] getUserAttributes() {
     String[] ret = new String[4];
+
     System.out.print(String.format("%-50s: ", "Enter username"));
     String username = Helper.readLine();
     ret[0] = username;
-    System.out.print(String.format("%-50s: ", "Enter password"));
-    String password = Helper.getPasswordInput();
-    // TODO: implement a password complexity checker in Helper to check if the password should pass
+
+    String password = getInputWithValidation("Enter password (contain at least one uppercase letter, one lowercase letter, one digit, one special character, and be at least 8 characters long)", Helper::isValidPassword,true);
     ret[1] = password;
+
     System.out.print(String.format("%-50s: ", "Enter firstName"));
     String firstName = Helper.readLine();
     ret[2] = firstName;
+
     System.out.print(String.format("%-50s: ", "Enter lastName"));
     String lastName = Helper.readLine();
     ret[3] = lastName;
+
     return ret;
   }
 
@@ -246,5 +251,40 @@ public final class Helper {
     System.out.print(String.format("%-50s: %s%n", "userName", user.getUsername()));
     System.out.print(String.format("%-50s: %s%n", "firstName", user.getFirstName()));
     System.out.print(String.format("%-50s: %s%n", "lastName", user.getLastName()));
+  }
+
+  public static String getInputWithValidation(String prompt, Function<String, Boolean> validator, boolean isPassword) {
+    String input;
+    while (true) {
+        System.out.print(String.format("%-50s: ", prompt));
+        if (isPassword) input =Helper.getPasswordInput();
+        else input = Helper.readLine();
+
+        if (validator.apply(input)) {
+            return input;
+        } else {
+            System.out.println("\u001B[31mInvalid input format. Please try again.\u001B[0m");
+        }
+    }
+  }
+  public static boolean isValidPassword(String password){
+    String passwordPattern = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#$%^&+=~`!]).{8,}$";
+    return password.matches(passwordPattern);
+  }
+
+  public static boolean isValidNric(String nric) {
+    // NRIC format check: 9 characters with uppercase first and last characters
+    return nric.length() == 9 && Character.isUpperCase(nric.charAt(0)) && Character.isUpperCase(nric.charAt(8));
+  }
+
+  public static boolean isValidEmail(String email) {
+    // Email format check using a simple regular expression
+    String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$";
+    return email.matches(emailPattern);
+  }
+
+  public static boolean isValidPhoneNumber(String phoneNumber) {
+    // Phone number format check: 8 characters, all digits
+    return phoneNumber.length() == 8 && phoneNumber.matches("\\d+");
   }
 }
