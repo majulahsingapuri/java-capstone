@@ -1,6 +1,8 @@
 package capstone.Views;
 
+import capstone.Extras.ConsoleColours;
 import capstone.Extras.Helper;
+import capstone.Objects.Database;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -17,11 +19,14 @@ public final class AdminMainView extends View {
   /** Prints menu options for the User to select from. Required method from {@link View}. */
   public void print() {
 
-    clearScreen("Admin Main");
+    clearScreen("Admin Main" + "\uD83D\uDE00");
     DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
     String option;
 
     while (true) {
+      String username = Database.CURRENT_USER.getUsername();
+      System.out.println(
+          "Welcome Admin: " + ConsoleColours.GREEN_BRIGHT + username + ConsoleColours.RESET);
       DateTime now = DateTime.now();
       System.out.println("Current Time: " + formatter.print(now));
       System.out.println("");
@@ -56,7 +61,7 @@ public final class AdminMainView extends View {
           AdminChangePassword adminChangePassword_view = new AdminChangePassword();
           adminChangePassword_view.print();
         default:
-          System.out.println("Please enter valid option.");
+          System.out.println("Please enter valid option." + "\uD83E\uDD7A");
       }
     }
   }

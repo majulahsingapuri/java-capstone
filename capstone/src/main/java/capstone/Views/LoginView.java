@@ -1,5 +1,6 @@
 package capstone.Views;
 
+import capstone.Extras.ConsoleColours;
 import capstone.Extras.Helper;
 import capstone.Objects.Admin;
 import capstone.Objects.Customer;
@@ -29,7 +30,7 @@ public final class LoginView extends View {
    */
   public void print() {
 
-    clearScreen("Login");
+    clearScreen("Login" + "\uD83D\uDC4B");
 
     DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
     String password, username, domain;
@@ -42,9 +43,9 @@ public final class LoginView extends View {
       System.out.println("");
 
       System.out.println("Enter user domain[Enter q to quit]");
-      System.out.println("1. Admin");
-      System.out.println("2. Teller");
-      System.out.println("3. Customer");
+      System.out.println("1. Admin" + "\uD83D\uDE00");
+      System.out.println("2. Teller" + "\uD83D\uDC40");
+      System.out.println("3. Customer" + "\uD83E\uDD70");
       while (true) {
 
         System.out.print(String.format("%-50s: ", "Choice"));
@@ -62,7 +63,7 @@ public final class LoginView extends View {
           System.out.print(String.format("%-50s: ", "Enter customer username"));
           break;
         } else {
-          System.out.println("Invalid input");
+          System.out.println(ConsoleColours.RED + "Invalid input" + ConsoleColours.RESET);
         }
       }
 
@@ -82,7 +83,8 @@ public final class LoginView extends View {
               Database.CURRENT_USER = result.get();
               Database.CURRENT_ACCESS_LEVEL = Database.CURRENT_USER.getAccessLevel();
             } catch (Exception e) {
-              System.out.println("Invalid user. Please try again");
+              System.out.println(
+                  ConsoleColours.RED + "Invalid user. Please try again" + ConsoleColours.RESET);
             }
             AdminMainView adminView = new AdminMainView();
             adminView.print();
@@ -94,7 +96,8 @@ public final class LoginView extends View {
               Database.CURRENT_USER = result.get();
               Database.CURRENT_ACCESS_LEVEL = Database.CURRENT_USER.getAccessLevel();
             } catch (Exception e) {
-              System.out.println("Invalid user. Please enter again!");
+              System.out.println(
+                  ConsoleColours.RED + "Invalid user. Please try again" + ConsoleColours.RESET);
             }
             TellerMainView view = new TellerMainView();
             view.print();
@@ -106,19 +109,23 @@ public final class LoginView extends View {
               Database.CURRENT_USER = result.get();
               Database.CURRENT_ACCESS_LEVEL = Database.CURRENT_USER.getAccessLevel();
             } catch (Exception e) {
-              System.out.println("Invalid user. Please enter again!");
+              System.out.println(
+                  ConsoleColours.RED + "Invalid user. Please try again" + ConsoleColours.RESET);
             }
             CustomerMainView view = new CustomerMainView();
             view.print();
           } else {
-            System.out.println("Invalid domain. Please enter domain again.\n");
+            System.out.println(
+                ConsoleColours.RED
+                    + "Invalid domain. Please enter domain again.\n"
+                    + ConsoleColours.RESET);
           }
         } else {
-          System.out.println("Invalid Password\n");
+          System.out.println(ConsoleColours.RED + "Invalid Password\n" + ConsoleColours.RESET);
         }
 
       } else {
-        System.out.println("Invalid Username\n");
+        System.out.println(ConsoleColours.RED + "Invalid Username\n" + ConsoleColours.RESET);
       }
     }
   }

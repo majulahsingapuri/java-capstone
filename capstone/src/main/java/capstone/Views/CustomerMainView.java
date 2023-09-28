@@ -1,5 +1,6 @@
 package capstone.Views;
 
+import capstone.Extras.ConsoleColours;
 import capstone.Extras.Helper;
 import capstone.Objects.Database;
 
@@ -19,10 +20,14 @@ public final class CustomerMainView extends View {
     do {
       try {
 
-        clearScreen("Customer Main");
+        clearScreen("Customer Main" + "\uD83E\uDD70");
 
         String username = Database.CURRENT_USER.getUsername();
-        System.out.println("Welcome our dear customer: ----- " + username + " -----");
+        System.out.println(
+            "Welcome our distinguished customer: "
+                + ConsoleColours.GREEN_BRIGHT
+                + username
+                + ConsoleColours.RESET); //
 
         System.out.println("What would you like to do?");
         // TODO
@@ -72,7 +77,7 @@ public final class CustomerMainView extends View {
             customerDisplayView_view.print();
             break;
           default:
-            System.out.println("Please enter valid option.");
+            System.out.println("Please enter valid option." + "\uD83E\uDD7A");
         }
       } catch (Exception e) {
         System.out.println(e.getLocalizedMessage());

@@ -81,7 +81,10 @@ public class User {
           System.out.println("new password encrypted:" + password);
           boolean result = Database.updatePassword(this, password); // password
           System.out.println(
-              ConsoleColours.GREEN + "Password Update Successfully!" + ConsoleColours.RESET);
+              ConsoleColours.GREEN
+                  + "Password Update Successfully!"
+                  + ConsoleColours.RESET
+                  + "\uD83C\uDF89");
           Helper.pause();
           if (result) {
             this.password = password;
@@ -91,11 +94,13 @@ public class User {
           System.out.println(
               ConsoleColours.RED
                   + "The passwords you entered do not match. Please try again."
-                  + ConsoleColours.RESET);
+                  + ConsoleColours.RESET
+                  + "\uD83E\uDD7A");
           Helper.pause();
         }
       } else {
-        System.out.println(ConsoleColours.RED + "Wrong password!" + ConsoleColours.RESET);
+        System.out.println(
+            ConsoleColours.RED + "Wrong password!" + ConsoleColours.RESET + "\u274C");
         Helper.pause();
       }
     }

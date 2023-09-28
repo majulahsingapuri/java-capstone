@@ -1,5 +1,6 @@
 package capstone.Views;
 
+import capstone.Extras.ConsoleColours;
 import capstone.Extras.Helper;
 import capstone.Objects.Database;
 
@@ -19,7 +20,11 @@ public final class TellerMainView extends View {
     do {
       try {
 
-        clearScreen("Teller Main");
+        clearScreen("Teller Main" + "\uD83D\uDC40");
+
+        String username = Database.CURRENT_USER.getUsername();
+        System.out.println(
+            "Welcome Teller: " + ConsoleColours.GREEN_BRIGHT + username + ConsoleColours.RESET);
 
         System.out.println("What would you like to do?");
         System.out.println("1: Change your Password");
@@ -68,7 +73,7 @@ public final class TellerMainView extends View {
             tellerDisplayTellerView_view.print();
             break;
           default:
-            System.out.println("Please enter valid option.");
+            System.out.println("Please enter valid option." + "\uD83E\uDD7A");
         }
       } catch (Exception e) {
         System.out.println(e.getLocalizedMessage());

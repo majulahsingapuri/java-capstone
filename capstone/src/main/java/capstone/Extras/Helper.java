@@ -156,7 +156,8 @@ public final class Helper {
       Helper.sc.nextLine(); // this line ensures next .nextLine() consume propoerly for next input
       return input_amount;
     } catch (Exception e) {
-      System.out.println(ConsoleColours.RED_BOLD + "NOT A VALID NUMBER" + ConsoleColours.RESET);
+      System.out.println(
+          ConsoleColours.RED_BOLD + "NOT A VALID NUMBER" + ConsoleColours.RESET + "\uD83E\uDD7A");
       Helper.sc.nextLine(); // this line ensures next .nextLine() consume propoerly for next input
       return input_amount;
     }
@@ -172,7 +173,10 @@ public final class Helper {
       return 0;
     } else {
       System.out.println(
-          ConsoleColours.RED_BOLD + "Wrong Input, please input Y/N or y/n" + ConsoleColours.RESET);
+          ConsoleColours.RED_BOLD
+              + "Wrong Input, please input Y/N or y/n"
+              + ConsoleColours.RESET
+              + "\u274C");
       return 0;
     }
   }
@@ -190,7 +194,8 @@ public final class Helper {
                 + "Customer with username "
                 + username
                 + " cannot be found"
-                + ConsoleColours.RESET);
+                + ConsoleColours.RESET
+                + "\uD83E\uDD7A");
         return null;
       }
       return username;
@@ -198,7 +203,8 @@ public final class Helper {
       System.out.println(
           ConsoleColours.RED_BOLD
               + "This username does not exist! Please re-enter!"
-              + ConsoleColours.RESET);
+              + ConsoleColours.RESET
+              + "\uD83E\uDD7A");
       Helper.pause();
       return null;
     }
@@ -221,7 +227,10 @@ public final class Helper {
       else if (domain.equals("3")) return "customer";
       else
         System.out.println(
-            ConsoleColours.RED_BOLD + "Invalid input, try again" + ConsoleColours.RESET);
+            ConsoleColours.RED_BOLD
+                + "Invalid input, try again"
+                + ConsoleColours.RESET
+                + "\uD83E\uDD7A");
     }
   }
 
@@ -232,7 +241,12 @@ public final class Helper {
     String username = Helper.readLine();
     ret[0] = username;
 
-    String password = getInputWithValidation("Enter password (contain at least one uppercase letter, one lowercase letter, one digit, one special character, and be at least 8 characters long)", Helper::isValidPassword,true);
+    String password =
+        getInputWithValidation(
+            "Enter password (contain at least one uppercase letter, one lowercase letter, one"
+                + " digit, one special character, and be at least 8 characters long)",
+            Helper::isValidPassword,
+            true);
     ret[1] = password;
 
     System.out.print(String.format("%-50s: ", "Enter firstName"));
@@ -253,28 +267,32 @@ public final class Helper {
     System.out.print(String.format("%-50s: %s%n", "lastName", user.getLastName()));
   }
 
-  public static String getInputWithValidation(String prompt, Function<String, Boolean> validator, boolean isPassword) {
+  public static String getInputWithValidation(
+      String prompt, Function<String, Boolean> validator, boolean isPassword) {
     String input;
     while (true) {
-        System.out.print(String.format("%-50s: ", prompt));
-        if (isPassword) input =Helper.getPasswordInput();
-        else input = Helper.readLine();
+      System.out.print(String.format("%-50s: ", prompt));
+      if (isPassword) input = Helper.getPasswordInput();
+      else input = Helper.readLine();
 
-        if (validator.apply(input)) {
-            return input;
-        } else {
-            System.out.println("\u001B[31mInvalid input format. Please try again.\u001B[0m");
-        }
+      if (validator.apply(input)) {
+        return input;
+      } else {
+        System.out.println("\u001B[31mInvalid input format. Please try again.\u001B[0m");
+      }
     }
   }
-  public static boolean isValidPassword(String password){
+
+  public static boolean isValidPassword(String password) {
     String passwordPattern = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#$%^&+=~`!]).{8,}$";
     return password.matches(passwordPattern);
   }
 
   public static boolean isValidNric(String nric) {
     // NRIC format check: 9 characters with uppercase first and last characters
-    return nric.length() == 9 && Character.isUpperCase(nric.charAt(0)) && Character.isUpperCase(nric.charAt(8));
+    return nric.length() == 9
+        && Character.isUpperCase(nric.charAt(0))
+        && Character.isUpperCase(nric.charAt(8));
   }
 
   public static boolean isValidEmail(String email) {

@@ -23,7 +23,7 @@ public final class TellerDepositView extends View {
       ArrayList<Account> account_list = Database.getCustomerAccounts(username);
       if (account_list.size() > 0) {
         System.out.println("Here are all the accounts under customer: " + username);
-        System.out.println("#################");
+        Helper.printLine(80);
         System.out.println("Choice | Account ID | Type    | Balance");
         account_list.forEach(
             (account) -> {
@@ -36,12 +36,13 @@ public final class TellerDepositView extends View {
                       + " | "
                       + account.getBalance());
             });
-        System.out.println("#################");
+        Helper.printLine(80);
       } else {
         System.out.println(
             ConsoleColours.RED_BOLD
                 + "This customer does not have a bank account!"
-                + ConsoleColours.RESET);
+                + ConsoleColours.RESET
+                + "\u274C");
         Helper.pause();
         break;
       }
@@ -55,7 +56,8 @@ public final class TellerDepositView extends View {
           System.out.print(String.format("%-50s: ", "Choice"));
           int choice = Integer.parseInt(Helper.readLine());
           double balance_current = account_list.get(choice - 1).getBalance();
-          System.out.println("Current Balance for this account is: " + balance_current);
+          System.out.println(
+              "Current Balance for this account is: " + "\uD83D\uDCB0" + balance_current);
 
           /*
            * Check for the right amount input
@@ -74,20 +76,25 @@ public final class TellerDepositView extends View {
               System.out.println(
                   ConsoleColours.GREEN
                       + "Deposit Successful!"
-                      + ConsoleColours.RESET); // [x] difference with withdraw
+                      + ConsoleColours.RESET
+                      + "\uD83C\uDF89"); // [x] difference with withdraw
               break;
             } else if (input_amount <= 0) {
               System.out.println(
                   ConsoleColours.RED_BOLD
                       + "Please enter a valid and positive number!"
-                      + ConsoleColours.RESET);
+                      + ConsoleColours.RESET
+                      + "\uD83E\uDD7A");
               continue;
             }
           }
           break;
         } catch (Exception e) {
           System.out.println(
-              ConsoleColours.RED_BOLD + "Invalid choice input!" + ConsoleColours.RESET);
+              ConsoleColours.RED_BOLD
+                  + "Invalid choice input!"
+                  + ConsoleColours.RESET
+                  + "\uD83E\uDD7A");
           continue;
         }
       }
