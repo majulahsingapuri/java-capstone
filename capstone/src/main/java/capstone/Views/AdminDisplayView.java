@@ -11,7 +11,7 @@ import java.util.Optional;
 public final class AdminDisplayView extends View {
   public void print() {
     clearScreen("Admin Account Display Page");
-
+    Boolean isEmpty;
     while (true) {
 
       // display password & username & balance & access level
@@ -21,7 +21,7 @@ public final class AdminDisplayView extends View {
         System.out.print(String.format("%-50s: ", "Enter the admin username"));
         String username = Helper.readLine();
         Optional<Admin> queryRes = Database.getAdmin(username);
-        Boolean isEmpty = queryRes.isEmpty();
+        isEmpty = queryRes.isEmpty();
         if (isEmpty) System.out.println("Admin with username " + username + " can not be found");
         else {
           Helper.printUserInfo((User) queryRes.get());
@@ -31,7 +31,7 @@ public final class AdminDisplayView extends View {
         System.out.print(String.format("%-50s: ", "Enter the Teller username"));
         String username = Helper.readLine();
         Optional<Teller> queryRes = Database.getTeller(username);
-        Boolean isEmpty = queryRes.isEmpty();
+        isEmpty = queryRes.isEmpty();
         if (isEmpty) System.out.println("Teller with username " + username + " can not be found");
         else {
           Helper.printUserInfo((User) queryRes.get());
@@ -41,7 +41,7 @@ public final class AdminDisplayView extends View {
         System.out.print(String.format("%-50s: ", "Enter the customer username"));
         String username = Helper.readLine();
         Optional<Customer> queryRes = Database.getCustomer(username);
-        Boolean isEmpty = queryRes.isEmpty();
+        isEmpty = queryRes.isEmpty();
         Customer customer = queryRes.get();
         if (isEmpty) System.out.println("Customer with username " + username + " can not be found");
         else {
