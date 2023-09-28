@@ -19,51 +19,29 @@ public final class AdminAddUser extends View {
       String domain = Helper.getUserDomain();
       Boolean isEmpty;
       if (domain.equals("admin")) {
-        String[] ret = Helper.getUserAttributes();
-        Optional<Admin> queryRes = Database.createAdmin(ret[0], ret[1], ret[2], ret[3]);
+        String[] ret = (String[])Helper.getUserAttributes(false,true);
+        Optional<Admin> queryRes = Database.createAdmin(ret[0],ret[1],ret[2],ret[3]);
         isEmpty = queryRes.isEmpty();
-        if (isEmpty) System.out.println("Create Admin failed, please try again" + "\uD83E\uDD7A");
-        else System.out.println("Admin has been created successfully" + "\uD83C\uDF89");
-      } else if (domain.equals("teller")) {
-        String[] ret = Helper.getUserAttributes();
+        if (isEmpty) System.out.println("Create Admin failed, please try again");
+        else System.out.println("Admin has been created successfully");
+      }
+      else if (domain.equals("teller")) {
+        String[] ret = (String[])Helper.getUserAttributes(false,true);
         Optional<Teller> queryRes = Database.createTeller(ret[0], ret[1], ret[2], ret[3]);
         isEmpty = queryRes.isEmpty();
-        if (isEmpty) System.out.println("Create Teller failed, please try again" + "\uD83E\uDD7A");
-        else System.out.println("Teller has been created successfully" + "\uD83C\uDF89");
-      } else {
-        Date dateOfBirth;
-        String[] ret = Helper.getUserAttributes();
+        if (isEmpty) System.out.println("Create Teller failed, please try again");
+        else System.out.println("Teller has been created successfully");
+      } 
+      else { //Customer daomin
 
-        String nric = Helper.getInputWithValidation("Enter nric", Helper::isValidNric, false);
-
-        String email = Helper.getInputWithValidation("Enter email", Helper::isValidEmail, false);
-
-        while (true) {
-          System.out.print(String.format("%-50s: ", "Enter dateOfBirth in the format yyyy-mm-dd"));
-          String date = Helper.readLine();
-          SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-          try {
-            dateOfBirth = dateFormat.parse(date);
-            break;
-          } catch (ParseException e) {
-            System.out.println(
-                "\u001B[31mInvalid input format. Please try again.\u001B[0m" + "\uD83E\uDD7A");
-          }
-        }
-
-        System.out.print(String.format("%-50s: ", "Enter address"));
-        String address = Helper.readLine();
-
-        String phoneNumber =
-            Helper.getInputWithValidation("Enter phonenumber", Helper::isValidPhoneNumber, false);
+        Object[] ret = Helper.getUserAttributes(true,true);
 
         Optional<Customer> queryRes =
             Database.createCustomer(
-                ret[0], ret[1], ret[2], ret[3], nric, email, dateOfBirth, address, phoneNumber);
+                (String)ret[0], (String)ret[1], (String)ret[2], (String)ret[3], (String)ret[4], (String)ret[5], (Date)ret[6], (String)ret[7], (String)ret[8]);
         isEmpty = queryRes.isEmpty();
-        if (isEmpty)
-          System.out.println("Create Customer failed, please try again" + "\uD83E\uDD7A");
-        else System.out.println("Customer has been created successfully" + "\uD83C\uDF89");
+        if (isEmpty) System.out.println("Create Customer failed, please try again");
+        else System.out.println("Customer has been created successfully");
       }
 
       int continue_checker = Helper.continue_checker();

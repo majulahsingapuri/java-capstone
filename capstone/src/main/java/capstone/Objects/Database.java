@@ -461,7 +461,7 @@ public final class Database {
     try {
       PreparedStatement upstmt =
           conn.prepareStatement(
-              "UPDATE " + AccessLevel.NONE.db + " SET first_name = ?," + " WHERE username = ?");
+              "UPDATE " + AccessLevel.NONE.db + " SET first_name = ?" + " WHERE username = ?");
       upstmt.setString(1, firstName);
       upstmt.setString(2, user.getUsername());
       upstmt.executeQuery();
