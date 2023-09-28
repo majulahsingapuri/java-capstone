@@ -1,8 +1,10 @@
 package capstone.Views;
 
+import capstone.Enums.TransactionType;
 import capstone.Extras.ConsoleColours;
 import capstone.Extras.Helper;
 import capstone.Objects.Account;
+import capstone.Objects.Customer;
 import capstone.Objects.Database;
 import java.util.ArrayList;
 
@@ -61,11 +63,14 @@ public final class TellerDepositView extends View {
           // TODO: savings has a min amount?
           while (true) {
             double input_amount = Helper.Amount_input_Checker();
+            Customer customer_user = Database.getCustomer(username).get();
+            Account account = account_list.get(choice - 1);
             if (input_amount > 0) {
               float balance_after_withdraw =
                   (float) (balance_current + input_amount); // [x] difference with withdraw
-              Database.updateBalance(
-                  account_list.get(choice - 1), balance_after_withdraw); // add try
+              Database.updateBalance(account, balance_after_withdraw); // add try
+              Database.createTransaction(
+                  customer_user, account, TransactionType.CREDIT, input_amount);
               System.out.println(
                   ConsoleColours.GREEN
                       + "Deposit Successful!"

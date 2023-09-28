@@ -639,7 +639,7 @@ public final class Database {
               "insert into migrations_transaction (transaction_ref, transaction_type, date, amount,"
                   + " account_no_id, customer_id_id)\n"
                   + "values (?, ?, ?, ?, ?, ?) returning id");
-      insertTransactionStatement.setString(1, uuid.toString());
+      insertTransactionStatement.setObject(1, uuid); // uuid type can not take string
       insertTransactionStatement.setString(2, transactionType.type);
       insertTransactionStatement.setDate(
           3,
