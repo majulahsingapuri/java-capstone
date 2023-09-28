@@ -17,22 +17,20 @@ public final class AdminAddUser extends View {
     while (true) {
 
       String domain = Helper.getUserDomain();
-
+      Boolean isEmpty;
       if (domain.equals("admin")) {
         String[] ret = Helper.getUserAttributes();
         Optional<Admin> queryRes = Database.createAdmin(ret[0], ret[1], ret[2], ret[3]);
-        Boolean isEmpty = queryRes.isEmpty();
+        isEmpty = queryRes.isEmpty();
         if (isEmpty) System.out.println("Create Admin failed, please try again");
         else System.out.println("Admin has been created successfully");
-      }
-      else if (domain.equals("teller")) {
+      } else if (domain.equals("teller")) {
         String[] ret = Helper.getUserAttributes();
         Optional<Teller> queryRes = Database.createTeller(ret[0], ret[1], ret[2], ret[3]);
-        Boolean isEmpty = queryRes.isEmpty();
+        isEmpty = queryRes.isEmpty();
         if (isEmpty) System.out.println("Create Teller failed, please try again");
         else System.out.println("Teller has been created successfully");
-      } 
-      else {
+      } else {
         Date dateOfBirth;
         String[] ret = Helper.getUserAttributes();
 
@@ -55,12 +53,13 @@ public final class AdminAddUser extends View {
         System.out.print(String.format("%-50s: ", "Enter address"));
         String address = Helper.readLine();
 
-        String phoneNumber = Helper.getInputWithValidation("Enter phonenumber", Helper::isValidPhoneNumber, false);
+        String phoneNumber =
+            Helper.getInputWithValidation("Enter phonenumber", Helper::isValidPhoneNumber, false);
 
         Optional<Customer> queryRes =
             Database.createCustomer(
                 ret[0], ret[1], ret[2], ret[3], nric, email, dateOfBirth, address, phoneNumber);
-        Boolean isEmpty = queryRes.isEmpty();
+        isEmpty = queryRes.isEmpty();
         if (isEmpty) System.out.println("Create Customer failed, please try again");
         else System.out.println("Customer has been created successfully");
       }
