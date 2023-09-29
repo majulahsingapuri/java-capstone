@@ -739,9 +739,9 @@ public final class Database {
     try {
       PreparedStatement upstmt =
           conn.prepareStatement(
-              "UPDATE " + AccessLevel.CUSTOMER.db + " SET nric = ?" + " WHERE username = ?");
+              "UPDATE " + AccessLevel.CUSTOMER.db + " SET nric = ?" + " WHERE nric = ?");
       upstmt.setString(1, nric);
-      upstmt.setString(2, customer.getUsername());
+      upstmt.setString(2, customer.getNRIC());
       upstmt.executeQuery();
       result = true;
     } catch (SQLException e) {
@@ -762,9 +762,9 @@ public final class Database {
     try {
       PreparedStatement upstmt =
           conn.prepareStatement(
-              "UPDATE " + AccessLevel.CUSTOMER.db + " SET email = ?" + " WHERE username = ?");
+              "UPDATE " + AccessLevel.CUSTOMER.db + " SET email = ?" + " WHERE nric = ?");
       upstmt.setString(1, email);
-      upstmt.setString(2, customer.getUsername());
+      upstmt.setString(2, customer.getNRIC());
       upstmt.executeQuery();
       result = true;
     } catch (SQLException e) {
@@ -785,12 +785,9 @@ public final class Database {
     try {
       PreparedStatement upstmt =
           conn.prepareStatement(
-              "UPDATE "
-                  + AccessLevel.CUSTOMER.db
-                  + " SET date_of_birth = ?"
-                  + " WHERE username = ?");
+              "UPDATE " + AccessLevel.CUSTOMER.db + " SET date_of_birth = ?" + " WHERE nric = ?");
       upstmt.setDate(1, new java.sql.Date(dob.getTime()));
-      upstmt.setString(2, customer.getUsername());
+      upstmt.setString(2, customer.getNRIC());
       upstmt.executeQuery();
       result = true;
     } catch (SQLException e) {
@@ -811,9 +808,9 @@ public final class Database {
     try {
       PreparedStatement upstmt =
           conn.prepareStatement(
-              "UPDATE " + AccessLevel.CUSTOMER.db + " SET address = ?" + " WHERE username = ?");
+              "UPDATE " + AccessLevel.CUSTOMER.db + " SET address = ?" + " WHERE nric = ?");
       upstmt.setString(1, address);
-      upstmt.setString(2, customer.getUsername());
+      upstmt.setString(2, customer.getNRIC());
       upstmt.executeQuery();
       result = true;
     } catch (SQLException e) {
@@ -834,9 +831,9 @@ public final class Database {
     try {
       PreparedStatement upstmt =
           conn.prepareStatement(
-              "UPDATE " + AccessLevel.CUSTOMER.db + " SET phone_no = ?" + " WHERE username = ?");
+              "UPDATE " + AccessLevel.CUSTOMER.db + " SET phone_no = ?" + " WHERE nric = ?");
       upstmt.setString(1, phone_number);
-      upstmt.setString(2, customer.getUsername());
+      upstmt.setString(2, customer.getNRIC());
       upstmt.executeQuery();
       result = true;
     } catch (SQLException e) {
