@@ -108,32 +108,32 @@ public class PopulateData {
     /*** Creates a transaction and credits into customer_1 account */
     Transaction transaction_1 =
         Database.createTransaction(customer_1, cust_acc_1, TransactionType.CREDIT, 500).get();
-    Database.updateBalance(cust_acc_1, transaction_1.getAmount());
+    Database.updateBalance(cust_acc_1, (cust_acc_1.getBalance() + transaction_1.getAmount()));
 
     /*** Creates a 'debit' transaction from the customer_1 account */
     Transaction transaction_2 =
         Database.createTransaction(customer_1, cust_acc_1, TransactionType.DEBIT, 300).get();
-    Database.updateBalance(cust_acc_1, transaction_2.getAmount());
+    Database.updateBalance(cust_acc_1, (cust_acc_1.getBalance() - transaction_2.getAmount()));
 
     /*** Creates a transaction and credits into customer_2 account */
     Transaction transaction_3 =
         Database.createTransaction(customer_2, cust_acc_2, TransactionType.CREDIT, 1000).get();
-    Database.updateBalance(cust_acc_2, transaction_3.getAmount());
+    Database.updateBalance(cust_acc_2, (cust_acc_2.getBalance() + transaction_3.getAmount()));
 
     /*** Creates a transaction and credits into customer_3 account */
     Transaction transaction_4 =
         Database.createTransaction(customer_3, cust_acc_3, TransactionType.CREDIT, 2020).get();
-    Database.updateBalance(cust_acc_3, transaction_4.getAmount());
+    Database.updateBalance(cust_acc_3, (cust_acc_3.getBalance() + transaction_4.getAmount()));
 
     /*** Creates a transaction and credits into customer_4 account */
     Transaction transaction_5 =
         Database.createTransaction(customer_4, cust_acc_4, TransactionType.CREDIT, 6969).get();
-    Database.updateBalance(cust_acc_4, transaction_5.getAmount());
+    Database.updateBalance(cust_acc_4, (cust_acc_4.getBalance() + transaction_5.getAmount()));
 
     /*** Creates a transaction and credits into customer_5 account */
     Transaction transaction_6 =
         Database.createTransaction(customer_5, cust_acc_5, TransactionType.CREDIT, 10).get();
-    Database.updateBalance(cust_acc_5, transaction_6.getAmount());
+    Database.updateBalance(cust_acc_5, (cust_acc_5.getBalance() + transaction_6.getAmount()));
 
     System.out.println("Database Updated! :)");
 
