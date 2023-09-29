@@ -1,6 +1,8 @@
 package capstone.Extras;
 
 import capstone.Enums.DayOfWeek;
+import capstone.Enums.TransactionType;
+import capstone.Objects.Account;
 import capstone.Objects.Admin;
 import capstone.Objects.Customer;
 import capstone.Objects.Database;
@@ -8,7 +10,9 @@ import capstone.Objects.User;
 import java.io.Console;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.function.Function;
@@ -161,8 +165,6 @@ public final class Helper {
       Helper.sc.nextLine(); // this line ensures next .nextLine() consume propoerly for next input
       return input_amount;
     } catch (Exception e) {
-      System.out.println(
-          ConsoleColours.RED_BOLD + "NOT A VALID NUMBER" + ConsoleColours.RESET + "\uD83E\uDD7A");
       Helper.sc.nextLine(); // this line ensures next .nextLine() consume propoerly for next input
       return input_amount;
     }
@@ -189,9 +191,9 @@ public final class Helper {
     // for most view, decide whether continue this service or back to upper menu
     System.out.println("Continue in this service? [Y/N]: ");
     String str_input = Helper.sc.nextLine();
-    if (str_input.equals("N")) {
+    if (str_input.equals("N") || str_input.equals("n")) {
       return 1;
-    } else if (str_input.equals("Y")) {
+    } else if (str_input.equals("Y") || str_input.equals("y")) {
       return 0;
     } else {
       System.out.println(
@@ -199,7 +201,7 @@ public final class Helper {
               + "Wrong Input, please input Y/N or y/n"
               + ConsoleColours.RESET
               + "\u274C");
-      return 0;
+      return -1;
     }
   }
 
@@ -468,5 +470,121 @@ public final class Helper {
       Database.updateCustomerAddress((Customer) user, address);
     if (user instanceof Customer && phoneNumber != null)
       Database.updateCustomerPhoneNumber((Customer) user, phoneNumber);
+  }
+
+  public static String display_customer_accounts(String username) {
+    ArrayList<Account> account_list = Database.getCustomerAccounts(username);
+    if (account_list.isEmpty()) {
+      System.out.println(
+          ConsoleColours.RED_BOLD
+              + "This customer does not have a bank account!"
+              + ConsoleColours.RESET
+              + "\u274C");
+      Helper.pause();
+      return "No Account";
+    }
+    System.out.println("Here are all accounts under customer: " + username);
+    Helper.printLine(80);
+    System.out.println("Choice | Account ID | Type    | Balance");
+
+    for (int i = 0; i < account_list.size(); i++) {
+      Account account1 = account_list.get(i);
+      System.out.println(
+          (i + 1)
+              + "      | "
+              + account1.getID()
+              + "          | "
+              + account1.getAccountType()
+              + " | "
+              + account1.getBalance());
+    }
+    Helper.printLine(80);
+    return "Account Exist";
+  }
+
+  public static HashMap<String, Integer> check_account_choice_input(
+      ArrayList<Account> account_list) {
+    HashMap<String, Integer> choice_map = new HashMap<String, Integer>();
+    System.out.println("Select one account you want to continue on: ");
+    System.out.print(String.format("%-50s: ", "Choice"));
+    try {
+      int choice = Integer.parseInt(Helper.readLine());
+      if (choice >= 1 && choice <= account_list.size()) {
+        choice_map.put("Valid", choice);
+        return choice_map;
+      } else {
+        System.out.println(
+            ConsoleColours.RED_BOLD + "Invalid choice input!" + ConsoleColours.RESET);
+        choice_map.put("Choice out of range", 0);
+        return choice_map;
+      }
+    } catch (NumberFormatException e) {
+      System.out.println(ConsoleColours.RED_BOLD + "Invalid choice input!" + ConsoleColours.RESET);
+      choice_map.put("Invalid input choice format", 0);
+      return choice_map;
+    }
+  }
+
+  public static String customer_withdraw(
+      Customer customer_user,
+      ArrayList<Account> account_list,
+      HashMap<String, Integer> choice_map) {
+    double input_amount = Amount_input_Checker();
+    int choice = choice_map.get("Valid");
+    Account account = account_list.get(choice - 1);
+    double balance_current = account_list.get(choice - 1).getBalance();
+    String withdraw_result = "";
+    System.out.println("Current Balance for this account is: " + "\uD83D\uDCB0" + balance_current);
+    if (input_amount <= balance_current && input_amount > 0) {
+      float balance_after_withdraw = (float) (balance_current - input_amount);
+      Database.updateBalance(account, balance_after_withdraw); // add try
+      Database.createTransaction(customer_user, account, TransactionType.DEBIT, input_amount);
+      System.out.println(
+          ConsoleColours.GREEN + "Withdraw Successful!" + ConsoleColours.RESET + "\uD83C\uDF89");
+      withdraw_result = "Withdraw Success";
+    } else if (input_amount > balance_current) {
+      System.out.println(
+          ConsoleColours.YELLOW
+              + "Insufficient Cash inside!"
+              + ConsoleColours.RESET
+              + "\uD83E\uDD7A");
+      withdraw_result = "Insufficient Cash inside";
+    } else if (input_amount <= 0) {
+      System.out.println(
+          ConsoleColours.RED_BOLD
+              + "Please enter a valid and positive number!"
+              + ConsoleColours.RESET
+              + "\uD83E\uDD7A");
+      withdraw_result = "Invalid Input";
+    }
+    return withdraw_result;
+  }
+
+  public static String customer_deposit(
+      Customer customer_user,
+      ArrayList<Account> account_list,
+      HashMap<String, Integer> choice_map) {
+    double input_amount = Amount_input_Checker();
+    int choice = choice_map.get("Valid");
+    Account account = account_list.get(choice - 1);
+    double balance_current = account_list.get(choice - 1).getBalance();
+    String deposit_result = "";
+    System.out.println("Current Balance for this account is: " + "\uD83D\uDCB0" + balance_current);
+    if (input_amount > 0) {
+      float balance_after_withdraw = (float) (balance_current + input_amount);
+      Database.updateBalance(account, balance_after_withdraw); // add try
+      Database.createTransaction(customer_user, account, TransactionType.DEBIT, input_amount);
+      System.out.println(
+          ConsoleColours.GREEN + "Deposit Successful!" + ConsoleColours.RESET + "\uD83C\uDF89");
+      deposit_result = "Deposit Success";
+    } else if (input_amount <= 0) {
+      System.out.println(
+          ConsoleColours.RED_BOLD
+              + "Please enter a valid and positive number!"
+              + ConsoleColours.RESET
+              + "\uD83E\uDD7A");
+      deposit_result = "Invalid Input";
+    }
+    return deposit_result;
   }
 }

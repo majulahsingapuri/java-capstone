@@ -1,12 +1,11 @@
 package capstone.Views;
 
-import capstone.Enums.TransactionType;
-import capstone.Extras.ConsoleColours;
 import capstone.Extras.Helper;
 import capstone.Objects.Account;
 import capstone.Objects.Customer;
 import capstone.Objects.Database;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public final class TellerWithdrawView extends View {
   public void print() {
@@ -19,93 +18,47 @@ public final class TellerWithdrawView extends View {
       }
 
       ArrayList<Account> account_list = Database.getCustomerAccounts(username);
-      if (account_list.size() > 0) {
-        System.out.println("Here are all the accounts under customer: " + username);
-        Helper.printLine(80);
-        System.out.println("Choice | Account ID | Type    | Balance");
-        account_list.forEach(
-            (account) -> {
-              System.out.println(
-                  (account_list.indexOf(account) + 1)
-                      + "      | "
-                      + account.getID()
-                      + "          | "
-                      + account.getAccountType()
-                      + " | "
-                      + account.getBalance());
-            });
-        Helper.printLine(80);
-      } else {
-        System.out.println(
-            ConsoleColours.RED_BOLD
-                + "This customer does not have a bank account!"
-                + ConsoleColours.RESET
-                + "\u274C");
-        Helper.pause();
+      Customer customer_user = Database.getCustomer(username).get();
+
+      String account_exist = Helper.display_customer_accounts(username);
+      if (account_exist == "No Account") {
         break;
       }
+
       /*
        * check on right choice input
        */
       while (true) {
-        try {
-          System.out.println("Select one account you want to continue on: ");
-          System.out.print(String.format("%-50s: ", "Choice"));
-          int choice = Integer.parseInt(Helper.readLine());
-          double balance_current = account_list.get(choice - 1).getBalance();
-          System.out.println(
-              "Current Balance for this account is: " + "\uD83D\uDCB0" + balance_current);
-
-          /*
-           * Check for the right amount input
-           */
-          // TODO: savings has a min amount?
-          while (true) {
-            double input_amount = Helper.Amount_input_Checker();
-            Customer customer_user = Database.getCustomer(username).get();
-            Account account = account_list.get(choice - 1);
-            if (input_amount <= balance_current && input_amount > 0) {
-              float balance_after_withdraw = (float) (balance_current - input_amount);
-              Database.updateBalance(account, balance_after_withdraw);
-              Database.createTransaction(
-                  customer_user, account, TransactionType.DEBIT, input_amount);
-              System.out.println(
-                  ConsoleColours.GREEN
-                      + "Withdraw Successful!"
-                      + ConsoleColours.RESET
-                      + "\uD83C\uDF89");
-              break;
-            } else if (input_amount > balance_current) {
-              System.out.println(
-                  ConsoleColours.YELLOW
-                      + "Insufficient Cash inside!"
-                      + ConsoleColours.RESET
-                      + "\uD83E\uDD7A");
-              break;
-            } else if (input_amount <= 0) {
-              System.out.println(
-                  ConsoleColours.RED_BOLD
-                      + "Please enter a valid and positive number!"
-                      + ConsoleColours.RESET
-                      + "\uD83E\uDD7A");
-              continue;
-            }
-          }
-          break;
-        } catch (Exception e) {
-          System.out.println(
-              ConsoleColours.RED_BOLD
-                  + "Invalid choice input!"
-                  + ConsoleColours.RESET
-                  + "\uD83E\uDD7A");
-          continue;
+        String choice_result_str = "Valid";
+        HashMap<String, Integer> choice_map = Helper.check_account_choice_input(account_list);
+        for (String result_str : choice_map.keySet()) {
+          choice_result_str = result_str;
         }
-      }
+        if (choice_result_str != "Valid") {
+          break;
+        }
+        /*
+         * Check for the right amount input
+         */
 
+        while (true) {
+          String withdraw_result =
+              Helper.customer_withdraw(customer_user, account_list, choice_map);
+          if (withdraw_result == "Withdraw Success") {
+            break;
+          } else if (withdraw_result == "Insufficient Cash inside") {
+            break;
+          } else if (withdraw_result == "Invalid Input") {
+            continue;
+          }
+        }
+        break;
+      }
       int continue_checker = Helper.continue_checker();
       if (continue_checker == 1) {
         break;
-      } else {
+      } else if (continue_checker == 0) {
+        Helper.printLine(80);
         continue;
       }
     }

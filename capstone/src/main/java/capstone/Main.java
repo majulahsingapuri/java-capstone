@@ -13,7 +13,7 @@ public class Main {
    */
   public static void main(String[] args) {
     new Database();
-    Database.createAdmin("ADMIN", "PASSWORD", "firstname1", "lastname1");
+    // Database.createAdmin("ADMIN", "PASSWORD", "firstname1", "lastname1");
     LoginView view = new LoginView();
     view.print();
     Database.close();
