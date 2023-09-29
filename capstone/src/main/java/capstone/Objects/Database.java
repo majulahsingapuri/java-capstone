@@ -739,7 +739,7 @@ public final class Database {
     try {
       PreparedStatement upstmt =
           conn.prepareStatement(
-              "UPDATE " + AccessLevel.CUSTOMER.db + " SET nric = ?," + " WHERE username = ?");
+              "UPDATE " + AccessLevel.CUSTOMER.db + " SET nric = ?" + " WHERE username = ?");
       upstmt.setString(1, nric);
       upstmt.setString(2, customer.getUsername());
       upstmt.executeQuery();
@@ -762,7 +762,7 @@ public final class Database {
     try {
       PreparedStatement upstmt =
           conn.prepareStatement(
-              "UPDATE " + AccessLevel.CUSTOMER.db + " SET email = ?," + " WHERE username = ?");
+              "UPDATE " + AccessLevel.CUSTOMER.db + " SET email = ?" + " WHERE username = ?");
       upstmt.setString(1, email);
       upstmt.setString(2, customer.getUsername());
       upstmt.executeQuery();
@@ -787,7 +787,7 @@ public final class Database {
           conn.prepareStatement(
               "UPDATE "
                   + AccessLevel.CUSTOMER.db
-                  + " SET date_of_birth = ?,"
+                  + " SET date_of_birth = ?"
                   + " WHERE username = ?");
       upstmt.setDate(1, new java.sql.Date(dob.getTime()));
       upstmt.setString(2, customer.getUsername());
@@ -811,7 +811,7 @@ public final class Database {
     try {
       PreparedStatement upstmt =
           conn.prepareStatement(
-              "UPDATE " + AccessLevel.CUSTOMER.db + " SET address = ?," + " WHERE username = ?");
+              "UPDATE " + AccessLevel.CUSTOMER.db + " SET address = ?" + " WHERE username = ?");
       upstmt.setString(1, address);
       upstmt.setString(2, customer.getUsername());
       upstmt.executeQuery();
@@ -834,7 +834,7 @@ public final class Database {
     try {
       PreparedStatement upstmt =
           conn.prepareStatement(
-              "UPDATE " + AccessLevel.CUSTOMER.db + " SET phone_no = ?," + " WHERE username = ?");
+              "UPDATE " + AccessLevel.CUSTOMER.db + " SET phone_no = ?" + " WHERE username = ?");
       upstmt.setString(1, phone_number);
       upstmt.setString(2, customer.getUsername());
       upstmt.executeQuery();
