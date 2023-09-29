@@ -19,3 +19,5 @@ This is for the UOB TDP Capstone 2 project
    ```
 
 4. Run the `create_db_via_django.sql` file to create the tables.
+
+5. Run the `PopulateData.java` file to insert the sample data.
