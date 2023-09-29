@@ -113,7 +113,7 @@ public class User {
    * @param rawString the raw password string
    * @return the encoded bytes
    */
-  private String encryptPassword(String rawString) {
+  public String encryptPassword(String rawString) {
     return BCrypt.hashpw(rawString, BCrypt.gensalt());
   }
 

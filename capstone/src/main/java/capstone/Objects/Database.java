@@ -410,9 +410,9 @@ public final class Database {
       PreparedStatement updateUserPassword =
           conn.prepareStatement(
               "UPDATE " + AccessLevel.NONE.db + " SET password = ? WHERE username = ? ");
-      updateUserPassword.setString(1, password);
+      updateUserPassword.setString(1, user.encryptPassword(password));
       updateUserPassword.setString(2, user.getUsername());
-      updateUserPassword.executeQuery();
+      updateUserPassword.execute();
       return true;
     } catch (SQLException e) {
       System.out.println(e.getMessage());
@@ -464,7 +464,7 @@ public final class Database {
               "UPDATE " + AccessLevel.NONE.db + " SET first_name = ?" + " WHERE username = ?");
       upstmt.setString(1, firstName);
       upstmt.setString(2, user.getUsername());
-      upstmt.executeQuery();
+      upstmt.execute();
       result = true;
     } catch (SQLException e) {
       System.out.println(e.getMessage());
@@ -487,7 +487,7 @@ public final class Database {
               "UPDATE " + AccessLevel.NONE.db + " SET last_name = ?" + " WHERE username = ?");
       upstmt.setString(1, lastName);
       upstmt.setString(2, user.getUsername());
-      upstmt.executeQuery();
+      upstmt.execute();
       result = true;
     } catch (SQLException e) {
       System.out.println(e.getMessage());
