@@ -1,9 +1,6 @@
 package capstone;
 
-import javax.xml.crypto.Data;
-
 import capstone.Objects.Database;
-import capstone.Objects.User;
 import capstone.Views.LoginView;
 
 /** Main Class that runs the program. */
@@ -16,11 +13,9 @@ public class Main {
    */
   public static void main(String[] args) {
     new Database();
-    // Database.createAdmin("aa","pp", "firstname12", "lastname12");
-    User user = Database.getUser("aa").get();
-    Database.updateUserFirstName(user, "sdas");
-    // LoginView view = new LoginView();
-    // view.print();
+    Database.createAdmin("ADMIN", "PASSWORD", "firstname1", "lastname1");
+    LoginView view = new LoginView();
+    view.print();
     Database.close();
   }
 }

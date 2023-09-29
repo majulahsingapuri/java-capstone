@@ -1,8 +1,8 @@
 package capstone;
 
-import capstone.Objects.Account;
+import capstone.Enums.AccountType;
+import capstone.Objects.Customer;
 import capstone.Objects.Database;
-import java.util.ArrayList;
 import java.util.Date;
 import org.joda.time.DateTime;
 
@@ -37,12 +37,14 @@ public class Manage_SQL_Data {
     //     "hello road_2",
     //     "222222");
 
-    // Database.createAccount("customer_1", AccountType.CURRENT);
-    // Database.createAccount("customer_1", AccountType.CURRENT); // 2nd account for same username
-    // Database.createAccount("customer_1", AccountType.SAVINGS); // 2nd account for same username
+    Customer CUS_1 = Database.getCustomer("customer_1").get();
+    Customer CUS_2 = Database.getCustomer("customer_2").get();
+    Database.createAccount(CUS_1, AccountType.CURRENT);
+    Database.createAccount(CUS_1, AccountType.CURRENT); // 2nd account for same username
+    Database.createAccount(CUS_1, AccountType.SAVINGS); // 2nd account for same username
 
-    // Database.createAccount("customer_2", AccountType.CURRENT); // 2nd account for same username
-    // // Database.createAccount("bhargav", AccountType.SAVINGS);
+    Database.createAccount(CUS_2, AccountType.CURRENT); // 2nd account for same username
+    // Database.createAccount("bhargav", AccountType.SAVINGS);
 
     // Database.getCustomer("SuperiorMonLBJ");
 
@@ -57,12 +59,12 @@ public class Manage_SQL_Data {
     // System.out.println("#################");
     // System.out.println("Account ID | Type");
     // account_list.forEach(
-        // (account) -> {
-          // System.out.println(account.getID() + " | " + account.getAccountType());
-        // });
+    //     (account) -> {
+    //       System.out.println(account.getID() + " | " + account.getAccountType());
+    //     });
     // System.out.println("#################");
     // System.out.println("Select one you want to continue: ");
-// 
+
     Database.close();
   }
 }

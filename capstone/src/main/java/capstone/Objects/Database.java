@@ -618,6 +618,33 @@ public final class Database {
   }
 
   /**
+   * Updates the new balance for the account specifically used for transfer to make it a float
+   *
+   * @param account the account to be updated
+   * @param newBalance the new balance to be updated
+   * @return true
+   */
+  public static boolean updateBalanceForTransfer(Account account, double newBalance) {
+    boolean result = false;
+    try {
+      PreparedStatement stmt =
+          conn.prepareStatement("UPDATE migrations_account AS ma SET balance = ? WHERE ma.id = ?");
+      stmt.setDouble(1, newBalance);
+      stmt.setInt(2, account.getID());
+
+      // Use executeUpdate() for UPDATE statements
+      int rowsUpdated = stmt.executeUpdate();
+
+      if (rowsUpdated > 0) {
+        result = true;
+      }
+    } catch (SQLException se) {
+      System.out.println(se.getMessage());
+    }
+    return result;
+  }
+
+  /**
    * creates a Transaction in the transaction table
    *
    * @param customer The customer that created the transaction
