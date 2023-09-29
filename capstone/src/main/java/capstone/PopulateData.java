@@ -111,9 +111,8 @@ public class PopulateData {
     Database.updateBalance(cust_acc_1, (cust_acc_1.getBalance() + transaction_1.getAmount()));
 
     /*** Creates a 'debit' transaction from the customer_1 account */
-    Transaction transaction_2 =
-        Database.createTransaction(customer_1, cust_acc_1, TransactionType.DEBIT, 300).get();
-    Database.updateBalance(cust_acc_1, (cust_acc_1.getBalance() - transaction_2.getAmount()));
+    Database.createTransaction(customer_1, cust_acc_1, TransactionType.DEBIT, 300).get();
+    Database.updateBalance(cust_acc_1, 200);
 
     /*** Creates a transaction and credits into customer_2 account */
     Transaction transaction_3 =
