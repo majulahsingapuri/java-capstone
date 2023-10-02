@@ -7,8 +7,8 @@ import capstone.Objects.Customer;
 import capstone.Objects.Database;
 import capstone.Objects.User;
 import java.io.Console;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -311,13 +311,21 @@ public final class Helper {
       while (true) {
         System.out.print(String.format("%-50s: ", "Enter dateOfBirth in the format yyyy-mm-dd"));
         String date = Helper.readLine();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
-          Date dateOfBirth = dateFormat.parse(date);
-          ret[6] = dateOfBirth;
+          LocalDate dob =
+              LocalDate.parse(date, java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+          LocalDate minAgeDate = LocalDate.now().minusYears(16);
+          if (dob.isAfter(minAgeDate)) {
+            System.out.println(
+                ANSI_RED + "Invalid date. You need to be at least 16 years old." + ANSI_RESET);
+            System.out.println("Please provide correct Date of birth");
+            continue;
+          }
+
+          ret[6] = dob;
           break;
-        } catch (ParseException e) {
-          System.out.println(ANSI_RED + "Invalid input format. Please try again." + ANSI_RESET);
+        } catch (DateTimeParseException e) {
+          System.out.println(ANSI_RED + "Invalid date. Please try again." + ANSI_RESET);
         }
       }
 
