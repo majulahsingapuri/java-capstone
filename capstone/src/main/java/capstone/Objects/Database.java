@@ -51,6 +51,7 @@ public final class Database {
     }
   }
 
+  /** Closes the connection to the DB */
   public static void close() {
     if (conn != null) {
       try {
@@ -319,11 +320,13 @@ public final class Database {
   }
 
   /**
-   * Creates a new Admin for the Database
+   * Creates a new Admin in the Database
    *
-   * @param username new username
-   * @param password new password
-   * @return a new admin
+   * @param username Admin's username
+   * @param password Admin's password
+   * @param firstName Admin's first name
+   * @param lastName Admin's last name
+   * @return
    */
   public static Optional<Admin> createAdmin(
       String username, String password, String firstName, String lastName) {
@@ -363,6 +366,8 @@ public final class Database {
    *
    * @param username new username
    * @param password new password
+   * @param firstName new first name
+   * @param lastName new last name
    * @return a new teller
    */
   public static Optional<Teller> createTeller(
@@ -498,6 +503,8 @@ public final class Database {
   /**
    * Creates an Account in the Account Table
    *
+   * @param customer The customer creating the account
+   * @param accountType The type of account
    * @return null if the account could not be created else an {@link Account} objct
    */
   public static Optional<Account> createAccount(Customer customer, AccountType accountType) {
@@ -777,7 +784,7 @@ public final class Database {
    * allows the teller and admin to change the customer's date of birth
    *
    * @param customer customer to update
-   * @param email new date of birth
+   * @param dob new date of birth
    * @return true if date of birth is successfully updated
    */
   public static boolean updateCustomerDob(Customer customer, Date dob) {
@@ -803,7 +810,7 @@ public final class Database {
    * allows the teller and admin to change the customer's address
    *
    * @param customer customer to update
-   * @param email new address
+   * @param address new address
    * @return true if address is successfully updated
    */
   public static boolean updateCustomerAddress(Customer customer, String address) {
@@ -826,7 +833,7 @@ public final class Database {
    * allows the teller and admin to change the customer's phone number
    *
    * @param customer customer to update
-   * @param email new phone number
+   * @param phone_number new phone number
    * @return true if phone number is successfully updated
    */
   public static boolean updateCustomerPhoneNumber(Customer customer, String phone_number) {
