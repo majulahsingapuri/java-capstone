@@ -33,8 +33,8 @@ public final class AdminMainView extends View {
 
       System.out.println("What would you like to do?");
       System.out.println("1: Add new user");
-      System.out.println("2: Display current user info");
-      System.out.println("3: Update current user");
+      System.out.println("2: Display a user's credentials");
+      System.out.println("3: Update a user's credentials");
       System.out.println("4: Logout");
       System.out.println("5: Change Password");
       System.out.print(String.format("%-50s: ", "Choice"));

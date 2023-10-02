@@ -1,15 +1,15 @@
 package capstone.Views;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+// import java.text.ParseException;
+// import java.text.SimpleDateFormat;
+// import java.util.Optional;
+// import capstone.Objects.Admin;
+// import capstone.Objects.Customer;
+// import capstone.Objects.Database;
+// import capstone.Objects.Teller;
 import java.util.Date;
-import java.util.Optional;
 
 import capstone.Extras.Helper;
-import capstone.Objects.Admin;
-import capstone.Objects.Customer;
-import capstone.Objects.Database;
-import capstone.Objects.Teller;
 import capstone.Objects.User;
 
 public final class AdminUpdateView extends View {
@@ -35,18 +35,23 @@ public final class AdminUpdateView extends View {
       }
       while (true){
       //get new fields and check with user  
+        System.out.println(Helper.ANSI_YELLOW + "Please provide the following fields for update" + Helper.ANSI_RESET);
         if (domain.equals("customer")) ret = Helper.getUserAttributes(true, false);  
         else ret = Helper.getUserAttributes(false, false); //teller and admin
-
-        Helper.printUserUpdateCredentials((String)ret[2], (String)ret[3],(String)ret[1], (String)ret[4],(String)ret[5],(Date)ret[6],(String)ret[7],(String)ret[8]);
+        String tableHeader = "Updated Value";
+        Helper.printUserCredentials(tableHeader,(String)ret[2], (String)ret[3],(String)ret[1], (String)ret[4],(String)ret[5],(Date)ret[6],(String)ret[7],(String)ret[8]);
         System.out.println("Please confirm the updated fields are correct.[Y/N]");
         input = Helper.readLine();
         if (input.equals("Y")) break;
       }
       //call db
-      //TODO:Check if any is not updated successfully 
-      Helper.UpdateDb(user, (String)ret[2],(String)ret[3],(String)ret[1],(String)ret[4],(String)ret[5],(Date)ret[6],(String)ret[7],(String)ret[8]);
-      
+      try{
+        Helper.UpdateDb(user, (String)ret[2],(String)ret[3],(String)ret[1],(String)ret[4],(String)ret[5],(Date)ret[6],(String)ret[7],(String)ret[8]);
+      }
+      catch (Exception e){
+        // System.out.println("error encountered");
+        System.out.println(e);
+      }
       int continue_checker = Helper.continue_checker();
       if (continue_checker == 1) {
         break;

@@ -35,6 +35,19 @@ public final class Helper {
    */
   public static Scanner sc = new Scanner(System.in);
 
+  /**
+   * Color printing on console
+   */
+  public static final String ANSI_RESET = "\u001B[0m";
+  public static final String ANSI_BLACK = "\u001B[30m";
+  public static final String ANSI_RED = "\u001B[31m";
+  public static final String ANSI_GREEN = "\u001B[32m";
+  public static final String ANSI_YELLOW = "\u001B[33m";
+  public static final String ANSI_BLUE = "\u001B[34m";
+  public static final String ANSI_PURPLE = "\u001B[35m";
+  public static final String ANSI_CYAN = "\u001B[36m";
+  public static final String ANSI_WHITE = "\u001B[37m";
+
   /** A load function that prints progress bars across the screen at 500ms intervals. */
   public static void load() {
 
@@ -234,6 +247,9 @@ public final class Helper {
     }
   }
 
+  /**
+   * Method that prints and acquires the user domain.
+   */
   public static String getUserDomain() {
     // to print and get the domain of user
     String domain;
@@ -258,7 +274,14 @@ public final class Helper {
     }
   }
 
+  /**
+   * Method that prints and acquires user attributes.
+   *
+   * @param isCustomer false when it is Teller or Admin else true
+   * @param requireUsername the function will not print and acquire Username filed when this sets to false
+   */
   public static Object[] getUserAttributes(boolean isCustomer, boolean requireUsername) {
+    
     Object[] ret = new Object[9];
 
     if (requireUsername) {
@@ -268,8 +291,7 @@ public final class Helper {
     }
     String password =
         getInputWithValidation(
-            "Enter password (contain at least one uppercase letter, one lowercase letter, one"
-                + " digit, one special character, and be at least 8 characters long)",
+            "Enter password" + ANSI_RED + "(At least 1 uppercase, 1 lower case, 1 special character and length > 8)" + ANSI_RESET,
             Helper::isValidPassword,
             true);
     ret[1] = password;
@@ -298,7 +320,7 @@ public final class Helper {
           ret[6] = dateOfBirth;
           break;
         } catch (ParseException e) {
-          System.out.println("\u001B[31mInvalid input format. Please try again.\u001B[0m");
+          System.out.println(ANSI_RED + "Invalid input format. Please try again." + ANSI_RESET);
         }
       }
 
@@ -310,10 +332,9 @@ public final class Helper {
           Helper.getInputWithValidation("Enter phonenumber", Helper::isValidPhoneNumber, false);
       ret[8] = phoneNumber;
     }
-
     return ret;
   }
-
+//TODO: TO DELETED
   public static void printUserInfo(User user) {
     System.out.println("Account Information " + "\u2B07");
     Helper.printLine(80);
@@ -321,6 +342,13 @@ public final class Helper {
     System.out.print(String.format("%-50s: %s%n", "firstName", user.getFirstName()));
     System.out.print(String.format("%-50s: %s%n", "lastName", user.getLastName()));
   }
+  
+  /**
+   * Method that acquires inputs with validation.
+   * @param prompt guiding message to user for the input field
+   * @param validator function checks if the input is valid; return false if it's invalid
+   * @param isPassword true when the input field is a password.
+   */
 
   public static String getInputWithValidation(
       String prompt, Function<String, Boolean> validator, boolean isPassword) {
@@ -333,16 +361,24 @@ public final class Helper {
       if (validator.apply(input)) {
         return input;
       } else {
-        System.out.println("\u001B[31mInvalid input format. Please try again.\u001B[0m");
+        System.out.println(ANSI_RED + "Invalid input format. Please try again." + ANSI_RESET);
       }
     }
   }
 
+  /**
+   * Method that checks password pattern for validation.
+   * @param password the password input
+   */
   public static boolean isValidPassword(String password) {
     String passwordPattern = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#$%^&+=~`!]).{8,}$";
     return password.matches(passwordPattern);
   }
 
+  /**
+   * Method that checks nric pattern for validation.
+   * @param nric the nric input
+   */
   public static boolean isValidNric(String nric) {
     // NRIC format check: 9 characters with uppercase first and last characters
     return nric.length() == 9
@@ -350,31 +386,87 @@ public final class Helper {
         && Character.isUpperCase(nric.charAt(8));
   }
 
+  
+  /**
+   * Method that checks email pattern for validation.
+   * @param email the email input
+   */
   public static boolean isValidEmail(String email) {
     // Email format check using a simple regular expression
     String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$";
     return email.matches(emailPattern);
   }
 
+  
+  /**
+   * Method that checks phoneNumber pattern for validation.
+   * @param phoneNumber the phoneNumber input
+   */
   public static boolean isValidPhoneNumber(String phoneNumber) {
     // Phone number format check: 8 characters, all digits
     return phoneNumber.length() == 8 && phoneNumber.matches("\\d+");
   }
 
-  public static String[] getUpdatedParticulars(boolean isCustomer) {
-    while (true) {
-      System.out.print(String.format("%-50s: ", "Enter new firstName"));
-      System.out.print(String.format("%-50s: ", "Enter new lastName"));
-      System.out.print(String.format("%-50s: ", "Enter new passWord"));
-      if (isCustomer) {
-        System.out.print(String.format("%-50s: ", "Enter new nric"));
-        System.out.print(String.format("%-50s: ", "Enter new "));
-        System.out.print(String.format("%-50s: ", "Enter new "));
-        System.out.print(String.format("%-50s: ", "Enter new "));
+  // public static String[] getUpdatedParticulars(boolean isCustomer) {
+  //   while (true) {
+  //     System.out.print(String.format("%-50s: ", "Enter new firstName"));
+  //     System.out.print(String.format("%-50s: ", "Enter new lastName"));
+  //     System.out.print(String.format("%-50s: ", "Enter new passWord"));
+  //     if (isCustomer) {
+  //       System.out.print(String.format("%-50s: ", "Enter new nric"));
+  //       System.out.print(String.format("%-50s: ", "Enter new "));
+  //       System.out.print(String.format("%-50s: ", "Enter new "));
+  //       System.out.print(String.format("%-50s: ", "Enter new "));
+  //     }
+  //   }
+  // }
+
+
+  public static void getUser (String userType, String prompt){
+    System.out.print(String.format("%-50s: ", prompt));
+    String username = Helper.readLine();
+
+    Optional<?> queryRes;
+    Boolean isEmpty;
+    if (userType.equals("admin")) queryRes = Database.getAdmin(username);
+    else if (userType.equals("teller")) queryRes = Database.getTeller(username);
+    else queryRes = Database.getCustomer(username); //Customer type
+
+    isEmpty = queryRes.isEmpty();
+    if (isEmpty)
+      System.out.println(
+          ANSI_RED + userType + " with username " + username + " can not be found" + ANSI_RESET + "\uD83E\uDD7A");
+    else {
+      String tableHeader, firstName, lastName, password, nric="", email="", address="", phoneNumber="";
+      Date dob = null;
+      Customer customer;
+
+      User user = (User)queryRes.get();
+      if (queryRes.get() instanceof Customer) customer = (Customer) queryRes.get();
+
+      tableHeader = userType + " credentials";
+      firstName = user.getFirstName();
+      lastName = user.getLastName();
+      password = "you have no access to read the password";
+
+      if (queryRes.get() instanceof Customer) {
+        customer = (Customer) queryRes.get();
+        nric = customer.getNRIC();
+        email = customer.getEmail();
+        address = customer.getAddress();
+        phoneNumber = customer.getPhoneNumber();
+        dob = customer.getDateOfBirth();
       }
+
+       printUserCredentials(tableHeader, firstName, lastName, password, nric, email, dob, address, phoneNumber);;
+      Helper.printLine(80);
     }
   }
-
+  
+  /**
+   * Method that acquires username and password; Validates if it's a exisiting user in the db
+   * @param userType customer or admin or teller type
+   */
   public static <T extends User> T validateUser(String userType) throws Exception {
     System.out.println("Please provide username & password for validation");
     System.out.print(String.format("%-50s: ", "Enter username"));
@@ -395,58 +487,62 @@ public final class Helper {
     if (!(result.get().checkPassword(password))) {
       throw new Exception("Password is incorrect");
     }
+
+    System.out.println(ANSI_GREEN + "User validated successfully" + ANSI_RESET);
     return (T) result2.get();
   }
 
-  public static void printUserUpdateCredentials(
-      String firstName,
-      String lastName,
-      String password,
-      String nric,
-      String email,
-      Date dob,
-      String address,
-      String phoneNumber) {
-    String table =
-        String.format(
-            Ansi.ansi()
-                    .fg(Ansi.Color.YELLOW)
-                    .a("+----------------------------------------+")
-                    .reset()
-                + "\n"
-                + Ansi.ansi()
-                    .fg(Ansi.Color.YELLOW)
-                    .a("| Field          | Updated Value         |")
-                    .reset()
-                + "\n"
-                + Ansi.ansi()
-                    .fg(Ansi.Color.YELLOW)
-                    .a("+----------------------------------------+")
-                    .reset()
-                + "\n"
-                + Ansi.ansi().a(String.format("| First Name     | %-21s |", firstName))
-                + "\n"
-                + Ansi.ansi().a(String.format("| Last Name      | %-21s |", lastName))
-                + "\n"
-                + Ansi.ansi().a(String.format("| Password       | %-21s |", password))
-                + "\n"
-                + Ansi.ansi().a(String.format("| NRIC           | %-21s |", nric))
-                + "\n"
-                + Ansi.ansi().a(String.format("| Email          | %-21s |", email))
-                + "\n"
-                + Ansi.ansi().a(String.format("| Date of Birth  | %-21s |", dob))
-                + "\n"
-                + Ansi.ansi().a(String.format("| Address        | %-21s |", address))
-                + "\n"
-                + Ansi.ansi().a(String.format("| Phone Number   | %-21s |", phoneNumber))
-                + "\n"
-                + Ansi.ansi()
-                    .fg(Ansi.Color.YELLOW)
-                    .a("+----------------------------------------+")
-                    .reset());
+  
+  /**
+   * Method that prints the user's credentials in table format.
+   * @param tableHeader the tableheader
+   * @param firstName user's firsname
+   * @param lastName user's lassname
+   * @param password user's password
+   * @param nric user's nric
+   * @param email user's email
+   * @param dob user's date of birth
+   * @param address user's address
+   * @param phoneNumber user's phoneNumber
+   */
+
+  public static void printUserCredentials(String tableHeader, String firstName, String lastName, String password, String nric, String email, Date dob, String address, String phoneNumber){
+    String formattedDob = (dob != null) ? dob.toString() : "";
+    String formattedNRIC = (nric != null) ? nric : "";
+    String formattedEmail = (email != null) ? email : "";
+    String formattedAddress = (address != null) ? address : "";
+    String formattedPhoneNum = (phoneNumber != null) ? phoneNumber : "";
+    String table = String.format(
+      Ansi.ansi().fg(Ansi.Color.YELLOW).a("+-----------------------------------------------------------+").reset() + "\n" +
+      Ansi.ansi().fg(Ansi.Color.YELLOW).a("| Field          | " + tableHeader + "                        |").reset() + "\n" +
+      Ansi.ansi().fg(Ansi.Color.YELLOW).a("+-----------------------------------------------------------+").reset() + "\n" +
+      Ansi.ansi().a("|" + ANSI_GREEN + " First Name     " + ANSI_RESET + "| " + String.format("%-40s", firstName) + " |") + "\n" +
+      Ansi.ansi().a("|" + ANSI_GREEN + " Last Name      " + ANSI_RESET + "| " + String.format("%-40s", lastName) + " |") + "\n" +
+      Ansi.ansi().a("|" + ANSI_GREEN + " Password       " + ANSI_RESET + "| " + ANSI_RED + String.format("%-40s", password) + ANSI_RESET + " |") + "\n" +
+      Ansi.ansi().a("|" + ANSI_GREEN + " NRIC           " + ANSI_RESET + "| " + String.format("%-40s", formattedNRIC) + " |") + "\n" +
+      Ansi.ansi().a("|" + ANSI_GREEN + " Email          " + ANSI_RESET + "| " + String.format("%-40s", formattedEmail) + " |") + "\n" +
+      Ansi.ansi().a("|" + ANSI_GREEN + " Date of Birth  " + ANSI_RESET + "| " + String.format("%-40s", formattedDob) + " |") + "\n" +
+      Ansi.ansi().a("|" + ANSI_GREEN + " Address        " + ANSI_RESET + "| " + String.format("%-40s", formattedAddress) + " |") + "\n" +
+      Ansi.ansi().a("|" + ANSI_GREEN + " Phone Number   " + ANSI_RESET + "| " + String.format("%-40s", formattedPhoneNum) + " |") + "\n" +
+      Ansi.ansi().fg(Ansi.Color.YELLOW).a("+-----------------------------------------------------------+").reset()
+    );
     System.out.println(table);
   }
 
+  
+
+    /**
+   * Method that attempts to update user's credentials into database.
+   * @param user the to be updated
+   * @param firstName user's updated firsname
+   * @param lastName user's updated lassname
+   * @param password user's updated password
+   * @param nric user's updated nric
+   * @param email user's updated email
+   * @param dob user's updated date of birth
+   * @param address user's updated address
+   * @param phoneNumber user's updated phoneNumber
+   */
   public static void UpdateDb(
       User user,
       String firstName,
@@ -457,19 +553,31 @@ public final class Helper {
       Date dob,
       String address,
       String phoneNumber) {
-    System.out.println(user instanceof Admin);
-    if (firstName != null) Database.updateUserFirstName(user, firstName);
-    if (lastName != null) Database.updateUserLastName(user, lastName);
-    if (password != null) Database.updatePassword(user, password);
-    if (user instanceof Customer && nric != null)
-      Database.updateCustomerNRIC((Customer) user, nric);
-    if (user instanceof Customer && email != null)
-      Database.updateCustomerEmail((Customer) user, email);
-    if (user instanceof Customer && dob != null) Database.updateCustomerDob((Customer) user, dob);
-    if (user instanceof Customer && address != null)
-      Database.updateCustomerAddress((Customer) user, address);
-    if (user instanceof Customer && phoneNumber != null)
-      Database.updateCustomerPhoneNumber((Customer) user, phoneNumber);
+
+    if (firstName != null && !firstName.isEmpty()) {
+      if (Database.updateUserFirstName(user, firstName)) System.out.println(ANSI_GREEN +"Firstname updated successfully" + ANSI_RESET); 
+    }
+    if (lastName != null && !lastName.isEmpty()) {
+      if(Database.updateUserLastName(user, lastName)) System.out.println(ANSI_GREEN +"Lastname updated successfully" + ANSI_RESET);
+    }
+    if (password != null && !password.isEmpty()) {
+      if(Database.updatePassword(user, password)) System.out.println(ANSI_GREEN +"Password updated successfully" + ANSI_RESET);
+    }
+    if(user instanceof Customer && nric != null && !nric.isEmpty()) {
+      if (Database.updateCustomerNRIC((Customer)user, nric)) System.out.println(ANSI_GREEN +"Nric updated successfully" + ANSI_RESET);
+    }
+    if(user instanceof Customer && email != null && !email.isEmpty()) {
+      if (Database.updateCustomerEmail((Customer)user,email)) System.out.println(ANSI_GREEN +"Email updated successfully" + ANSI_RESET);
+    }
+    if(user instanceof Customer && dob != null) {
+      if (Database.updateCustomerDob((Customer)user, dob)) System.out.println(ANSI_GREEN +"DateofBirth updated successfully" + ANSI_RESET);
+    }
+    if(user instanceof Customer && address != null && ! address.isEmpty()) {
+      if (Database.updateCustomerAddress((Customer)user, address)) System.out.println(ANSI_GREEN +"Address updated successfully" + ANSI_RESET);
+    }
+    if(user instanceof Customer && phoneNumber != null && !phoneNumber.isEmpty()) {
+      if (Database.updateCustomerPhoneNumber((Customer)user, phoneNumber)) System.out.println(ANSI_GREEN +"PhoneNum updated successfully" + ANSI_RESET);
+    }
   }
 
   public static String display_customer_accounts(String username) {
