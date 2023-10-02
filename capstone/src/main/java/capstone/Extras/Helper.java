@@ -334,7 +334,8 @@ public final class Helper {
     }
     return ret;
   }
-//TODO: TO DELETED
+  
+//TODO: TO replace this with printUserCredentials function in CustomerDisplayView and delete this fucntion
   public static void printUserInfo(User user) {
     System.out.println("Account Information " + "\u2B07");
     Helper.printLine(80);
@@ -407,20 +408,12 @@ public final class Helper {
     return phoneNumber.length() == 8 && phoneNumber.matches("\\d+");
   }
 
-  // public static String[] getUpdatedParticulars(boolean isCustomer) {
-  //   while (true) {
-  //     System.out.print(String.format("%-50s: ", "Enter new firstName"));
-  //     System.out.print(String.format("%-50s: ", "Enter new lastName"));
-  //     System.out.print(String.format("%-50s: ", "Enter new passWord"));
-  //     if (isCustomer) {
-  //       System.out.print(String.format("%-50s: ", "Enter new nric"));
-  //       System.out.print(String.format("%-50s: ", "Enter new "));
-  //       System.out.print(String.format("%-50s: ", "Enter new "));
-  //       System.out.print(String.format("%-50s: ", "Enter new "));
-  //     }
-  //   }
-  // }
 
+  /**
+   * Method that asks for userName and print the userCredentials accordingly. This function words for all roles including Customer,admin and teller.
+   * @param userType role of the user. customer for Customer, teller for Teller and admin for Admin
+   * @param prompt initial prompt message to acquire username 
+   */
 
   public static void getUser (String userType, String prompt){
     System.out.print(String.format("%-50s: ", prompt));
