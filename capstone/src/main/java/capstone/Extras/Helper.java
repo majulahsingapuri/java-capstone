@@ -246,7 +246,7 @@ public final class Helper {
   public static String getUserDomain() {
     // to print and get the domain of user
     String domain;
-    System.out.println("Enter the user's domain");
+    System.out.println("Enter domain of user you want to see");
     while (true) {
       System.out.println("1. Admin");
       System.out.println("2. Teller");
