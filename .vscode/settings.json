@@ -10,30 +10,5 @@
       "database": "capstone2",
       "username": "capstone2"
     }
-  ],
-  "todo-tree.highlights.customHighlight": {
-    "TODO": {
-      "background": "#ffa500ff",
-      "icon": "tasklist",
-      "iconColour": "#ffa500ff",
-      "type": "line"
-    },
-    "[ ]": {
-      "background": "#ffffff4f",
-      "icon": "tasklist",
-      "iconColour": "#ffffffff",
-      "type": "line"
-    },
-    "[x]": {
-      "background": "#ffffff4f",
-      "icon": "tasklist",
-      "iconColour": "#ffffffff",
-      "type": "line"
-    },
-    "FIXME": {
-      "iconColour": "#ff0000ff",
-      "icon": "alert",
-      "type": "line"
-    }
-  }
+  ]
 }
