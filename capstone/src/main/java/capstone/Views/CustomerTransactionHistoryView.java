@@ -9,9 +9,9 @@ import java.util.ArrayList;
 
 public final class CustomerTransactionHistoryView extends View {
   public void print() {
-    clearScreen("Customer Transaction History Page");
 
     while (true) {
+      clearScreen("Customer Transaction History Page");
 
       Customer customer = (Customer) Database.CURRENT_USER;
       String username = Database.CURRENT_USER.getUsername();

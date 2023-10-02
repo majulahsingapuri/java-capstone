@@ -37,6 +37,7 @@ public final class AdminMainView extends View {
       System.out.println("3: Update a user's credentials");
       System.out.println("4: Logout");
       System.out.println("5: Change Password");
+      System.out.println("6: Log");
       System.out.print(String.format("%-50s: ", "Choice"));
 
       option = Helper.readLine();
@@ -60,6 +61,9 @@ public final class AdminMainView extends View {
         case "5":
           AdminChangePassword adminChangePassword_view = new AdminChangePassword();
           adminChangePassword_view.print();
+        case "6":
+          AdminLogView adminLogView_view = new AdminLogView();
+          adminLogView_view.print();
         default:
           System.out.println("Please enter valid option." + "\uD83E\uDD7A");
       }

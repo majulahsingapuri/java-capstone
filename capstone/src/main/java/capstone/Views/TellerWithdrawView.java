@@ -9,9 +9,10 @@ import java.util.HashMap;
 
 public final class TellerWithdrawView extends View {
   public void print() {
-    clearScreen("Teller Withdraw Page");
 
     while (true) {
+      clearScreen("Teller Withdraw Page");
+
       String username = Helper.customer_search();
       if (username == null) {
         continue;

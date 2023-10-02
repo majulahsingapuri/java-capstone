@@ -698,7 +698,7 @@ public final class Database {
    * creates a log and logs the details
    *
    * @param user cast the object down to a user
-   * @param task user's task
+   * @param task user's task, login
    * @param error the error for the task
    * @return true if successfully logged
    */
@@ -785,7 +785,10 @@ public final class Database {
     try {
       PreparedStatement upstmt =
           conn.prepareStatement(
-              "UPDATE " + AccessLevel.CUSTOMER.db + " SET date_of_birth = ?" + " WHERE customer_id = ?");
+              "UPDATE "
+                  + AccessLevel.CUSTOMER.db
+                  + " SET date_of_birth = ?"
+                  + " WHERE customer_id = ?");
       upstmt.setDate(1, new java.sql.Date(dob.getTime()));
       upstmt.setInt(2, customer.getCustomerID());
       upstmt.execute();
@@ -839,6 +842,39 @@ public final class Database {
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
+    return result;
+  }
+
+  public static ArrayList<Log> getLoggingRecords() {
+    ArrayList<Log> result = new ArrayList<Log>();
+
+    try {
+      PreparedStatement queryCustomerAccountStatement =
+          conn.prepareStatement("SELECT id, user_ptr_id, date, data FROM migrations_log");
+      ResultSet rs = queryCustomerAccountStatement.executeQuery();
+
+      while (rs.next()) {
+        String jsondata = rs.getString("data");
+
+        // Parse the JSON data into a JSON object and able to retrieve value via key
+        JSONObject jsonObject = new JSONObject(jsondata);
+
+        // System.out.println(jsonObject.getString("error"));
+        Log res =
+            new Log(
+                rs.getInt(1), // id
+                rs.getInt(2), // user_ptr_id
+                DateTime.parse(rs.getDate(3).toString()),
+                jsonObject.getString("user"),
+                jsonObject.getString("task"),
+                jsonObject.getString("error"));
+        result.add(res);
+      }
+
+    } catch (SQLException se) {
+      System.out.println(se.getMessage());
+    }
+
     return result;
   }
 }

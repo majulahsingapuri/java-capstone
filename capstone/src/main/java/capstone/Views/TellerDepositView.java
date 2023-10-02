@@ -10,9 +10,9 @@ import java.util.HashMap;
 public final class TellerDepositView extends View {
 
   public void print() {
-    clearScreen("Teller Deposit Page");
 
     while (true) {
+      clearScreen("Teller Deposit Page");
 
       String username = Helper.customer_search();
       if (username == null) {

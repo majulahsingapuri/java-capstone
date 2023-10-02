@@ -121,9 +121,10 @@ public final class LoginView extends View {
                     + ConsoleColours.RESET);
           }
         } else {
+          Database.createLogging(user, "Login", "Wrong Password When Login");
+          System.out.println("Log created!");
           System.out.println(ConsoleColours.RED + "Invalid Password\n" + ConsoleColours.RESET);
         }
-
       } else {
         System.out.println(ConsoleColours.RED + "Invalid Username\n" + ConsoleColours.RESET);
       }

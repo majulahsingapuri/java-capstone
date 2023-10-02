@@ -11,9 +11,9 @@ import java.util.HashMap;
 
 public final class CustomerTransferView extends View {
   public void print() {
-    clearScreen("Customer Transfer Page");
 
     while (true) {
+      clearScreen("Customer Transfer Page");
       // find out username 1
       String username1 = Database.CURRENT_USER.getUsername();
       Customer customer_1 = Database.getCustomer(username1).get();

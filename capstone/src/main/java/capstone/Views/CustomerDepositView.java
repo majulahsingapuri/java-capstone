@@ -10,9 +10,9 @@ import java.util.HashMap;
 public final class CustomerDepositView extends View {
 
   public void print() {
-    clearScreen("Customer Deposit Page");
 
     while (true) {
+      clearScreen("Customer Deposit Page");
 
       String username = Database.CURRENT_USER.getUsername();
       ArrayList<Account> account_list = Database.getCustomerAccounts(username);

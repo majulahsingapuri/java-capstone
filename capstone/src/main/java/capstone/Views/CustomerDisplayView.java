@@ -9,9 +9,9 @@ import java.util.ArrayList;
 
 public final class CustomerDisplayView extends View {
   public void print() {
-    clearScreen("Customer Account Display Page");
 
     while (true) {
+      clearScreen("Customer Account Display Page");
       // display password & username & balance & access level
 
       Customer customer = (Customer) Database.CURRENT_USER;

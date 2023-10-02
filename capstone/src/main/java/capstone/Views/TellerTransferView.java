@@ -10,9 +10,9 @@ import java.util.ArrayList;
 
 public final class TellerTransferView extends View {
   public void print() {
-    clearScreen("Teller Transfer Page");
-
     while (true) {
+      clearScreen("Teller Transfer Page");
+
       System.out.println(
           ConsoleColours.GREEN_BRIGHT
               + "Please enter the transferer username"

@@ -9,9 +9,9 @@ import java.util.HashMap;
 
 public final class CustomerWithdrawView extends View {
   public void print() {
-    clearScreen("Customer Withdraw Page");
 
     while (true) {
+      clearScreen("Customer Withdraw Page");
 
       String username = Database.CURRENT_USER.getUsername();
       ArrayList<Account> account_list = Database.getCustomerAccounts(username);
