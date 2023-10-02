@@ -372,7 +372,7 @@ public final class Helper {
    */
   public static boolean isValidNric(String nric) {
     // NRIC format check: 9 characters with uppercase first and last characters
-    String nricPattern = "[GSTFM]{1}[0-9]{7}[A-Z]{1}|^$";
+    String nricPattern = "^[GSTFM]{1}[0-9]{7}[A-Z]{1}$";
     return nric.matches(nricPattern);
   }
 
