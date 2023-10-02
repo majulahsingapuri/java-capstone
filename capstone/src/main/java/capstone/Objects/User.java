@@ -1,6 +1,7 @@
 package capstone.Objects;
 
 import capstone.Enums.AccessLevel;
+import capstone.Extras.ConsoleColours;
 import capstone.Extras.Helper;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -50,7 +51,7 @@ public class User {
       AccessLevel accessLevel) {
     this.id = id;
     this.username = username;
-    this.password = encryptPassword(password);
+    this.password = password;
     this.firstName = firstName;
     this.lastName = lastName;
     this.accessLevel = accessLevel;
@@ -64,7 +65,7 @@ public class User {
   public boolean changePassword() {
 
     while (true) {
-      System.out.print("Enter current password or Q to quit: ");
+      System.out.print("Enter current password or Q to quit: " + "\uD83D\uDD12");
       String oldPassword = Helper.getPasswordInput();
       if (oldPassword.equals("Q")) {
         break;
@@ -74,19 +75,32 @@ public class User {
         String newPassword1 = Helper.getPasswordInput();
         System.out.print("Enter the new password again: ");
         String newPassword2 = Helper.getPasswordInput();
+        System.out.println("new password:" + newPassword2 + "\uD83D\uDD11");
         if (newPassword1.equals(newPassword2)) {
           String password = encryptPassword(newPassword1);
-          boolean result = Database.updatePassword(this, password);
+          System.out.println("new password encrypted:" + "\uD83D\uDD10" + password);
+          boolean result = Database.updatePassword(this, password); // password
+          System.out.println(
+              ConsoleColours.GREEN
+                  + "Password Update Successfully!"
+                  + ConsoleColours.RESET
+                  + "\uD83C\uDF89");
+          Helper.pause();
           if (result) {
             this.password = password;
           }
           return result;
         } else {
-          System.out.println("The passwords you entered do not match. Please try again.");
+          System.out.println(
+              ConsoleColours.RED
+                  + "The passwords you entered do not match. Please try again."
+                  + ConsoleColours.RESET
+                  + "\uD83E\uDD7A");
           Helper.pause();
         }
       } else {
-        System.out.println("Invalid password!");
+        System.out.println(
+            ConsoleColours.RED + "Wrong password!" + ConsoleColours.RESET + "\u274C");
         Helper.pause();
       }
     }
@@ -99,7 +113,7 @@ public class User {
    * @param rawString the raw password string
    * @return the encoded bytes
    */
-  private String encryptPassword(String rawString) {
+  public String encryptPassword(String rawString) {
     return BCrypt.hashpw(rawString, BCrypt.gensalt());
   }
 

@@ -1,5 +1,6 @@
 package capstone.Enums;
 
+/** An enum representing the two transaction types */
 public enum TransactionType {
   /** A Credit type transaction */
   CREDIT("CREDIT"),

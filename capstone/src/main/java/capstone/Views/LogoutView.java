@@ -36,31 +36,43 @@ public final class LogoutView extends View {
     System.out.println(
         "║"
             + ConsoleColours.YELLOW_BOLD
-            + "       __  ___     _____________   ___  ____      "
+            + "            ____     ____     ____                "
             + ConsoleColours.GREEN_BRIGHT
             + "║");
     System.out.println(
         "║"
             + ConsoleColours.YELLOW_BOLD
-            + "      /  |/  /_ __/ __/_  __/ _ | / _ \\/ __/      "
+            + "           /\\  _`\\  /\\  _`\\  /\\  _`\\              "
             + ConsoleColours.GREEN_BRIGHT
             + "║");
     System.out.println(
         "║"
             + ConsoleColours.YELLOW_BOLD
-            + "     / /|_/ / // /\\ \\  / / / __ |/ , _/\\ \\        "
+            + "           \\ \\ \\L\\ \\\\ \\ \\L\\ \\\\ \\ \\/\\_\\            "
             + ConsoleColours.GREEN_BRIGHT
             + "║");
     System.out.println(
         "║"
             + ConsoleColours.YELLOW_BOLD
-            + "    /_/  /_/\\_, /___/ /_/ /_/ |_/_/|_/___/        "
+            + "            \\ \\  _ <'\\ \\  _ <'\\ \\ \\/_/_           "
             + ConsoleColours.GREEN_BRIGHT
             + "║");
     System.out.println(
         "║"
             + ConsoleColours.YELLOW_BOLD
-            + "           /___/                                  "
+            + "             \\ \\ \\L\\ \\\\ \\ \\L\\ \\\\ \\ \\L\\ \\          "
+            + ConsoleColours.GREEN_BRIGHT
+            + "║");
+    System.out.println(
+        "║"
+            + ConsoleColours.YELLOW_BOLD
+            + "              \\ \\____/ \\ \\____/ \\ \\____/          "
+            + ConsoleColours.GREEN_BRIGHT
+            + "║");
+    System.out.println(
+        "║"
+            + ConsoleColours.YELLOW_BOLD
+            + "               \\/___/   \\/___/   \\/___/           "
             + ConsoleColours.GREEN_BRIGHT
             + "║");
     System.out.println("║                                                  ║");
@@ -73,6 +85,6 @@ public final class LogoutView extends View {
 
     System.out.println("\n");
 
-    clearScreen("Login");
+    clearScreen("Login" + "\uD83D\uDC4B");
   }
 }
