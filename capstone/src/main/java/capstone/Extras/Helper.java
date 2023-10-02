@@ -744,7 +744,7 @@ public final class Helper {
     Account account = account_list.get(choice - 1);
     double balance_current = account_list.get(choice - 1).getBalance();
     String withdraw_result = "";
-    
+
     if (input_amount <= balance_current && input_amount > 0) {
       float balance_after_withdraw = (float) (balance_current - input_amount);
       Database.updateBalance(account, balance_after_withdraw); // add try
@@ -752,7 +752,8 @@ public final class Helper {
       System.out.println(
           ConsoleColours.GREEN + "Withdraw Successful!" + ConsoleColours.RESET + "\uD83C\uDF89");
       withdraw_result = "Withdraw Success";
-      System.out.println("Current Balance for this account is: " + "\uD83D\uDCB0" + balance_after_withdraw);
+      System.out.println(
+          "Current Balance for this account is: " + "\uD83D\uDCB0" + balance_after_withdraw);
     } else if (input_amount > balance_current) {
       System.out.println(
           ConsoleColours.YELLOW
@@ -780,7 +781,7 @@ public final class Helper {
     Account account = account_list.get(choice - 1);
     double balance_current = account_list.get(choice - 1).getBalance();
     String deposit_result = "";
-    
+
     if (input_amount > 0) {
       float balance_after_withdraw = (float) (balance_current + input_amount);
       Database.updateBalance(account, balance_after_withdraw); // add try
@@ -788,7 +789,8 @@ public final class Helper {
       System.out.println(
           ConsoleColours.GREEN + "Deposit Successful!" + ConsoleColours.RESET + "\uD83C\uDF89");
       deposit_result = "Deposit Success";
-      System.out.println("Current Balance for this account is: " + "\uD83D\uDCB0" + balance_after_withdraw);
+      System.out.println(
+          "Current Balance for this account is: " + "\uD83D\uDCB0" + balance_after_withdraw);
     } else if (input_amount <= 0) {
       System.out.println(
           ConsoleColours.RED_BOLD
