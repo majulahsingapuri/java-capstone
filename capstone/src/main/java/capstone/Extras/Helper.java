@@ -334,16 +334,6 @@ public final class Helper {
     return ret;
   }
 
-  // TODO: TO replace this with printUserCredentials function in CustomerDisplayView and delete this
-  // fucntion
-  public static void printUserInfo(User user) {
-    System.out.println("Account Information " + "\u2B07");
-    Helper.printLine(80);
-    System.out.print(String.format("%-50s: %s%n", "userName", user.getUsername()));
-    System.out.print(String.format("%-50s: %s%n", "firstName", user.getFirstName()));
-    System.out.print(String.format("%-50s: %s%n", "lastName", user.getLastName()));
-  }
-
   /**
    * Method that acquires inputs with validation.
    *
