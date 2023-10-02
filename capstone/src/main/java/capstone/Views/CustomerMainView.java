@@ -82,6 +82,5 @@ public final class CustomerMainView extends View {
   private void changePassword() {
 
     Database.CURRENT_USER.changePassword();
-    Helper.pause();
   }
 }

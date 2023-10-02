@@ -61,9 +61,11 @@ public final class AdminMainView extends View {
         case "5":
           AdminChangePassword adminChangePassword_view = new AdminChangePassword();
           adminChangePassword_view.print();
+          break;
         case "6":
           AdminLogView adminLogView_view = new AdminLogView();
           adminLogView_view.print();
+          break;
         default:
           System.out.println("Please enter valid option." + "\uD83E\uDD7A");
       }
