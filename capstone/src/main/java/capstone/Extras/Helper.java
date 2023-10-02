@@ -466,7 +466,7 @@ public final class Helper {
    * @param userType customer or admin or teller type
    */
   public static <T extends User> T validateUser(String userType) throws Exception {
-    System.out.println("Please provide username & password for validation");
+    System.out.println("\nPlease enter the credentials of the user you wish to update:");
     System.out.print(String.format("%-50s: ", "Enter username"));
     String username = Helper.readLine();
     System.out.print(String.format("%-50s: ", "Enter password"));
