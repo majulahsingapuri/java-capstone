@@ -137,7 +137,7 @@ public final class TellerTransferView extends View {
       Account account1 = account_list1.get(choice1 - 1);
       Account account2 = account_list2.get(choice2 - 1);
 
-      double transfer_amount = Helper.Amount_Transfer_Checker();
+      double transfer_amount = Helper.Amount_input_Checker();
 
       if (transfer_amount <= balance_current1 && transfer_amount > 0) {
         double balance_after_transfer_transferer = balance_current1 - transfer_amount;
@@ -162,7 +162,8 @@ public final class TellerTransferView extends View {
       } else if (transfer_amount <= 0) {
         System.out.println(
             ConsoleColours.RED_BOLD
-                + "Please enter a valid and positive number!"
+                + "Please enter a number greater than or equal to zero with at least two decimal"
+                + " places"
                 + ConsoleColours.RESET);
       }
 
