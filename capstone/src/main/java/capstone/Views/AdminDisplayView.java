@@ -1,12 +1,6 @@
 package capstone.Views;
 
 import capstone.Extras.Helper;
-import capstone.Objects.Admin;
-import capstone.Objects.Customer;
-import capstone.Objects.Database;
-import capstone.Objects.Teller;
-import capstone.Objects.User;
-import java.util.Optional;
 
 public final class AdminDisplayView extends View {
   public void print() {
@@ -25,7 +19,6 @@ public final class AdminDisplayView extends View {
 
       } else {
         Helper.getUser("customer", "Enter the customer username");
-
       }
       ;
       int continue_checker = Helper.continue_checker();
