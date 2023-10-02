@@ -23,6 +23,11 @@ public final class CustomerDisplayView extends View {
       System.out.print(String.format("%-50s: %s%n", "phoneNumber", customer.getPhoneNumber()));
       System.out.print(String.format("%-50s: %s%n", "address", customer.getAddress()));
       Helper.printLine(80);
+      // [x] how to get password to display
+      // [x] Helper.printUserCredentials("Customer Credentials", customer.getFirstName(),
+      // customer.getLastName(), customer.get, customer.getNRIC(), customer.getEmail(),
+      // customer.getDateOfBirth(), customer.getAddress(), customer.getPhoneNumber());
+
       System.out.println("Accounts List" + "\uD83D\uDCDA");
 
       ArrayList<Account> account_list = Database.getCustomerAccounts(customer.getUsername());

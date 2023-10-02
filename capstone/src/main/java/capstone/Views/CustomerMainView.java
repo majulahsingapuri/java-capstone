@@ -30,19 +30,12 @@ public final class CustomerMainView extends View {
                 + ConsoleColours.RESET); //
 
         System.out.println("What would you like to do?");
-        // TODO
         System.out.println("1: Change your Password");
-        // OK
         System.out.println("2: Logout");
-        // Roy
         System.out.println("3: Deposit");
-        // Beiji
         System.out.println("4: Withdraw");
-        // TODO: until sql branch
         System.out.println("5: Transfer");
-        //
         System.out.println("6: Transaction History");
-        // Beiji
         System.out.println("7: Display Account Info");
         System.out.print(String.format("%-50s: ", "Choice"));
         choice = Integer.parseInt(Helper.readLine());

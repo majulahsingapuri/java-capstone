@@ -4,10 +4,11 @@ import capstone.Extras.Helper;
 
 public final class TellerTransactionHistoryView extends View {
   public void print() {
-    clearScreen("Teller Transaction History Page");
 
-    // TODO:
     while (true) {
+
+      clearScreen("Teller Transaction History Page");
+
       Helper.customer_search(); // search the target customer from teller side
 
       int continue_checker = Helper.continue_checker();

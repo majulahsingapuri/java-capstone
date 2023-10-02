@@ -4,9 +4,9 @@ import capstone.Extras.Helper;
 
 public final class TellerDisplayCustomerView extends View {
   public void print() {
-    clearScreen("Teller Account Display Page");
 
     while (true) {
+      clearScreen("Teller Account Display Page");
       Helper.customer_search(); // search the target customer from teller side
 
       // display password & username & balance & access level
