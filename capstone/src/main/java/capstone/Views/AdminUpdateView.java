@@ -1,12 +1,5 @@
 package capstone.Views;
 
-// import java.text.ParseException;
-// import java.text.SimpleDateFormat;
-// import java.util.Optional;
-// import capstone.Objects.Admin;
-// import capstone.Objects.Customer;
-// import capstone.Objects.Database;
-// import capstone.Objects.Teller;
 import capstone.Extras.Helper;
 import capstone.Objects.User;
 import java.util.Date;
@@ -68,7 +61,6 @@ public final class AdminUpdateView extends View {
             (String) ret[7],
             (String) ret[8]);
       } catch (Exception e) {
-        // System.out.println("error encountered");
         System.out.println(e);
       }
       int continue_checker = Helper.continue_checker();

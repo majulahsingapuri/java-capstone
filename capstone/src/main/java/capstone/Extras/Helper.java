@@ -166,7 +166,6 @@ public final class Helper {
   }
 
   public static Double Amount_input_Checker() {
-    // TODO: minus??
     double input_amount = 0;
     try {
       System.out.println("Enter the amount:");
@@ -181,7 +180,6 @@ public final class Helper {
   }
 
   public static Double Amount_Transfer_Checker() {
-    // TODO: minus??
     double transfer_amount = 0;
     try {
       System.out.println("Enter the amount to be transferred:");
@@ -374,9 +372,8 @@ public final class Helper {
    */
   public static boolean isValidNric(String nric) {
     // NRIC format check: 9 characters with uppercase first and last characters
-    return nric.length() == 9
-        && Character.isUpperCase(nric.charAt(0))
-        && Character.isUpperCase(nric.charAt(8));
+    String nricPattern = "[GSTFM]{1}[0-9]{7}[A-Z]{1}|^$";
+    return nric.matches(nricPattern);
   }
 
   /**
