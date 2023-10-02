@@ -197,7 +197,8 @@ public final class Helper {
 
   public static int continue_checker() {
     // for most view, decide whether continue this service or back to upper menu
-    System.out.println("Continue in this service? [Y/N]: ");
+    System.out.println(
+        "Would you like to continue using our services at this point in time? [Y/N]: ");
     String str_input = Helper.sc.nextLine();
     if (str_input.equals("N") || str_input.equals("n")) {
       return 1;
