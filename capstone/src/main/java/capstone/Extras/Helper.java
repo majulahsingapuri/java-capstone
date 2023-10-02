@@ -507,7 +507,7 @@ public final class Helper {
     String formattedPhoneNum = (phoneNumber != null) ? phoneNumber : "";
     String table = String.format(
       Ansi.ansi().fg(Ansi.Color.YELLOW).a("+-----------------------------------------------------------+").reset() + "\n" +
-      Ansi.ansi().fg(Ansi.Color.YELLOW).a("| Field          | " + tableHeader + "                        |").reset() + "\n" +
+      Ansi.ansi().fg(Ansi.Color.YELLOW).a("| Field          | " + String.format("%-40s", tableHeader) + " |").reset() + "\n" +
       Ansi.ansi().fg(Ansi.Color.YELLOW).a("+-----------------------------------------------------------+").reset() + "\n" +
       Ansi.ansi().a("|" + ANSI_GREEN + " First Name     " + ANSI_RESET + "| " + String.format("%-40s", firstName) + " |") + "\n" +
       Ansi.ansi().a("|" + ANSI_GREEN + " Last Name      " + ANSI_RESET + "| " + String.format("%-40s", lastName) + " |") + "\n" +
