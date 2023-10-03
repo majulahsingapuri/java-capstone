@@ -681,6 +681,11 @@ public final class Helper {
     }
   }
 
+  /**
+   * Method that displays the customer account information.
+   *
+   * @param username customer account to be displayed
+   */
   public static String display_customer_accounts(String username) {
     ArrayList<Account> account_list = Database.getCustomerAccounts(username);
     if (account_list.isEmpty()) {
@@ -711,6 +716,11 @@ public final class Helper {
     return "Account Exist";
   }
 
+  /**
+   * Method that displays the customer account information without balance.
+   *
+   * @param username customer account to be displayed
+   */
   public static String display_customer_accounts_without_balance(String username) {
     ArrayList<Account> account_list = Database.getCustomerAccounts(username);
     if (account_list.isEmpty()) {
