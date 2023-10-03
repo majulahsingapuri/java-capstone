@@ -187,25 +187,6 @@ public final class Helper {
     return input_failure;
   }
 
-  // public static Double Amount_Transfer_Checker() {
-  //   double transfer_amount = 0;
-  //   try {
-  //     System.out.println("Enter the amount to be transferred:");
-  //     transfer_amount = Helper.sc.nextDouble();
-  //     System.out.println("Amount Number:" + transfer_amount);
-  //     Helper.sc.nextLine(); // this line ensures next .nextLine() consume propoerly for next
-  // input
-  //     return transfer_amount;
-  //   } catch (Exception e) {
-  //     System.out.println(
-  //         ConsoleColours.RED_BOLD + "NOT A VALID NUMBER" + ConsoleColours.RESET +
-  // "\uD83E\uDD7A");
-  //     Helper.sc.nextLine(); // this line ensures next .nextLine() consume propoerly for next
-  // input
-  //     return transfer_amount;
-  //   }
-  // }
-
   public static int continue_checker() {
     // for most view, decide whether continue this service or back to upper menu
     System.out.println(
