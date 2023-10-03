@@ -208,7 +208,7 @@ public final class Helper {
 
   public static String customer_search() {
     // for admin and teller use
-    System.out.println("Enter the customer username:");
+    System.out.print("Enter the customer username: ");
     String username = Helper.readLine(); // convert to int type
     if (Database.containsUser(username)) {
       Optional<Customer> queryRes = Database.getCustomer(username);
