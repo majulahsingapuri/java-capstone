@@ -755,6 +755,7 @@ public final class Helper {
       withdraw_result = "Withdraw Success";
       System.out.println(
           "Current Balance for this account is: " + "\uD83D\uDCB0" + balance_after_withdraw);
+      display_customer_accounts(customer_user.getUsername());
     } else if (input_amount > balance_current) {
       System.out.println(
           ConsoleColours.YELLOW
@@ -793,6 +794,7 @@ public final class Helper {
       deposit_result = "Deposit Success";
       System.out.println(
           "Current Balance for this account is: " + "\uD83D\uDCB0" + balance_after_withdraw);
+      display_customer_accounts(customer_user.getUsername());
     } else if (input_amount <= 0) {
       System.out.println(
           ConsoleColours.RED_BOLD
