@@ -17,19 +17,28 @@ public final class AdminAddUser extends View {
       String domain = Helper.getUserDomain();
       Boolean isEmpty;
       if (domain.equals("admin")) {
-        String[] ret = (String[]) Helper.getUserAttributes(false, true);
-        Optional<Admin> queryRes = Database.createAdmin(ret[0], ret[1], ret[2], ret[3]);
+        System.out.println(
+            Helper.ANSI_BLUE + "Please enter the new admin credentials" + Helper.ANSI_RESET);
+        Object[] ret = Helper.getUserAttributes(false, true);
+        Optional<Admin> queryRes =
+            Database.createAdmin(
+                ret[0].toString(), ret[1].toString(), ret[2].toString(), ret[3].toString());
         isEmpty = queryRes.isEmpty();
         if (isEmpty) System.out.println("Create Admin failed, please try again");
         else System.out.println("Admin has been created successfully");
       } else if (domain.equals("teller")) {
-        String[] ret = (String[]) Helper.getUserAttributes(false, true);
-        Optional<Teller> queryRes = Database.createTeller(ret[0], ret[1], ret[2], ret[3]);
+        System.out.println(
+            Helper.ANSI_BLUE + "Please enter the new teller credentials" + Helper.ANSI_RESET);
+        Object[] ret = Helper.getUserAttributes(false, true);
+        Optional<Teller> queryRes =
+            Database.createTeller(
+                ret[0].toString(), ret[1].toString(), ret[2].toString(), ret[3].toString());
         isEmpty = queryRes.isEmpty();
         if (isEmpty) System.out.println("Create Teller failed, please try again");
         else System.out.println("Teller has been created successfully");
       } else { // Customer daomin
-
+        System.out.println(
+            Helper.ANSI_BLUE + "Please enter the new customer credentials" + Helper.ANSI_RESET);
         Object[] ret = Helper.getUserAttributes(true, true);
 
         Optional<Customer> queryRes =
