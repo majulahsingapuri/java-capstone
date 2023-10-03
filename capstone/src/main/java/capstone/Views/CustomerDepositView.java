@@ -50,11 +50,11 @@ public final class CustomerDepositView extends View {
         }
         break;
       }
-      
+
       if (choice_result_str == "Exit") {
         System.out.println(ConsoleColours.WHITE + "\n\nTaking you back to the Customer Main Page");
         for (int i = 0; i < 6; i++) {
-        Helper.load();
+          Helper.load();
         }
         break;
       }

@@ -28,7 +28,7 @@ public final class CustomerWithdrawView extends View {
        */
       String choice_result_str = "Valid";
       while (true) {
-        
+
         HashMap<String, Integer> choice_map = Helper.check_account_choice_input(account_list);
         for (String result_str : choice_map.keySet()) {
           choice_result_str = result_str;
@@ -57,7 +57,7 @@ public final class CustomerWithdrawView extends View {
       if (choice_result_str == "Exit") {
         System.out.println(ConsoleColours.WHITE + "\n\nTaking you back to the Customer Main Page");
         for (int i = 0; i < 6; i++) {
-        Helper.load();
+          Helper.load();
         }
         break;
       }

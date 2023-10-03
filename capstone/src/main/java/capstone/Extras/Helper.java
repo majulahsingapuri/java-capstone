@@ -718,7 +718,7 @@ public final class Helper {
     System.out.print(String.format("%-50s: ", "Choice"));
     try {
       String choice_str = Helper.readLine();
-      if (choice_str.equals("q") || choice_str.equals("Q")){
+      if (choice_str.equals("q") || choice_str.equals("Q")) {
         choice_map.put("Exit", 0);
         return choice_map;
       }
