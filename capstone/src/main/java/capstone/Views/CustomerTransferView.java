@@ -57,7 +57,7 @@ public final class CustomerTransferView extends View {
 
         ArrayList<Account> account_list2 = Database.getCustomerAccounts(username2);
 
-        String account_exist2 = Helper.display_customer_accounts(username2);
+        String account_exist2 = Helper.display_customer_accounts_without_balance(username2);
         if (account_exist2 == "No Account") {
           break;
         }
