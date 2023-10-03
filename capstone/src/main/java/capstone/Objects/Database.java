@@ -616,7 +616,7 @@ public final class Database {
               "UPDATE migrations_account AS ma " + "SET balance = ? " + "WHERE ma.id = ?");
       stmt.setDouble(1, newBalance);
       stmt.setInt(2, account.getID());
-      stmt.executeQuery();
+      stmt.executeUpdate();
       result = true;
     } catch (SQLException se) {
       System.out.println(se.getMessage());

@@ -22,10 +22,10 @@ public enum TransactionType {
 
   public static TransactionType getTransactionType(String type) {
     for (TransactionType transactionType : TransactionType.values()) {
-      if (transactionType.type == type) {
+      if (transactionType.type.equals(type)) {
         return transactionType;
       }
     }
-    return TransactionType.CREDIT;
+    return null;
   }
 }
