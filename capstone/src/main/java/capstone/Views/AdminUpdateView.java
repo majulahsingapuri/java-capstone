@@ -46,7 +46,7 @@ public final class AdminUpdateView extends View {
             (String) ret[8]);
         System.out.println("Please confirm the updated fields are correct.[Y/N]");
         input = Helper.readLine();
-        if (input.equals("Y")) break;
+        if (input.toUpperCase().equals("Y")) break;
       }
       // call db
       try {
