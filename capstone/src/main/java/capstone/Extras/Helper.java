@@ -711,6 +711,34 @@ public final class Helper {
     return "Account Exist";
   }
 
+  public static String display_customer_accounts_without_balance(String username) {
+    ArrayList<Account> account_list = Database.getCustomerAccounts(username);
+    if (account_list.isEmpty()) {
+      System.out.println(
+          ConsoleColours.RED_BOLD
+              + "This customer does not have a bank account!"
+              + ConsoleColours.RESET
+              + "\u274C");
+      Helper.pause();
+      return "No Account";
+    }
+    System.out.println("Here are all accounts under customer: " + username);
+    Helper.printLine(80);
+    System.out.println("Choice | Account ID | Type    ");
+
+    for (int i = 0; i < account_list.size(); i++) {
+      Account account1 = account_list.get(i);
+      System.out.println(
+          (i + 1)
+              + "      | "
+              + account1.getID()
+              + "          | "
+              + account1.getAccountType());
+    }
+    Helper.printLine(80);
+    return "Account Exist";
+  }
+
   public static HashMap<String, Integer> check_account_choice_input(
       ArrayList<Account> account_list) {
     HashMap<String, Integer> choice_map = new HashMap<String, Integer>();
