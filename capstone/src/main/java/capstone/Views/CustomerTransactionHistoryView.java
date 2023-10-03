@@ -32,16 +32,6 @@ public final class CustomerTransactionHistoryView extends View {
                   transaction.getTransactionType(),
                   transaction.getAmount(),
                   transaction.getDate()));
-          // System.out.println(
-          //     transaction.getAccountNoID()
-          //         + "          | "
-          //         + transaction.getTransactionRef()
-          //         + " | "
-          //         + transaction.getTransactionType()
-          //         + "           | "
-          //         + transaction.getAmount()
-          //         + "  | "
-          //         + transaction.getDate());
         }
       } else {
         Helper.printLine(80);

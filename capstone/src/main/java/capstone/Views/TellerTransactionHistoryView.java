@@ -40,20 +40,6 @@ public final class TellerTransactionHistoryView extends View {
                   transaction.getTransactionType(),
                   transaction.getAmount(),
                   transaction.getDate()));
-          //     "Account ID | Ref no.                              | Transaction Type | Amount |
-          // Date"
-          //         + " ");
-          // for (Transaction transaction : transaction_list) {
-          //   System.out.println(
-          //       transaction.getAccountNoID()
-          //           + "          | "
-          //           + transaction.getTransactionRef()
-          //           + " | "
-          //           + transaction.getTransactionType()
-          //           + "           | "
-          //           + transaction.getAmount()
-          //           + "  | "
-          //           + transaction.getDate());
         }
       } else {
         Helper.printLine(80);
