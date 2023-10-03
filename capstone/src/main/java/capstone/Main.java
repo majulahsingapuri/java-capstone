@@ -1,5 +1,6 @@
 package capstone;
 
+import capstone.Extras.AudioPlayer;
 import capstone.Objects.Database;
 import capstone.Views.LoginView;
 
@@ -13,8 +14,13 @@ public class Main {
    */
   public static void main(String[] args) {
     new Database();
+
     LoginView view = new LoginView();
+    AudioPlayer audioPlayer = new AudioPlayer();
+    String music = "capstone/src/main/java/capstone/bip.wav";
+    audioPlayer.playAudio(music);
     view.print();
     Database.close();
+    audioPlayer.stopAudio();
   }
 }
