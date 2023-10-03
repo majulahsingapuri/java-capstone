@@ -415,7 +415,7 @@ public final class Database {
       PreparedStatement updateUserPassword =
           conn.prepareStatement(
               "UPDATE " + AccessLevel.NONE.db + " SET password = ? WHERE username = ? ");
-      updateUserPassword.setString(1, password);
+      updateUserPassword.setString(1, BCrypt.hashpw(password, BCrypt.gensalt()));
       updateUserPassword.setString(2, user.getUsername());
       updateUserPassword.execute();
       return true;
