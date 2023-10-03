@@ -21,3 +21,22 @@ This is for the UOB TDP Capstone 2 project
 4. Run the `create_db_via_django.sql` file to create the tables.
 
 5. Run the `PopulateData.java` file to insert the sample data.
+
+   > This file provides sample users and transaction data for the application user to have some dummy data to play around with.
+   >
+   > The users provided are as follows:
+   >
+   > - admin_1
+   > - admin_2
+   > - teller_1
+   > - teller_2
+   > - teller_3
+   > - teller_4
+   > - teller_5
+   > - customer_1
+   > - customer_2
+   > - customer_3
+   > - customer_4
+   > - customer_5
+   >
+   > The default password for all the users is `password`.
