@@ -43,7 +43,7 @@ public final class AdminMainView extends View {
       option = Helper.readLine();
       switch (option) {
         case "1":
-          AdminAddUser adminAddUser_view = new AdminAddUser();
+          AdminAddUserView adminAddUser_view = new AdminAddUserView();
           adminAddUser_view.print();
           break;
         case "2":
@@ -59,7 +59,7 @@ public final class AdminMainView extends View {
           logoutView.print();
           return;
         case "5":
-          AdminChangePassword adminChangePassword_view = new AdminChangePassword();
+          AdminChangePasswordView adminChangePassword_view = new AdminChangePasswordView();
           adminChangePassword_view.print();
           break;
         case "6":
