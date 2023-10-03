@@ -190,8 +190,8 @@ public final class Helper {
 
   public static int continue_checker() {
     // for most view, decide whether continue this service or back to upper menu
-    System.out.println(
-        "Please enter [Y] to continue with this service. Enter [N] to return to the main menu : ");
+    System.out.print(
+        "Please enter [Y] to continue with this service.\nEnter [N] to return to the main menu : ");
     String str_input = Helper.sc.nextLine();
     if (str_input.equals("N") || str_input.equals("n")) {
       return 1;
