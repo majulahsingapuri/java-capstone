@@ -16,20 +16,19 @@ public final class AdminLogView extends View {
 
       if (log_list.size() > 0) {
         Helper.printLine(80);
-        System.out.println("Log ID | User ID | User Name | Date | Task | Error");
+        System.out.println(
+            "Log ID | User ID | User Name     | Date                          | Task  | Error      "
+                + "                    |");
         for (Log log : log_list) {
           System.out.println(
-              log.getID()
-                  + " | "
-                  + log.getUser_ID()
-                  + " | "
-                  + log.getDate()
-                  + " | "
-                  + log.getUser_Name()
-                  + " | "
-                  + log.getTask_Name()
-                  + " | "
-                  + log.getError_Msg());
+              String.format(
+                  "%-6s | %-7s | %-13s | %-19s | %-5s | %-30s |",
+                  log.getID(),
+                  log.getUser_ID(),
+                  log.getUser_Name(),
+                  log.getDate(),
+                  log.getTask_Name(),
+                  log.getError_Msg()));
         }
       } else {
         Helper.printLine(80);
