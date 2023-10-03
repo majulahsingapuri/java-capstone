@@ -1,5 +1,6 @@
 package capstone.Views;
 
+import capstone.Extras.ConsoleColours;
 import capstone.Extras.Helper;
 import capstone.Objects.Account;
 import capstone.Objects.Customer;
@@ -29,8 +30,9 @@ public final class TellerWithdrawView extends View {
       /*
        * check on right choice input
        */
+      String choice_result_str = "Valid";
       while (true) {
-        String choice_result_str = "Valid";
+        
         HashMap<String, Integer> choice_map = Helper.check_account_choice_input(account_list);
         for (String result_str : choice_map.keySet()) {
           choice_result_str = result_str;
@@ -55,6 +57,15 @@ public final class TellerWithdrawView extends View {
         }
         break;
       }
+
+      if (choice_result_str == "Exit") {
+        System.out.println(ConsoleColours.WHITE + "\n\nTaking you back to the Teller Main Page");
+        for (int i = 0; i < 6; i++) {
+        Helper.load();
+        }
+        break;
+      }
+
       int continue_checker = Helper.continue_checker();
       if (continue_checker == 1) {
         break;
