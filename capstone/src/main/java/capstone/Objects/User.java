@@ -76,8 +76,7 @@ public class User {
         System.out.print("Enter the new password again: ");
         String newPassword2 = Helper.getPasswordInput();
         if (newPassword1.equals(newPassword2)) {
-          String password = encryptPassword(newPassword1);
-          boolean result = Database.updatePassword(this, password); // password
+          boolean result = Database.updatePassword(this, newPassword1); // password
           System.out.println(
               ConsoleColours.GREEN
                   + "Password Update Successfully!"
