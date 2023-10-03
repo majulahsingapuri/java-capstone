@@ -8,6 +8,7 @@ import capstone.Objects.Database;
 import capstone.Objects.User;
 import java.io.Console;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -315,7 +316,10 @@ public final class Helper {
             continue;
           }
 
-          ret[6] = dob;
+          // Convert LocalDate to Date
+          Date dobDate = Date.from(dob.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+          ret[6] = dobDate;
           break;
         } catch (DateTimeParseException e) {
           System.out.println(ANSI_RED + "Invalid date. Please try again." + ANSI_RESET);
