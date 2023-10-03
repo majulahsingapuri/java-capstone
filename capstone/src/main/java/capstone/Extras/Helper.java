@@ -739,11 +739,7 @@ public final class Helper {
     for (int i = 0; i < account_list.size(); i++) {
       Account account1 = account_list.get(i);
       System.out.println(
-          (i + 1)
-              + "      | "
-              + account1.getID()
-              + "          | "
-              + account1.getAccountType());
+          (i + 1) + "      | " + account1.getID() + "          | " + account1.getAccountType());
     }
     Helper.printLine(80);
     return "Account Exist";
