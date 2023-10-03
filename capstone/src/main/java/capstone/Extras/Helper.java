@@ -803,8 +803,7 @@ public final class Helper {
     } else if (input_amount <= 0) {
       System.out.println(
           ConsoleColours.RED_BOLD
-              + "Please enter a number greater than or equal to zero with at least two decimal"
-              + " places"
+              + "Enter the amount (up to 2 decimal places):"
               + ConsoleColours.RESET
               + "\uD83E\uDD7A");
       withdraw_result = "Invalid Input";
@@ -835,8 +834,7 @@ public final class Helper {
     } else if (input_amount <= 0) {
       System.out.println(
           ConsoleColours.RED_BOLD
-              + "Please enter a number greater than or equal to zero with at least two decimal"
-              + " places"
+              + "Enter the amount (up to 2 decimal places)"
               + ConsoleColours.RESET
               + "\uD83E\uDD7A");
       deposit_result = "Invalid Input";
