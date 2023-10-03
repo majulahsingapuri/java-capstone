@@ -2,9 +2,9 @@ package capstone.Views;
 
 import capstone.Objects.Database;
 
-public final class CustomerChangePassword extends View {
+public final class AdminChangePasswordView extends View {
   public void print() {
-    clearScreen("Customer Change Password Page");
+    clearScreen("Admin Change Password Page");
     Database.CURRENT_USER.changePassword();
   }
 }

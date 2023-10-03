@@ -8,7 +8,7 @@ import capstone.Objects.Teller;
 import java.util.Date;
 import java.util.Optional;
 
-public final class AdminAddUser extends View {
+public final class AdminAddUserView extends View {
   public void print() {
     clearScreen("Admin Add User Page");
 

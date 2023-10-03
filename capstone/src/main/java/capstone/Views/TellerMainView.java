@@ -35,12 +35,13 @@ public final class TellerMainView extends View {
         System.out.println("6: Transaction History");
         System.out.println("7: Display Customer Account Info");
         System.out.println("8: Display Current Teller Account Info");
+        System.out.println("9: Create a New Customer Account");
         System.out.print(String.format("%-50s: ", "Choice"));
         choice = Integer.parseInt(Helper.readLine());
 
         switch (choice) {
           case 1:
-            TellerChangePassword tellerChangePassword_view = new TellerChangePassword();
+            TellerChangePasswordView tellerChangePassword_view = new TellerChangePasswordView();
             tellerChangePassword_view.print();
             break;
           case 2:
@@ -72,6 +73,9 @@ public final class TellerMainView extends View {
             TellerDisplayTellerView tellerDisplayTellerView_view = new TellerDisplayTellerView();
             tellerDisplayTellerView_view.print();
             break;
+          case 9:
+            TellerCreateAccountView tellerCreateAccountView_view = new TellerCreateAccountView();
+            tellerCreateAccountView_view.print();
           default:
             System.out.println("Please enter valid option." + "\uD83E\uDD7A");
         }
