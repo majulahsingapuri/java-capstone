@@ -467,11 +467,9 @@ public final class Helper {
    * @param userType customer or admin or teller type
    */
   public static <T extends User> T validateUser(String userType) throws Exception {
-    System.out.println("\nPlease enter the credentials of the user you wish to update:");
+    System.out.println("\nPlease enter the username of the user you wish to update:");
     System.out.print(String.format("%-50s: ", "Enter username"));
     String username = Helper.readLine();
-    System.out.print(String.format("%-50s: ", "Enter password"));
-    String password = Helper.getPasswordInput();
 
     Optional<? extends User> result2;
     Optional<User> result = Database.getUser(username);
@@ -481,10 +479,6 @@ public final class Helper {
 
     if (result.isEmpty() || result2.isEmpty()) {
       throw new Exception("User not found");
-    }
-
-    if (!(result.get().checkPassword(password))) {
-      throw new Exception("Password is incorrect");
     }
 
     System.out.println(ANSI_GREEN + "User validated successfully" + ANSI_RESET);
