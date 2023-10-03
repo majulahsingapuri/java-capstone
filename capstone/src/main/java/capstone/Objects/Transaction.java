@@ -48,7 +48,7 @@ public class Transaction {
     this.id = id;
     this.transactionRef = transactionRef;
     this.transactionType = transactionType;
-    this.date = DateTime.now();
+    this.date = date;
     this.amount = amount;
     this.account_no_id = account_no_id;
     this.customer_id = customer_id;

@@ -36,7 +36,7 @@ public class Log {
     this.id = id;
     this.user_id = user_id;
     this.task_name = task_name;
-    this.date = DateTime.now();
+    this.date = date;
     this.user_name = user_name;
     this.error_msg = error_msg;
   }

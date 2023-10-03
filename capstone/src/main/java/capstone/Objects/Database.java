@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.json.JSONObject;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -583,12 +584,13 @@ public final class Database {
       ResultSet rs = queryCustomerTransactions.executeQuery();
 
       while (rs.next()) {
+        DateTime dateTime = new DateTime(rs.getTimestamp(4).getTime(), DateTimeZone.UTC);
         Transaction res =
             new Transaction(
                 rs.getInt(1),
                 rs.getString(2),
                 TransactionType.getTransactionType(rs.getString(3)),
-                DateTime.parse(rs.getDate(4).toString()),
+                DateTime.parse(dateTime.toString()),
                 rs.getDouble(5),
                 rs.getInt(6),
                 rs.getInt(7));
@@ -665,7 +667,9 @@ public final class Database {
     Optional<Transaction> transaction = Optional.empty();
     try {
       UUID uuid = UUID.randomUUID();
-      DateTime timestamp = DateTime.now();
+      long timeStampLong = System.currentTimeMillis();
+      // DateTime timestamp = DateTime.now();
+      DateTime timestamp = new DateTime(timeStampLong, DateTimeZone.UTC);
 
       // Insert values into database
       PreparedStatement insertTransactionStatement =
@@ -675,10 +679,7 @@ public final class Database {
                   + "values (?, ?, ?, ?, ?, ?) returning id");
       insertTransactionStatement.setObject(1, uuid); // uuid type can not take string
       insertTransactionStatement.setString(2, transactionType.type);
-      insertTransactionStatement.setDate(
-          3,
-          new java.sql.Date(
-              timestamp.toDate().getTime())); // TODO Check for probable loss of time part
+      insertTransactionStatement.setTimestamp(3, new java.sql.Timestamp(timeStampLong));
       insertTransactionStatement.setDouble(4, amount);
       insertTransactionStatement.setInt(5, account.getID());
       insertTransactionStatement.setInt(6, customer.getCustomerID());
@@ -711,7 +712,6 @@ public final class Database {
    */
   public static boolean createLogging(User user, String task, String error) {
     boolean result = false;
-    DateTime timestamp = DateTime.now();
     JSONObject jo = new JSONObject();
     jo.put("user", user.getUsername());
     jo.put("task", task);
@@ -721,10 +721,7 @@ public final class Database {
           conn.prepareStatement(
               "INSERT INTO migrations_log(user_ptr_id, date, data) VALUES (?, ?, ?::json)");
       stmt.setInt(1, user.getID());
-      stmt.setDate(
-          2,
-          new java.sql.Date(
-              timestamp.toDate().getTime())); // TODO Check for probable loss of time part
+      stmt.setTimestamp(2, new java.sql.Timestamp(System.currentTimeMillis()));
       stmt.setString(3, jo.toString());
       stmt.executeQuery();
       result = true;
@@ -866,12 +863,13 @@ public final class Database {
         // Parse the JSON data into a JSON object and able to retrieve value via key
         JSONObject jsonObject = new JSONObject(jsondata);
 
-        // System.out.println(jsonObject.getString("error"));
+        DateTime dateTime = new DateTime(rs.getTimestamp(3).getTime(), DateTimeZone.UTC);
+
         Log res =
             new Log(
                 rs.getInt(1), // id
                 rs.getInt(2), // user_ptr_id
-                DateTime.parse(rs.getDate(3).toString()),
+                DateTime.parse(dateTime.toString()),
                 jsonObject.getString("user"),
                 jsonObject.getString("task"),
                 jsonObject.getString("error"));
