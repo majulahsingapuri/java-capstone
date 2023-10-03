@@ -54,7 +54,7 @@ public final class CustomerWithdrawView extends View {
       int continue_checker = Helper.continue_checker();
       if (continue_checker == 1) {
         break;
-      } else if (continue_checker == 0) {
+      } else {
         Helper.printLine(80);
         continue;
       }
