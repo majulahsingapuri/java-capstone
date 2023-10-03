@@ -168,8 +168,11 @@ public final class TellerTransferView extends View {
       }
 
       int continue_checker = Helper.continue_checker();
-      if (continue_checker != 1) {
+      if (continue_checker == 1) {
         break;
+      } else {
+        Helper.printLine(80);
+        continue;
       }
     }
   }
