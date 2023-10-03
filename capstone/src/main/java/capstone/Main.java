@@ -21,5 +21,6 @@ public class Main {
     audioPlayer.playAudio(music);
     view.print();
     Database.close();
+    audioPlayer.stopAudio();
   }
 }
