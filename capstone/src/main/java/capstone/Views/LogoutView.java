@@ -25,58 +25,219 @@ public final class LogoutView extends View {
     Database.CURRENT_ACCESS_LEVEL = AccessLevel.NONE;
 
     System.out.println(
-        ConsoleColours.GREEN_BRIGHT + "╔══════════════════════════════════════════════════╗");
-    System.out.println("║                                                  ║");
+        ConsoleColours.GREEN_BRIGHT
+            + "╔════════════════════════════════════════════════════════════════════════╗");
     System.out.println(
-        "║"
+        "║                                                                        ║");
+    System.out.println(
+        "║           "
             + ConsoleColours.WHITE
             + "           You have been logged out of            "
             + ConsoleColours.GREEN_BRIGHT
-            + "║");
+            + "           ║");
     System.out.println(
-        "║"
-            + ConsoleColours.YELLOW_BOLD
-            + "            ____     ____     ____                "
+        ConsoleColours.GREEN_BRIGHT
+            + "║                 "
+            + ConsoleColours.GREEN
+            + "██"
+            + ConsoleColours.RESET
+            + "                                        "
             + ConsoleColours.GREEN_BRIGHT
-            + "║");
+            + "             ║");
     System.out.println(
-        "║"
-            + ConsoleColours.YELLOW_BOLD
-            + "           /\\  _`\\  /\\  _`\\  /\\  _`\\              "
+        ConsoleColours.GREEN_BRIGHT
+            + "║               "
+            + ConsoleColours.GREEN
+            + "██▒▒██"
+            + ConsoleColours.RESET
+            + "                                      "
             + ConsoleColours.GREEN_BRIGHT
-            + "║");
+            + "             ║");
     System.out.println(
-        "║"
-            + ConsoleColours.YELLOW_BOLD
-            + "           \\ \\ \\L\\ \\\\ \\ \\L\\ \\\\ \\ \\/\\_\\            "
+        ConsoleColours.GREEN_BRIGHT
+            + "║             "
+            + ConsoleColours.GREEN
+            + "██▒▒▒▒██"
+            + ConsoleColours.RESET
+            + "                                      "
             + ConsoleColours.GREEN_BRIGHT
-            + "║");
+            + "             ║");
     System.out.println(
-        "║"
-            + ConsoleColours.YELLOW_BOLD
-            + "            \\ \\  _ <'\\ \\  _ <'\\ \\ \\/_/_           "
+        ConsoleColours.GREEN_BRIGHT
+            + "║             "
+            + ConsoleColours.GREEN
+            + "████▒▒▒▒██  ██████"
+            + ConsoleColours.RESET
+            + "                            "
             + ConsoleColours.GREEN_BRIGHT
-            + "║");
+            + "             ║");
     System.out.println(
-        "║"
-            + ConsoleColours.YELLOW_BOLD
-            + "             \\ \\ \\L\\ \\\\ \\ \\L\\ \\\\ \\ \\L\\ \\          "
+        ConsoleColours.GREEN_BRIGHT
+            + "║             "
+            + ConsoleColours.GREEN
+            + "  ██▒▒▒▒▒▒██▒▒▒▒▒▒"
+            + ConsoleColours.PURPLE
+            + "██"
+            + ConsoleColours.RESET
+            + "                          "
             + ConsoleColours.GREEN_BRIGHT
-            + "║");
+            + "             ║");
     System.out.println(
-        "║"
-            + ConsoleColours.YELLOW_BOLD
-            + "              \\ \\____/ \\ \\____/ \\ \\____/          "
+        ConsoleColours.GREEN_BRIGHT
+            + "║             "
+            + ConsoleColours.GREEN
+            + "    ██▒▒▒▒▒▒▒▒"
+            + ConsoleColours.PURPLE
+            + "██████"
+            + ConsoleColours.RESET
+            + "                          "
             + ConsoleColours.GREEN_BRIGHT
-            + "║");
+            + "             ║");
     System.out.println(
-        "║"
-            + ConsoleColours.YELLOW_BOLD
-            + "               \\/___/   \\/___/   \\/___/           "
+        ConsoleColours.GREEN_BRIGHT
+            + "║             "
+            + ConsoleColours.GREEN
+            + "  ██▒▒▒▒▒▒▒▒"
+            + ConsoleColours.PURPLE
+            + "██▓▓▓▓▓▓██"
+            + ConsoleColours.RESET
+            + "                        "
             + ConsoleColours.GREEN_BRIGHT
-            + "║");
-    System.out.println("║                                                  ║");
-    System.out.println("╚══════════════════════════════════════════════════╝");
+            + "             ║");
+    System.out.println(
+        ConsoleColours.GREEN_BRIGHT
+            + "║             "
+            + ConsoleColours.GREEN
+            + "  ██▒▒"
+            + ConsoleColours.PURPLE
+            + "████"
+            + ConsoleColours.GREEN
+            + "▒▒"
+            + ConsoleColours.PURPLE
+            + "██▓▓▓▓▓▓▓▓██                      "
+            + ConsoleColours.GREEN_BRIGHT
+            + "             ║");
+    System.out.println(
+        ConsoleColours.GREEN_BRIGHT
+            + "║             "
+            + ConsoleColours.GREEN
+            + "  ██▒▒"
+            + ConsoleColours.PURPLE
+            + "██████▓▓▓▓▓▓▓▓▓▓▓▓████                  "
+            + ConsoleColours.GREEN_BRIGHT
+            + "             ║");
+    System.out.println(
+        ConsoleColours.GREEN_BRIGHT
+            + "║             "
+            + ConsoleColours.GREEN
+            + "  ██"
+            + ConsoleColours.PURPLE
+            + "██████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓████              "
+            + ConsoleColours.GREEN_BRIGHT
+            + "             ║");
+    System.out.println(
+        ConsoleColours.GREEN_BRIGHT
+            + "║             "
+            + ConsoleColours.PURPLE
+            + "  ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▓▓▓▓██████        "
+            + ConsoleColours.GREEN_BRIGHT
+            + "             ║");
+    System.out.println(
+        ConsoleColours.GREEN_BRIGHT
+            + "║             "
+            + ConsoleColours.PURPLE
+            + "  ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▓▓▓▓▓▓▓▓██      "
+            + ConsoleColours.GREEN_BRIGHT
+            + "             ║");
+    System.out.println(
+        ConsoleColours.GREEN_BRIGHT
+            + "║             "
+            + ConsoleColours.PURPLE
+            + "    ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▓▓▓▓██    "
+            + ConsoleColours.GREEN_BRIGHT
+            + "             ║");
+    System.out.println(
+        ConsoleColours.GREEN_BRIGHT
+            + "║             "
+            + ConsoleColours.PURPLE
+            + "    ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▓▓▓▓██  "
+            + ConsoleColours.GREEN_BRIGHT
+            + "             ║");
+    System.out.println(
+        ConsoleColours.GREEN_BRIGHT
+            + "║             "
+            + ConsoleColours.PURPLE
+            + "      ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▓▓██  "
+            + ConsoleColours.GREEN_BRIGHT
+            + "             ║");
+    System.out.println(
+        ConsoleColours.GREEN_BRIGHT
+            + "║             "
+            + ConsoleColours.PURPLE
+            + "      ██████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▓▓██"
+            + ConsoleColours.GREEN_BRIGHT
+            + "             ║");
+    System.out.println(
+        ConsoleColours.GREEN_BRIGHT
+            + "║             "
+            + ConsoleColours.PURPLE
+            + "        ██████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▓▓██"
+            + ConsoleColours.GREEN_BRIGHT
+            + "             ║");
+    System.out.println(
+        ConsoleColours.GREEN_BRIGHT
+            + "║             "
+            + ConsoleColours.PURPLE
+            + "          ██████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▓▓██"
+            + ConsoleColours.GREEN_BRIGHT
+            + "             ║");
+    System.out.println(
+        ConsoleColours.GREEN_BRIGHT
+            + "║             "
+            + ConsoleColours.PURPLE
+            + "            ██████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▓▓████"
+            + ConsoleColours.GREEN_BRIGHT
+            + "             ║");
+    System.out.println(
+        ConsoleColours.GREEN_BRIGHT
+            + "║             "
+            + ConsoleColours.PURPLE
+            + "              ██████████▓▓▓▓▓▓▓▓▓▓▒▒▒▒▓▓████  "
+            + ConsoleColours.GREEN_BRIGHT
+            + "             ║");
+    System.out.println(
+        ConsoleColours.GREEN_BRIGHT
+            + "║             "
+            + ConsoleColours.PURPLE
+            + "                ██████████▓▓▓▓▓▓▓▓▓▓▓▓██████  "
+            + ConsoleColours.GREEN_BRIGHT
+            + "             ║");
+    System.out.println(
+        ConsoleColours.GREEN_BRIGHT
+            + "║             "
+            + ConsoleColours.PURPLE
+            + "                  ████████████████████████    "
+            + ConsoleColours.GREEN_BRIGHT
+            + "             ║");
+    System.out.println(
+        ConsoleColours.GREEN_BRIGHT
+            + "║             "
+            + ConsoleColours.PURPLE
+            + "                    ████████████████████      "
+            + ConsoleColours.GREEN_BRIGHT
+            + "             ║");
+    System.out.println(
+        ConsoleColours.GREEN_BRIGHT
+            + "║             "
+            + ConsoleColours.PURPLE
+            + "                        ████████████          "
+            + ConsoleColours.GREEN_BRIGHT
+            + "             ║");
+
+    System.out.println(
+        "║                                                                        ║");
+    System.out.println(
+        "╚════════════════════════════════════════════════════════════════════════╝");
 
     System.out.println(ConsoleColours.WHITE + "\n\nTaking you back to the log in screen");
     for (int i = 0; i < 6; i++) {
