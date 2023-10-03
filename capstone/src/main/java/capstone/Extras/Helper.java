@@ -714,22 +714,27 @@ public final class Helper {
   public static HashMap<String, Integer> check_account_choice_input(
       ArrayList<Account> account_list) {
     HashMap<String, Integer> choice_map = new HashMap<String, Integer>();
-    System.out.println("Select one account you want to continue on: ");
+    System.out.println("Select one account you want to continue on[Enter q/Q to quit]: ");
     System.out.print(String.format("%-50s: ", "Choice"));
     try {
-      int choice = Integer.parseInt(Helper.readLine());
+      String choice_str = Helper.readLine();
+      if (choice_str.equals("q") || choice_str.equals("Q")) {
+        choice_map.put("Exit", 0);
+        return choice_map;
+      }
+      int choice = Integer.parseInt(choice_str);
       if (choice >= 1 && choice <= account_list.size()) {
         choice_map.put("Valid", choice);
         return choice_map;
       } else {
         System.out.println(
             ConsoleColours.RED_BOLD + "Invalid choice input!" + ConsoleColours.RESET);
-        choice_map.put("Choice out of range", 0);
+        choice_map.put("Invalid", 0);
         return choice_map;
       }
     } catch (NumberFormatException e) {
       System.out.println(ConsoleColours.RED_BOLD + "Invalid choice input!" + ConsoleColours.RESET);
-      choice_map.put("Invalid input choice format", 0);
+      choice_map.put("Invalid", 0);
       return choice_map;
     }
   }
