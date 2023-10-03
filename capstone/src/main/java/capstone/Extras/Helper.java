@@ -173,7 +173,7 @@ public final class Helper {
     Pattern twoDp = Pattern.compile("^\\d+(\\.\\d{1,2})?$");
 
     try {
-      System.out.println("Enter the amount (up to 2 decimal places):");
+      System.out.print("Enter the amount (up to 2 decimal places):");
       input_amount = Helper.sc.nextLine();
       if (twoDp.matcher(input_amount).matches()) {
         double inputValue = Double.parseDouble(input_amount);
