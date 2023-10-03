@@ -20,11 +20,10 @@ public final class TellerDisplayCustomerView extends View {
       Customer customer = Database.getCustomer(username).get();
 
       // [x] how to get password to display
-      Helper.printUserCredentials(
+      Helper.printUserCredentials_customer(
           "Customer Credentials",
           customer.getFirstName(),
           customer.getLastName(),
-          "password sample",
           customer.getNRIC(),
           customer.getEmail(),
           customer.getDateOfBirth(),

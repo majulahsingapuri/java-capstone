@@ -14,13 +14,10 @@ public final class TellerWithdrawView extends View {
     while (true) {
       clearScreen("Teller Withdraw Page");
 
-      String username = Helper.customer_search();
-      if (username == null) {
-        continue;
-      }
+      Customer customer_user = Helper.customer_search_new();
+      String username = customer_user.getUsername();
 
       ArrayList<Account> account_list = Database.getCustomerAccounts(username);
-      Customer customer_user = Database.getCustomer(username).get();
 
       String account_exist = Helper.display_customer_accounts(username);
       if (account_exist == "No Account") {
