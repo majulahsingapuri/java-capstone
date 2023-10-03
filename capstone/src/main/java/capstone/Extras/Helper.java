@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 import org.fusesource.jansi.Ansi;
 import org.joda.time.DateTime;
 
@@ -165,34 +166,25 @@ public final class Helper {
     System.out.println(line);
   }
 
-  public static Double Amount_input_Checker() {
-    double input_amount = 0;
-    try {
-      System.out.println("Enter the amount:");
-      input_amount = Helper.sc.nextDouble();
-      System.out.println("Amount Number:" + input_amount);
-      Helper.sc.nextLine(); // this line ensures next .nextLine() consume propoerly for next input
-      return input_amount;
-    } catch (Exception e) {
-      Helper.sc.nextLine(); // this line ensures next .nextLine() consume propoerly for next input
-      return input_amount;
-    }
-  }
+  public static double Amount_input_Checker() {
+    String input_amount;
+    double input_failure = 0.0;
+    Pattern twoDp = Pattern.compile("^\\d+(\\.\\d{1,2})?$");
 
-  public static Double Amount_Transfer_Checker() {
-    double transfer_amount = 0;
     try {
-      System.out.println("Enter the amount to be transferred:");
-      transfer_amount = Helper.sc.nextDouble();
-      System.out.println("Amount Number:" + transfer_amount);
-      Helper.sc.nextLine(); // this line ensures next .nextLine() consume propoerly for next input
-      return transfer_amount;
+      System.out.println("Enter the amount (up to 2 decimal places):");
+      input_amount = Helper.sc.nextLine();
+      if (twoDp.matcher(input_amount).matches()) {
+        double inputValue = Double.parseDouble(input_amount);
+        System.out.println("Amount Number:" + input_amount);
+        return inputValue; // Return the correctly formatted double
+      }
+
     } catch (Exception e) {
-      System.out.println(
-          ConsoleColours.RED_BOLD + "NOT A VALID NUMBER" + ConsoleColours.RESET + "\uD83E\uDD7A");
-      Helper.sc.nextLine(); // this line ensures next .nextLine() consume propoerly for next input
-      return transfer_amount;
+      Helper.sc.nextLine(); // Ensure next .nextLine() consumes properly for the next input
+      return input_failure;
     }
+    return input_failure;
   }
 
   public static int continue_checker() {
@@ -773,7 +765,8 @@ public final class Helper {
     } else if (input_amount <= 0) {
       System.out.println(
           ConsoleColours.RED_BOLD
-              + "Please enter a valid and positive number!"
+              + "Please enter a number greater than or equal to zero with at least two decimal"
+              + " places"
               + ConsoleColours.RESET
               + "\uD83E\uDD7A");
       withdraw_result = "Invalid Input";
@@ -803,7 +796,8 @@ public final class Helper {
     } else if (input_amount <= 0) {
       System.out.println(
           ConsoleColours.RED_BOLD
-              + "Please enter a valid and positive number!"
+              + "Please enter a number greater than or equal to zero with at least two decimal"
+              + " places"
               + ConsoleColours.RESET
               + "\uD83E\uDD7A");
       deposit_result = "Invalid Input";

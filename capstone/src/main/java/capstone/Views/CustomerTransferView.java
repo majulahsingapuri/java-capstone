@@ -85,7 +85,7 @@ public final class CustomerTransferView extends View {
         Account account2 = account_list2.get(choice2 - 1);
 
         while (true) {
-          double transfer_amount = Helper.Amount_Transfer_Checker();
+          double transfer_amount = Helper.Amount_input_Checker();
 
           if (transfer_amount <= balance_current1 && transfer_amount > 0) {
             double balance_after_transfer_transferer = balance_current1 - transfer_amount;
