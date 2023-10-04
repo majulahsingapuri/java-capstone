@@ -225,7 +225,11 @@ public final class Helper {
     }
   }
 
-  /** Method that prints and acquires the user domain. */
+  /**
+   * Gets the domain of the user
+   *
+   * @return a String representing the user's domain
+   */
   public static String getUserDomain() {
     // to print and get the domain of user
     String domain;
@@ -256,6 +260,7 @@ public final class Helper {
    * @param isCustomer false when it is Teller or Admin else true
    * @param requireUsername the function will not print and acquire Username filed when this sets to
    *     false
+   * @return returns a list of Object type
    */
   public static Object[] getUserAttributes(boolean isCustomer, boolean requireUsername) {
 
@@ -332,6 +337,7 @@ public final class Helper {
    * @param prompt guiding message to user for the input field
    * @param validator function checks if the input is valid; return false if it's invalid
    * @param isPassword true when the input field is a password.
+   * @return a validated input
    */
   public static String getInputWithValidation(
       String prompt, Function<String, Boolean> validator, boolean isPassword) {
@@ -353,6 +359,7 @@ public final class Helper {
    * Method that checks password pattern for validation.
    *
    * @param password the password input
+   * @return true if the password is valid
    */
   public static boolean isValidPassword(String password) {
     String passwordPattern = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#$%^&+=~`!]).{8,}$";
@@ -363,6 +370,7 @@ public final class Helper {
    * Method that checks nric pattern for validation.
    *
    * @param nric the nric input
+   * @return true if the nric is valid
    */
   public static boolean isValidNric(String nric) {
     // NRIC format check: 9 characters with uppercase first and last characters
@@ -374,6 +382,7 @@ public final class Helper {
    * Method that checks email pattern for validation.
    *
    * @param email the email input
+   * @return true if the email is valid
    */
   public static boolean isValidEmail(String email) {
     // Email format check using a simple regular expression
@@ -385,6 +394,7 @@ public final class Helper {
    * Method that checks phoneNumber pattern for validation.
    *
    * @param phoneNumber the phoneNumber input
+   * @return tru if the phone is valid
    */
   public static boolean isValidPhoneNumber(String phoneNumber) {
     // Phone number format check: 8 characters, all digits
@@ -458,6 +468,8 @@ public final class Helper {
    * Method that acquires username and password; Validates if it's a exisiting user in the db
    *
    * @param userType customer or admin or teller type
+   * @throws Exception when invald user
+   * @return a generic user object
    */
   public static <T extends User> T validateUser(String userType) throws Exception {
     System.out.println("\nPlease enter the username of the user you wish to update:");
@@ -484,7 +496,6 @@ public final class Helper {
    * @param tableHeader the tableheader
    * @param firstName user's firsname
    * @param lastName user's lassname
-   * @param password user's password
    * @param nric user's nric
    * @param email user's email
    * @param dob user's date of birth
@@ -661,6 +672,7 @@ public final class Helper {
    * Method that displays the customer account information.
    *
    * @param username customer account to be displayed
+   * @return a string of the customer's accounts
    */
   public static String display_customer_accounts(String username) {
     ArrayList<Account> account_list = Database.getCustomerAccounts(username);
@@ -696,6 +708,7 @@ public final class Helper {
    * Method that displays the customer account information without balance.
    *
    * @param username customer account to be displayed
+   * @return a string that displays the customer accounts without the balance for privacy
    */
   public static String display_customer_accounts_without_balance(String username) {
     ArrayList<Account> account_list = Database.getCustomerAccounts(username);

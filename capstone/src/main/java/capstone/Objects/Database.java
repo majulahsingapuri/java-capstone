@@ -327,7 +327,7 @@ public final class Database {
    * @param password Admin's password
    * @param firstName Admin's first name
    * @param lastName Admin's last name
-   * @return
+   * @return an optional admin object
    */
   public static Optional<Admin> createAdmin(
       String username, String password, String firstName, String lastName) {
@@ -849,6 +849,11 @@ public final class Database {
     return result;
   }
 
+  /**
+   * returns the logging records
+   *
+   * @return an arraylist of Logs
+   */
   public static ArrayList<Log> getLoggingRecords() {
     ArrayList<Log> result = new ArrayList<Log>();
 
