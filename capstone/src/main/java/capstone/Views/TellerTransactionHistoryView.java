@@ -18,11 +18,9 @@ public final class TellerTransactionHistoryView extends View {
           ConsoleColours.GREEN_BRIGHT
               + "Please enter the customer username"
               + ConsoleColours.RESET);
-      String username = Helper.customer_search();
-      Customer customer = Database.getCustomer(username).get();
-      if (username == null) {
-        continue;
-      }
+
+      Customer customer = Helper.customer_search();
+      String username = customer.getUsername();
 
       ArrayList<Transaction> transaction_list = Database.getCustomerTransactions(customer);
       System.out.println("Transaction History For User: " + username + "\uD83D\uDCDC");

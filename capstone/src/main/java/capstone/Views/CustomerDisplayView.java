@@ -21,7 +21,6 @@ public final class CustomerDisplayView extends View {
           "Customer Credentials",
           customer.getFirstName(),
           customer.getLastName(),
-          "password sample",
           customer.getNRIC(),
           customer.getEmail(),
           customer.getDateOfBirth(),

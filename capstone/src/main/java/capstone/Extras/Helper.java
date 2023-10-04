@@ -207,32 +207,21 @@ public final class Helper {
     }
   }
 
-  public static String customer_search() {
-    // for admin and teller use
-    System.out.print("Enter the customer username: ");
-    String username = Helper.readLine(); // convert to int type
-    if (Database.containsUser(username)) {
+  public static Customer customer_search() {
+    while (true) {
+      // for admin and teller use
+      System.out.print("Enter the customer username: ");
+      String username = Helper.readLine();
       Optional<Customer> queryRes = Database.getCustomer(username);
-      Boolean isEmpty = queryRes.isEmpty();
-      if (isEmpty) {
+      if (queryRes.isPresent()) {
+        return queryRes.get();
+      } else {
         System.out.println(
             ConsoleColours.RED_BOLD
-                + "Customer with username "
-                + username
-                + " cannot be found"
+                + "This customer username does not exist! Please re-enter!"
                 + ConsoleColours.RESET
                 + "\uD83E\uDD7A");
-        return null;
       }
-      return username;
-    } else {
-      System.out.println(
-          ConsoleColours.RED_BOLD
-              + "This username does not exist! Please re-enter!"
-              + ConsoleColours.RESET
-              + "\uD83E\uDD7A");
-      Helper.pause();
-      return null;
     }
   }
 
@@ -459,7 +448,7 @@ public final class Helper {
       }
 
       printUserCredentials(
-          tableHeader, firstName, lastName, password, nric, email, dob, address, phoneNumber);
+          tableHeader, firstName, lastName, nric, email, dob, address, phoneNumber);
       ;
       Helper.printLine(80);
     }
@@ -506,7 +495,6 @@ public final class Helper {
       String tableHeader,
       String firstName,
       String lastName,
-      String password,
       String nric,
       String email,
       Date dob,
@@ -552,18 +540,6 @@ public final class Helper {
                             + ANSI_RESET
                             + "| "
                             + String.format("%-40s", lastName)
-                            + " |")
-                + "\n"
-                + Ansi.ansi()
-                    .a(
-                        "|"
-                            + ANSI_GREEN
-                            + " Password       "
-                            + ANSI_RESET
-                            + "| "
-                            + ANSI_RED
-                            + String.format("%-40s", password)
-                            + ANSI_RESET
                             + " |")
                 + "\n"
                 + Ansi.ansi()

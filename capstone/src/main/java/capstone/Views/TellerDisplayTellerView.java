@@ -19,7 +19,6 @@ public final class TellerDisplayTellerView extends View {
           "Customer Credentials",
           teller.getFirstName(),
           teller.getLastName(),
-          "password sample",
           null,
           null,
           null,

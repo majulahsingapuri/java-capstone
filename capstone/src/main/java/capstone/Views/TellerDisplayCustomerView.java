@@ -12,19 +12,14 @@ public final class TellerDisplayCustomerView extends View {
 
     while (true) {
       clearScreen("Teller Account Display Page");
-      String username = Helper.customer_search();
-      if (username == null) {
-        continue;
-      }
 
-      Customer customer = Database.getCustomer(username).get();
+      Customer customer = Helper.customer_search();
 
       // [x] how to get password to display
       Helper.printUserCredentials(
           "Customer Credentials",
           customer.getFirstName(),
           customer.getLastName(),
-          "password sample",
           customer.getNRIC(),
           customer.getEmail(),
           customer.getDateOfBirth(),

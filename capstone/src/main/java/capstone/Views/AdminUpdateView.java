@@ -38,7 +38,6 @@ public final class AdminUpdateView extends View {
             tableHeader,
             (String) ret[2],
             (String) ret[3],
-            (String) ret[1],
             (String) ret[4],
             (String) ret[5],
             (Date) ret[6],

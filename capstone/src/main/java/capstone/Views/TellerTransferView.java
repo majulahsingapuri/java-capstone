@@ -17,11 +17,9 @@ public final class TellerTransferView extends View {
           ConsoleColours.GREEN_BRIGHT
               + "Please enter the transferer username"
               + ConsoleColours.RESET);
-      String username1 = Helper.customer_search();
-      Customer customer_1 = Database.getCustomer(username1).get();
-      if (username1 == null) {
-        continue;
-      }
+
+      Customer customer_1 = Helper.customer_search();
+      String username1 = customer_1.getUsername();
 
       ArrayList<Account> account_list1 = Database.getCustomerAccounts(username1);
       if (account_list1.isEmpty()) {
@@ -77,12 +75,9 @@ public final class TellerTransferView extends View {
           ConsoleColours.GREEN_BRIGHT
               + "Please enter the transferee username"
               + ConsoleColours.RESET);
-      String username2 = Helper.customer_search();
-      Customer customer_2 = Database.getCustomer(username2).get();
 
-      if (username2 == null) {
-        continue;
-      }
+      Customer customer_2 = Helper.customer_search();
+      String username2 = customer_2.getUsername();
 
       ArrayList<Account> account_list2 = Database.getCustomerAccounts(username2);
       if (account_list2.isEmpty()) {

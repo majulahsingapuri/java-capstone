@@ -49,11 +49,8 @@ public final class CustomerTransferView extends View {
 
       while (true) {
         // find out username 2
-        String username2 = Helper.customer_search();
-        if (username2 == null) {
-          continue;
-        }
-        Customer customer_2 = Database.getCustomer(username2).get();
+        Customer customer_2 = Helper.customer_search();
+        String username2 = customer_2.getUsername();
 
         ArrayList<Account> account_list2 = Database.getCustomerAccounts(username2);
 
