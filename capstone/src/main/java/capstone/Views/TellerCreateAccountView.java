@@ -18,11 +18,9 @@ public class TellerCreateAccountView extends View {
           ConsoleColours.GREEN_BRIGHT
               + "Please enter the customer username"
               + ConsoleColours.RESET);
-      String username = Helper.customer_search();
-      if (username == null) {
-        continue;
-      }
-      Customer customer = Database.getCustomer(username).get();
+
+      Customer customer = Helper.customer_search();
+
       Optional<Account> acc = null;
       while (true) {
 

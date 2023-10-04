@@ -17,7 +17,7 @@ public final class CustomerDisplayView extends View {
       Customer customer = (Customer) Database.CURRENT_USER;
 
       // [x] how to get password to display
-      Helper.printUserCredentials_customer(
+      Helper.printUserCredentials(
           "Customer Credentials",
           customer.getFirstName(),
           customer.getLastName(),

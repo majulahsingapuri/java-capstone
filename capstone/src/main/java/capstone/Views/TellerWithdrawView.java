@@ -14,7 +14,7 @@ public final class TellerWithdrawView extends View {
     while (true) {
       clearScreen("Teller Withdraw Page");
 
-      Customer customer_user = Helper.customer_search_new();
+      Customer customer_user = Helper.customer_search();
       String username = customer_user.getUsername();
 
       ArrayList<Account> account_list = Database.getCustomerAccounts(username);

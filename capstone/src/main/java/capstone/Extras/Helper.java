@@ -207,42 +207,13 @@ public final class Helper {
     }
   }
 
-  public static String customer_search() {
-    // for admin and teller use
-    System.out.print("Enter the customer username: ");
-    String username = Helper.readLine(); // convert to int type
-    if (Database.containsUser(username)) {
-      Optional<Customer> queryRes = Database.getCustomer(username);
-      Boolean isEmpty = queryRes.isEmpty();
-      if (isEmpty) {
-        System.out.println(
-            ConsoleColours.RED_BOLD
-                + "Customer with username "
-                + username
-                + " cannot be found"
-                + ConsoleColours.RESET
-                + "\uD83E\uDD7A");
-        return null;
-      }
-      return username;
-    } else {
-      System.out.println(
-          ConsoleColours.RED_BOLD
-              + "This username does not exist! Please re-enter!"
-              + ConsoleColours.RESET
-              + "\uD83E\uDD7A");
-      Helper.pause();
-      return null;
-    }
-  }
-
-  public static Customer customer_search_new() {
+  public static Customer customer_search() {
     while (true) {
       // for admin and teller use
       System.out.print("Enter the customer username: ");
       String username = Helper.readLine();
       Optional<Customer> queryRes = Database.getCustomer(username);
-      if (!queryRes.isEmpty()) {
+      if (queryRes.isPresent()) {
         return queryRes.get();
       } else {
         System.out.println(
@@ -250,8 +221,6 @@ public final class Helper {
                 + "This customer username does not exist! Please re-enter!"
                 + ConsoleColours.RESET
                 + "\uD83E\uDD7A");
-        Helper.pause();
-        continue;
       }
     }
   }
@@ -479,7 +448,7 @@ public final class Helper {
       }
 
       printUserCredentials(
-          tableHeader, firstName, lastName, password, nric, email, dob, address, phoneNumber);
+          tableHeader, firstName, lastName, nric, email, dob, address, phoneNumber);
       ;
       Helper.printLine(80);
     }
@@ -523,127 +492,6 @@ public final class Helper {
    * @param phoneNumber user's phoneNumber
    */
   public static void printUserCredentials(
-      String tableHeader,
-      String firstName,
-      String lastName,
-      String password,
-      String nric,
-      String email,
-      Date dob,
-      String address,
-      String phoneNumber) {
-    String formattedDob = (dob != null) ? dob.toString() : "";
-    String formattedNRIC = (nric != null) ? nric : "";
-    String formattedEmail = (email != null) ? email : "";
-    String formattedAddress = (address != null) ? address : "";
-    String formattedPhoneNum = (phoneNumber != null) ? phoneNumber : "";
-    String table =
-        String.format(
-            Ansi.ansi()
-                    .fg(Ansi.Color.YELLOW)
-                    .a("+-----------------------------------------------------------+")
-                    .reset()
-                + "\n"
-                + Ansi.ansi()
-                    .fg(Ansi.Color.YELLOW)
-                    .a("| Field          | " + String.format("%-40s", tableHeader) + " |")
-                    .reset()
-                + "\n"
-                + Ansi.ansi()
-                    .fg(Ansi.Color.YELLOW)
-                    .a("+-----------------------------------------------------------+")
-                    .reset()
-                + "\n"
-                + Ansi.ansi()
-                    .a(
-                        "|"
-                            + ANSI_GREEN
-                            + " First Name     "
-                            + ANSI_RESET
-                            + "| "
-                            + String.format("%-40s", firstName)
-                            + " |")
-                + "\n"
-                + Ansi.ansi()
-                    .a(
-                        "|"
-                            + ANSI_GREEN
-                            + " Last Name      "
-                            + ANSI_RESET
-                            + "| "
-                            + String.format("%-40s", lastName)
-                            + " |")
-                + "\n"
-                + Ansi.ansi()
-                    .a(
-                        "|"
-                            + ANSI_GREEN
-                            + " Password       "
-                            + ANSI_RESET
-                            + "| "
-                            + ANSI_RED
-                            + String.format("%-40s", password)
-                            + ANSI_RESET
-                            + " |")
-                + "\n"
-                + Ansi.ansi()
-                    .a(
-                        "|"
-                            + ANSI_GREEN
-                            + " NRIC           "
-                            + ANSI_RESET
-                            + "| "
-                            + String.format("%-40s", formattedNRIC)
-                            + " |")
-                + "\n"
-                + Ansi.ansi()
-                    .a(
-                        "|"
-                            + ANSI_GREEN
-                            + " Email          "
-                            + ANSI_RESET
-                            + "| "
-                            + String.format("%-40s", formattedEmail)
-                            + " |")
-                + "\n"
-                + Ansi.ansi()
-                    .a(
-                        "|"
-                            + ANSI_GREEN
-                            + " Date of Birth  "
-                            + ANSI_RESET
-                            + "| "
-                            + String.format("%-40s", formattedDob)
-                            + " |")
-                + "\n"
-                + Ansi.ansi()
-                    .a(
-                        "|"
-                            + ANSI_GREEN
-                            + " Address        "
-                            + ANSI_RESET
-                            + "| "
-                            + String.format("%-40s", formattedAddress)
-                            + " |")
-                + "\n"
-                + Ansi.ansi()
-                    .a(
-                        "|"
-                            + ANSI_GREEN
-                            + " Phone Number   "
-                            + ANSI_RESET
-                            + "| "
-                            + String.format("%-40s", formattedPhoneNum)
-                            + " |")
-                + "\n"
-                + Ansi.ansi()
-                    .fg(Ansi.Color.YELLOW)
-                    .a("+-----------------------------------------------------------+")
-                    .reset());
-    System.out.println(table);
-  }
-
-  public static void printUserCredentials_customer(
       String tableHeader,
       String firstName,
       String lastName,
