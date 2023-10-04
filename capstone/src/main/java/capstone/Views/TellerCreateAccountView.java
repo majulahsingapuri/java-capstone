@@ -50,7 +50,7 @@ public class TellerCreateAccountView extends View {
 
       int continue_checker = Helper.continue_checker();
       if (continue_checker == 1) {
-        continue;
+        break;
       }
     }
   }
