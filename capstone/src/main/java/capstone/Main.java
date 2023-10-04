@@ -17,7 +17,7 @@ public class Main {
 
     LoginView view = new LoginView();
     AudioPlayer audioPlayer = new AudioPlayer();
-    String music = "capstone/src/main/java/capstone/bip.wav";
+    String music = "capstone/src/main/java/capstone/title.wav";
     audioPlayer.playAudio(music);
     view.print();
     Database.close();
