@@ -162,8 +162,7 @@ public final class TellerTransferView extends View {
       } else if (transfer_amount <= 0) {
         System.out.println(
             ConsoleColours.RED_BOLD
-                + "Please enter a number greater than or equal to zero with at least two decimal"
-                + " places"
+                + "Enter the amount (up to 2 decimal places):"
                 + ConsoleColours.RESET);
       }
 
